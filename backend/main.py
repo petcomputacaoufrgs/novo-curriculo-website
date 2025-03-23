@@ -1,3 +1,4 @@
+import re
 from fastapi import FastAPI, File, HTTPException, UploadFile
 
 # Middleware do FastAPI para controlar as permissões de CORS (Cross-Origin Resource Sharing). Isso permite configurar DE QUAIS domínios ou portas o servidor pode receber requisições
@@ -13,7 +14,7 @@ import shutil
 from bs4 import BeautifulSoup
 
 
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, HTMLResponse
 from matplotlib.figure import Figure
 
 
@@ -99,27 +100,7 @@ async def upload_html(file: UploadFile = File(...)):
 
     # PROCESSA O ARQUIVO
     with open(file_path, "r", encoding="utf-8") as html_file:
-
-        '''
-        content = html_file.read()
-        soup = BeautifulSoup(content, "html.parser")
-        
-        # Procura pelas tags <meta>, que define o charset
-        meta_tags = soup.find_all("meta") # https://www.crummy.com/software/BeautifulSoup/bs4/doc/#find
-        
-        found_charset = False
-
-        # Vai tentando encontrar o charsert
-        for meta_tag in meta_tags:
-            if "charset" in meta_tag.attrs["content"]:
-                charset = meta_tag.attrs["content"]
-                found_charset = True
-                break
-        
-        if not found_charset:
-           charset = "Charset não encontrado"
-
-           '''
+        1
 
 
     # GERANDO GRÁFICOS DE EXEMPLO
@@ -138,7 +119,6 @@ async def upload_html(file: UploadFile = File(...)):
 
     fig.savefig(img_path)
 
-    print("AASDNFSDNFLSKNDF")
     fig = Figure()
     ax = fig.subplots()
     x = [1, 2, 3, 4, 5]
@@ -159,6 +139,32 @@ async def upload_html(file: UploadFile = File(...)):
     return {"filename": unique_file_name, "charset": charset,  "message": "Upload realizado com sucesso"}
 
 
+HTML_FILE_PATH = "mais_teste.txt"
+
+@app.post("/modificar_html")
+async def modificar_html(disciplinas: list[str]):
+    try:
+        # Ler o arquivo HTML
+        with open(HTML_FILE_PATH, "r") as f:
+            html_texto = f.read()
+
+        # Modificar o conteúdo do HTML
+        for disciplina in disciplinas:
+            teste = re.findall(rf"value=\\&quot;{disciplina}.*?style=.*?(?:(?!mxGeometry).)*?fillColor=.*?mxGeometry", html_texto)
+
+            if len(teste) > 0:
+                substituido = re.sub(r"fillColor=#\w{6}", "fillColor=#000000", teste[0])
+                html_texto = html_texto.replace(teste[0], substituido)
+
+            
+
+        # Retornar o HTML modificado como resposta
+        return HTMLResponse(content=html_texto)
+
+    except Exception as e:
+        return {"erro": str(e)}
+    
+    
 
 
 
