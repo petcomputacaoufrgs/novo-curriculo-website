@@ -1,4 +1,5 @@
 import re
+import subprocess
 from fastapi import FastAPI, File, HTTPException, UploadFile
 
 # Middleware do FastAPI para controlar as permissões de CORS (Cross-Origin Resource Sharing). Isso permite configurar DE QUAIS domínios ou portas o servidor pode receber requisições
@@ -20,6 +21,18 @@ from matplotlib.figure import Figure
 
 import time
 import hashlib
+
+from pydantic import BaseModel
+
+from readHtml import LeHtml, criaHistoricoCSV
+
+import pandas as pd
+
+
+class Linha(BaseModel):
+    disciplina: str 
+    codigo: str 
+    semestre: str
 
 
 def generate_unique_filename(filename):
@@ -52,6 +65,33 @@ app.add_middleware(
 RESULTS = {}
 
 
+# a palavra-chave async nas funções de endpoint permite que a função seja executada de maneira assíncrona, sem bloquear outras requisições.
+# Essa é uma das vantagens da FastAPI, que já suporta programação assíncrona nativamente
+
+@app.post(path="/upload/")
+async def upload_html(file: UploadFile = File(...)):
+    """Recebe um arquivo HTML e salva no servidor"""
+    
+    print("1")
+    # processa o conteúdo do arquivo para retornar os dados dele
+    conteudo_arquivo = file.file.read() 
+    print("2")
+    dados_extraidos = LeHtml(conteudo_arquivo)
+    print("3")
+    return dados_extraidos
+
+@app.post(path="/calculate/")
+async def calculate(tabela: list[list[str]]):
+    os.mkdir("1000")
+    file_path = os.path.join(os.path.dirname(__file__), "1000", 'historico.csv')
+    criaHistoricoCSV(tabela, file_path)
+
+    # result = subprocess.run(["ClassHistoryConverter/scripts/update.sh", file_path], capture_output=True, text=True, check=True)
+    print("Tudo certo!")
+    return 1
+
+
+
 @app.get(path="/results/{selectionView}/{filename}")
 async def get_results(selectionView: str, filename: str):
     """Retorna os dados do arquivo e a url da imagem gerada para o frontend"""
@@ -76,67 +116,7 @@ async def get_image(selectionView: str, filename: str):
     return FileResponse(img_path, media_type="image/png")
 
 
-# a palavra-chave async nas funções de endpoint permite que a função seja executada de maneira assíncrona, sem bloquear outras requisições.
-# Essa é uma das vantagens da FastAPI, que já suporta programação assíncrona nativamente
 
-@app.post(path="/upload/")
-async def upload_html(file: UploadFile = File(...)):
-    """Recebe um arquivo HTML e salva no servidor"""
-    
-    # Garante que o diretório de uploads existe
-    os.makedirs(UPLOAD_DIR, exist_ok=True)
-    os.makedirs(os.path.join(UPLOAD_DIR, "0"), exist_ok=True)
-    os.makedirs(os.path.join(UPLOAD_DIR, "1"), exist_ok=True)
-
-    unique_file_name = generate_unique_filename(file.filename)
-
-    # Caminho para salvar o arquivo
-    file_path = os.path.join(UPLOAD_DIR, unique_file_name)
-    
-    # Salva o arquivo no servidor
-    with open(file_path, "wb") as buffer:
-        shutil.copyfileobj(file.file, buffer)
-    
-
-    # PROCESSA O ARQUIVO
-    with open(file_path, "r", encoding="utf-8") as html_file:
-        1
-
-
-    # GERANDO GRÁFICOS DE EXEMPLO
-
-    x = [1, 2, 3, 4, 5]
-    y = [10, 20, 15, 25, 30]
-
-
-    fig = Figure()
-    ax = fig.subplots()
-
-    ax.plot(x, y)
-
-    img_path = os.path.join(UPLOAD_DIR, "0", f"{unique_file_name}.png")
-    print(img_path)
-
-    fig.savefig(img_path)
-
-    fig = Figure()
-    ax = fig.subplots()
-    x = [1, 2, 3, 4, 5]
-    y = [30, 25, 15, 20, 10]
-
-    ax.plot(x, y)
-
-    img_path = os.path.join(UPLOAD_DIR, "1", f"{unique_file_name}.png")
-    fig.savefig(img_path)
-
-
-    charset = "utf-8"
-    RESULTS[unique_file_name] = {"filename": unique_file_name, "charset" : charset}
-
-
-
-
-    return {"filename": unique_file_name, "charset": charset,  "message": "Upload realizado com sucesso"}
 
 
 HTML_FILE_PATH = "mais_teste.txt"

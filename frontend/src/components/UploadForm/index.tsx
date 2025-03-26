@@ -8,7 +8,8 @@ const UploadForm = () => {
   const [message, setMessage] = useState("");
   const [charset, setCharset] = useState("");
 
-  const navigate = useNavigate();
+  const [state, setState] = useState({});
+
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     
     const files = event.target.files;
@@ -24,14 +25,16 @@ const UploadForm = () => {
     }
 
     const formData = new FormData();
-    formData.append("file", file);  // Nome do campo deve ser "file", igual no backend
 
+    formData.append("file", file);  // Nome do campo deve ser "file", igual no backend
+    
     try {
+
       const response = await api.post("/upload/", formData);
 
-
-      navigate(`results/${response.data.filename}`)
-
+      setState(response.data);
+      console.log(response.data);
+      
       //setMessage(response.data.message);
       //setCharset(response.data.charset);
 
@@ -41,10 +44,22 @@ const UploadForm = () => {
     }
   };
 
+  const calculate = async () => {
+    try {
+      const response = await api.post("/calculate/", state);
+      setMessage(response.data.message);
+      setCharset(response.data.charset);
+    } catch (error) {
+      setMessage("Erro no cálculo");
+      setCharset("");
+    }
+  }
+
   return (
     <div>
       <input type="file" accept=".html" onChange={handleFileChange} />
       <button onClick={handleUpload}>Enviar</button>
+      <button onClick={calculate}>Calcular</button>
       <p>{message}</p>
       <p>{charset}</p>
     </div>
