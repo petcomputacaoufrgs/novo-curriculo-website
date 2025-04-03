@@ -1,3 +1,5 @@
+import base64
+import io
 import re
 import subprocess
 from fastapi import FastAPI, File, HTTPException, UploadFile
@@ -16,6 +18,7 @@ from bs4 import BeautifulSoup
 
 
 from fastapi.responses import FileResponse, HTMLResponse
+from matplotlib import pyplot as plt
 from matplotlib.figure import Figure
 
 
@@ -82,11 +85,14 @@ async def upload_html(file: UploadFile = File(...)):
 
 @app.post(path="/calculate/")
 async def calculate(tabela: list[list[str]]):
-    os.mkdir("1000")
-    file_path = os.path.join(os.path.dirname(__file__), "1000", 'historico.csv')
-    criaHistoricoCSV(tabela, file_path)
-
-    # result = subprocess.run(["ClassHistoryConverter/scripts/update.sh", file_path], capture_output=True, text=True, check=True)
+    nome_unico = generate_unique_filename("1000")
+    
+    os.mkdir(nome_unico)
+    file_path = os.path.join(os.path.dirname(__file__), nome_unico)
+    criaHistoricoCSV(tabela, os.path.join(file_path, "historico.csv"))
+    
+    # Tratar casos de erro
+    result = subprocess.run(["ClassHistoryConverter/scripts/update.sh", file_path], capture_output=True, text=True, check=True)
     print("Tudo certo!")
     return 1
 
@@ -143,6 +149,27 @@ async def modificar_html(disciplinas: list[str]):
 
     except Exception as e:
         return {"erro": str(e)}
+    
+
+
+
+
+
+# Gera um gráfico qualquer e converte sua imagem usando base64
+def generate_plot():
+    fig, ax = plt.subplots()
+    ax.plot([0, 1, 2], [0, 1, 4])
+    buf = io.BytesIO()
+    plt.savefig(buf, format="png")
+    buf.seek(0)
+    return base64.b64encode(buf.read()).decode('utf-8')
+
+# Envia para o front 2 imagens codificadas com base64 em formato de texto
+@app.get("/plots")
+async def get_plots():
+    img1 = generate_plot()
+    img2 = generate_plot()
+    return {"image1": img1, "image2": img2}
     
     
 

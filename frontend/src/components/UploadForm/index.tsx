@@ -1,6 +1,5 @@
 import { useState } from "react";
 import api from "../../api";
-import { useNavigate } from "react-router-dom";
 
 
 const UploadForm = () => {
@@ -47,6 +46,7 @@ const UploadForm = () => {
   const calculate = async () => {
     try {
       const response = await api.post("/calculate/", state);
+      
       setMessage(response.data.message);
       setCharset(response.data.charset);
     } catch (error) {
@@ -55,6 +55,9 @@ const UploadForm = () => {
     }
   }
 
+
+
+  
   return (
     <div>
       <input type="file" accept=".html" onChange={handleFileChange} />
