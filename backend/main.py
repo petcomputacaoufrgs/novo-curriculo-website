@@ -75,53 +75,143 @@ RESULTS = {}
 async def upload_html(file: UploadFile = File(...)):
     """Recebe um arquivo HTML e salva no servidor"""
     
-    print("1")
     # processa o conteúdo do arquivo para retornar os dados dele
     conteudo_arquivo = file.file.read() 
-    print("2")
     dados_extraidos = LeHtml(conteudo_arquivo)
-    print("3")
     return dados_extraidos
+
+    
+
+
+
+
+def plot_funtion(summarised_metrics, completed_index, total_credits, title, file_name):
+    """
+    Gera e salva um gráfico de pizza (donut) mostrando a proporção de créditos completados
+    em relação ao total necessário.
+
+    Parâmetros:
+    - summarised_metrics: DataFrame contendo os valores de créditos completos por categoria.
+    - completed_index: índice no DataFrame para pegar o valor de créditos já completados.
+    - total_credits: total de créditos que precisam ser cumpridos.
+    - title: título do gráfico.
+    - file_name: nome do arquivo em que o gráfico será salvo (formato .png).
+    """
+
+    # Extrai a quantidade de créditos completos e calcula os restantes
+    completed_credits = summarised_metrics.value.iloc[completed_index]
+    remaining_credits = total_credits - completed_credits 
+
+    # Cores do gráfico: azul claro (restantes), azul escuro (completos)
+    colors = ['#C6DCF1', '#202A44']
+
+    # Fatias e legendas do gráfico
+    slices = [remaining_credits, completed_credits]
+    legendas = [
+        f"Créditos restantes: {remaining_credits:.0f}",
+        f"Créditos obtidos: {completed_credits:.0f}"
+    ]
+
+    # Criação da figura
+    fig, ax = plt.subplots(figsize=(8, 6), dpi=100)
+    plt.style.use('fivethirtyeight')  # Estilo visual do gráfico
+
+    # Desenha o gráfico de pizza com buraco no meio (donut chart)
+    ax.pie(slices, shadow=True, wedgeprops=dict(width=0.3), startangle=0, colors=colors)
+
+    # Adiciona a legenda centralizada abaixo do gráfico
+    ax.legend(
+        legendas,
+        loc='upper center',
+        bbox_to_anchor=(0.5, -0.1),
+        frameon=False,
+        ncol=2,
+        fontsize=18
+    )
+
+    # Título do gráfico
+    ax.set_title(title)
+
+    # Ajusta o layout para evitar cortes
+    plt.tight_layout()
+
+    # Mostra a porcentagem de créditos obtidos no centro do gráfico
+    ax.text(0, 0, f"{completed_credits / total_credits * 100 :.1f}%",
+            dict(size=30, ha='center', va='center'))
+
+    # Salva o gráfico como imagem
+    fig.savefig(file_name)
+
+
+
 
 @app.post(path="/calculate/")
 async def calculate(tabela: list[list[str]]):
-    nome_unico = generate_unique_filename("1000")
+    """
+    Recebe uma tabela de histórico via POST, processa os dados,
+    gera gráficos e retorna um histórico organizado por etapas.
     
+    """
+
+    # Cria um diretório temporário para salvar os arquivos gerados
+    nome_unico = generate_unique_filename("1000")
     os.mkdir(nome_unico)
     file_path = os.path.join(os.path.dirname(__file__), nome_unico)
+
+    # Salva o CSV com o histórico enviado
     criaHistoricoCSV(tabela, os.path.join(file_path, "historico.csv"))
-    
-    # Tratar casos de erro
-    result = subprocess.run(["ClassHistoryConverter/scripts/update.sh", file_path], capture_output=True, text=True, check=True)
-    print("Tudo certo!")
-    return 1
+
+    # Executa os scripts
+    # result = subprocess.run(["ClassHistoryConverter/scripts/update.sh", file_path], capture_output=True, text=True, check=True)
+
+    # Carrega os dados resumidos gerados pelo script
+    summarised_metrics = pd.read_csv("summarised_metrics_from_novo_historico_ortodoxo.csv")
+
+    # Define os totais de créditos exigidos para o currículo novo e antigo
+    old_obligatory_credit_demand = 152
+    old_elective_credit_demand = 24
+    new_obligatory_credit_demand = 166
+    new_elective_credit_demand = 20
+
+    # Geração dos gráficos de créditos completados
+    plot_funtion(summarised_metrics, 0, old_obligatory_credit_demand, 'Créditos obrigatórios adquiridos (antigo)', 'figura1.png')
+    plot_funtion(summarised_metrics, 1, new_obligatory_credit_demand, 'Créditos obrigatórios adquiridos (novo)', 'figura2.png')
+    plot_funtion(summarised_metrics, 3, old_elective_credit_demand, 'Créditos eletivos adquiridos (antigo)', 'figura3.png')
+    plot_funtion(summarised_metrics, 4, new_elective_credit_demand, 'Créditos eletivos adquiridos (novo)', 'figura4.png')
+    plot_funtion(summarised_metrics, 6, old_obligatory_credit_demand + old_elective_credit_demand, 'Créditos totais adquiridos (antigo)', 'figura5.png')
+    plot_funtion(summarised_metrics, 7, new_obligatory_credit_demand + new_elective_credit_demand, 'Créditos totais adquiridos (novo)', 'figura6.png')
+
+    # Carrega as tabelas necessárias para fazer o histórico novo (novo histórico, com as cadeiras já liberadas, e nova demanda de cadeiras, com as cadeiras pendentes, e o dicionário de disciplinas)
+    new_history = pd.read_csv("novo_historico_flexivel.csv").drop('cartao', axis=1)
+
+    new_demand = pd.read_csv("new_class_demand_from_novo_historico_flexivel.csv")
+    new_demand = new_demand[new_demand['qt_students_needing_it'] == 1]  # Filtra apenas as que ainda precisam ser feitas
+
+    disciplines = pd.read_csv("disciplinas.csv")
+
+    # Coloca informações das disciplinas nas tabelas de novo histórico e nova demanda (merge no campo codigo)
+    new_history = new_history.merge(disciplines[['codigo', 'etapa', 'nome', 'creditos']], on="codigo", how="left")
+    new_demand = new_demand.merge(disciplines[['codigo', 'creditos']], on="codigo", how="left")
+
+    # Cria coluna vazia para regra associada a cada disciplina pendente
+    new_demand['rule_name'] = None
+
+    # Junta o histórico (cadeiras liberadas) e a demanda (cadeiras pendentes) em uma única tabela
+    history_table = pd.concat([new_demand, new_history], ignore_index=True)
+    history_table = history_table.fillna(0)
+
+    # Organiza o histórico em uma lista de dicionários, separando por etapa
+    history_table_separated = [
+        history_table[history_table['etapa'] == i].to_dict()
+        for i in range(int(history_table['etapa'].max()) + 1)
+    ]
+
+    # TODO: editar diagrama
+
+    # TODO: gerar histórico antigo??????
 
 
-
-@app.get(path="/results/{selectionView}/{filename}")
-async def get_results(selectionView: str, filename: str):
-    """Retorna os dados do arquivo e a url da imagem gerada para o frontend"""
-    result = RESULTS.get(filename, None)
-
-    if result:
-        return {"filename": filename, "charset": result["charset"], "image_url":  f"http://localhost:8000/results/{selectionView}/{filename}/image"}
-    else:
-        return {"error": "Arquivo não encontrado"}
-
-
-@app.get("/results/{selectionView}/{filename}/image")
-async def get_image(selectionView: str, filename: str):
-    """Retorna a imagem gerada para o frontend"""
-
-    img_path = os.path.join(UPLOAD_DIR, selectionView, f"{filename}.png")
-
-
-    if not os.path.exists(img_path):
-        raise HTTPException(status_code=404, detail="Imagem não encontrada")
-
-    return FileResponse(img_path, media_type="image/png")
-
-
+    return history_table_separated
 
 
 

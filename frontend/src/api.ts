@@ -4,7 +4,7 @@ import axios, { AxiosInstance } from 'axios';
 // temos Conversão automática de JSON e Tratamento automático de erros na chamada da requisição
 
 const api:AxiosInstance = axios.create({
-    baseURL: "http://localhost:8001"
+    baseURL: "http://localhost:8000"
 })
 
 export default api;

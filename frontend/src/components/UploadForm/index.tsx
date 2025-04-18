@@ -46,9 +46,9 @@ const UploadForm = () => {
   const calculate = async () => {
     try {
       const response = await api.post("/calculate/", state);
+
+      console.log(response);
       
-      setMessage(response.data.message);
-      setCharset(response.data.charset);
     } catch (error) {
       setMessage("Erro no cálculo");
       setCharset("");
