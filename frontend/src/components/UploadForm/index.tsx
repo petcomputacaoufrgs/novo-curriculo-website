@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import api from "../../api";
 
 
@@ -9,8 +9,10 @@ const UploadForm = () => {
 
   const [state, setState] = useState({});
 
+  const [image, setImage] = useState<string | null>(null);  
+
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    
+
     const files = event.target.files;
     if (files && files.length > 0) {
       setFile(files[0]);
@@ -26,14 +28,14 @@ const UploadForm = () => {
     const formData = new FormData();
 
     formData.append("file", file);  // Nome do campo deve ser "file", igual no backend
-    
+
     try {
 
       const response = await api.post("/upload/", formData);
 
       setState(response.data);
       console.log(response.data);
-      
+
       //setMessage(response.data.message);
       //setCharset(response.data.charset);
 
@@ -46,9 +48,20 @@ const UploadForm = () => {
   const calculate = async () => {
     try {
       const response = await api.post("/calculate/", state);
-
-      console.log(response);
       
+      setImage(response.data["Créditos Obrigatórios (antigo)"]);
+      console.log(response.data);
+
+      // Criar um Blob e carregar no iframe
+      const blob = new Blob([response.data["html"]], { type: "text/html" });
+      const urlBlob = URL.createObjectURL(blob);
+
+      const iframe = document.getElementById("meuIframe");
+            if (iframe) {
+                (iframe as HTMLIFrameElement).src = urlBlob;
+            }
+
+
     } catch (error) {
       setMessage("Erro no cálculo");
       setCharset("");
@@ -57,7 +70,7 @@ const UploadForm = () => {
 
 
 
-  
+
   return (
     <div>
       <input type="file" accept=".html" onChange={handleFileChange} />
@@ -65,7 +78,12 @@ const UploadForm = () => {
       <button onClick={calculate}>Calcular</button>
       <p>{message}</p>
       <p>{charset}</p>
-    </div>
+
+      <iframe style={{width: "100vw", height: "60vh"}} id="meuIframe"></iframe>
+
+
+      {(image ? <img src={`data:image/png;base64,${image}`}></img> : null)}
+    </div >
   );
 };
 

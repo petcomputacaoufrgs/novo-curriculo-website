@@ -85,22 +85,22 @@ async def upload_html(file: UploadFile = File(...)):
 
 
 
-def plot_funtion(summarised_metrics, completed_index, total_credits, title, file_name):
+def plot_function(summarised_metrics, remaining_index, total_credits, title):
     """
     Gera e salva um gráfico de pizza (donut) mostrando a proporção de créditos completados
     em relação ao total necessário.
 
     Parâmetros:
     - summarised_metrics: DataFrame contendo os valores de créditos completos por categoria.
-    - completed_index: índice no DataFrame para pegar o valor de créditos já completados.
+    - remaining_index: índice no DataFrame para pegar o valor de créditos ainda necessários.
     - total_credits: total de créditos que precisam ser cumpridos.
     - title: título do gráfico.
     - file_name: nome do arquivo em que o gráfico será salvo (formato .png).
     """
 
     # Extrai a quantidade de créditos completos e calcula os restantes
-    completed_credits = summarised_metrics.value.iloc[completed_index]
-    remaining_credits = total_credits - completed_credits 
+    remaining_credits = summarised_metrics.value.iloc[remaining_index]
+    completed_credits = total_credits - remaining_credits 
 
     # Cores do gráfico: azul claro (restantes), azul escuro (completos)
     colors = ['#C6DCF1', '#202A44']
@@ -139,8 +139,21 @@ def plot_funtion(summarised_metrics, completed_index, total_credits, title, file
     ax.text(0, 0, f"{completed_credits / total_credits * 100 :.1f}%",
             dict(size=30, ha='center', va='center'))
 
+    # Salva o gráfico em um buffer de memória
+    buf = io.BytesIO()
+
     # Salva o gráfico como imagem
-    fig.savefig(file_name)
+    fig.savefig(buf, format='png')
+
+    buf.seek(0) 
+
+    # Converte a imagem para base64
+    img_base64 = base64.b64encode(buf.read()).decode('utf-8')
+
+    buf.close()  # Fecha o buffer de memória
+
+    return img_base64
+
 
 
 
@@ -159,13 +172,16 @@ async def calculate(tabela: list[list[str]]):
     file_path = os.path.join(os.path.dirname(__file__), nome_unico)
 
     # Salva o CSV com o histórico enviado
-    criaHistoricoCSV(tabela, os.path.join(file_path, "historico.csv"))
 
+    try:
+        criaHistoricoCSV(tabela, os.path.join(file_path, "historico.csv"))
+    except:
+        raise HTTPException(status_code=400, detail="Erro ao criar o histórico.") 
     # Executa os scripts
-    # result = subprocess.run(["ClassHistoryConverter/scripts/update.sh", file_path], capture_output=True, text=True, check=True)
+    result = subprocess.run(["ClassHistoryConverter/scripts/update.sh", file_path], capture_output=True, text=True, check=True)
 
     # Carrega os dados resumidos gerados pelo script
-    summarised_metrics = pd.read_csv("summarised_metrics_from_novo_historico_ortodoxo.csv")
+    summarised_metrics = pd.read_csv(os.path.join(file_path, "summarised_metrics_from_novo_historico_ortodoxo.csv"))
 
     # Define os totais de créditos exigidos para o currículo novo e antigo
     old_obligatory_credit_demand = 152
@@ -173,18 +189,22 @@ async def calculate(tabela: list[list[str]]):
     new_obligatory_credit_demand = 166
     new_elective_credit_demand = 20
 
+
+    # Lista de imagens dos gráficos
+    return_value = {}
+    
     # Geração dos gráficos de créditos completados
-    plot_funtion(summarised_metrics, 0, old_obligatory_credit_demand, 'Créditos obrigatórios adquiridos (antigo)', 'figura1.png')
-    plot_funtion(summarised_metrics, 1, new_obligatory_credit_demand, 'Créditos obrigatórios adquiridos (novo)', 'figura2.png')
-    plot_funtion(summarised_metrics, 3, old_elective_credit_demand, 'Créditos eletivos adquiridos (antigo)', 'figura3.png')
-    plot_funtion(summarised_metrics, 4, new_elective_credit_demand, 'Créditos eletivos adquiridos (novo)', 'figura4.png')
-    plot_funtion(summarised_metrics, 6, old_obligatory_credit_demand + old_elective_credit_demand, 'Créditos totais adquiridos (antigo)', 'figura5.png')
-    plot_funtion(summarised_metrics, 7, new_obligatory_credit_demand + new_elective_credit_demand, 'Créditos totais adquiridos (novo)', 'figura6.png')
+    return_value["Créditos Obrigatórios (antigo)"] = plot_function(summarised_metrics, 0, old_obligatory_credit_demand, 'Créditos obrigatórios adquiridos (antigo)')
+    return_value["Créditos Obrigatórios (novo)"] = plot_function(summarised_metrics, 1, new_obligatory_credit_demand, 'Créditos obrigatórios adquiridos (novo)')
+    return_value["Créditos Eletivos (antigo)"] = plot_function(summarised_metrics, 3, old_elective_credit_demand, 'Créditos eletivos adquiridos (antigo)')
+    return_value["Créditos Eletivos (novo)"] = plot_function(summarised_metrics, 4, new_elective_credit_demand, 'Créditos eletivos adquiridos (novo)')
+    return_value["Créditos Totais (antigo)"] = plot_function(summarised_metrics, 6, old_obligatory_credit_demand + old_elective_credit_demand, 'Créditos totais adquiridos (antigo)')
+    return_value["Créditos Totais (novo)"] = plot_function(summarised_metrics, 7, new_obligatory_credit_demand + new_elective_credit_demand, 'Créditos totais adquiridos (novo)')
 
     # Carrega as tabelas necessárias para fazer o histórico novo (novo histórico, com as cadeiras já liberadas, e nova demanda de cadeiras, com as cadeiras pendentes, e o dicionário de disciplinas)
-    new_history = pd.read_csv("novo_historico_flexivel.csv").drop('cartao', axis=1)
+    new_history = pd.read_csv(os.path.join(file_path,"novo_historico_flexivel.csv")).drop('cartao', axis=1)
 
-    new_demand = pd.read_csv("new_class_demand_from_novo_historico_flexivel.csv")
+    new_demand = pd.read_csv(os.path.join(file_path,"new_class_demand_from_novo_historico_flexivel.csv"))
     new_demand = new_demand[new_demand['qt_students_needing_it'] == 1]  # Filtra apenas as que ainda precisam ser feitas
 
     disciplines = pd.read_csv("disciplinas.csv")
@@ -206,42 +226,51 @@ async def calculate(tabela: list[list[str]]):
         for i in range(int(history_table['etapa'].max()) + 1)
     ]
 
+    return_value["historico"] = history_table_separated
+
     # TODO: editar diagrama
 
-    # TODO: gerar histórico antigo??????
+    HTML_FILE_PATH = "ULTIMO-DIAGRAMA.html"
+    
+    obligatoryClasses = history_table[history_table["etapa"] != 0]
+    alreadyDoneClasses = obligatoryClasses[obligatoryClasses["qt_students_needing_it"] == 0]["nome"]
 
 
-    return history_table_separated
-
-
-
-HTML_FILE_PATH = "mais_teste.txt"
-
-@app.post("/modificar_html")
-async def modificar_html(disciplinas: list[str]):
     try:
         # Ler o arquivo HTML
         with open(HTML_FILE_PATH, "r") as f:
             html_texto = f.read()
-
+                
         # Modificar o conteúdo do HTML
-        for disciplina in disciplinas:
-            teste = re.findall(rf"value=\\&quot;{disciplina}.*?style=.*?(?:(?!mxGeometry).)*?fillColor=.*?mxGeometry", html_texto)
-
-            if len(teste) > 0:
-                substituido = re.sub(r"fillColor=#\w{6}", "fillColor=#000000", teste[0])
-                html_texto = html_texto.replace(teste[0], substituido)
-
+        for disciplina in alreadyDoneClasses:
+            teste = re.findall(rf"{disciplina}.*?style=.*?fillColor=#FFFFFA", html_texto)
             
+            print(teste)
+            print("==========================")
+            if len(teste) > 0:
+                substituido = re.sub(r"fillColor=#\w{6}", "fillColor=red", teste[0])
+                html_texto = html_texto.replace(teste[0], substituido)
+                
+                print(disciplina)
+
+    
+        with open("HTML_MODIFICADO.html", "w") as f:
+            f.write(html_texto)    
 
         # Retornar o HTML modificado como resposta
-        return HTMLResponse(content=html_texto)
+        return_value["html"] = html_texto
 
     except Exception as e:
         return {"erro": str(e)}
     
 
+    # Remove o diretório temporário
+    shutil.rmtree(file_path)
 
+    return return_value
+
+
+    
 
 
 
@@ -254,12 +283,6 @@ def generate_plot():
     buf.seek(0)
     return base64.b64encode(buf.read()).decode('utf-8')
 
-# Envia para o front 2 imagens codificadas com base64 em formato de texto
-@app.get("/plots")
-async def get_plots():
-    img1 = generate_plot()
-    img2 = generate_plot()
-    return {"image1": img1, "image2": img2}
     
     
 
