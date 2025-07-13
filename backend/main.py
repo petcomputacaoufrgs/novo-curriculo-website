@@ -155,6 +155,12 @@ def plot_function(summarised_metrics, remaining_index, total_credits, title):
     return img_base64
 
 
+@app.get(path="/api/regrasEquivalencia")
+async def get_regras_equivalencia():
+    regras = pd.read_csv("ClassHistoryConverter/scripts/INF_UFRGS_DATA/equivalencias_completas.csv")
+
+    regras = regras.sort_values(by=["nome_fez"])
+    return regras.to_dict(orient="records")
 
 
 
@@ -189,6 +195,7 @@ async def calculate(tabela: list[list[str]]):
     new_obligatory_credit_demand = 166
     new_elective_credit_demand = 20
 
+    print("Teste")
 
     # Lista de imagens dos gráficos
     return_value = {}
@@ -201,11 +208,17 @@ async def calculate(tabela: list[list[str]]):
     return_value["Créditos Totais (antigo)"] = plot_function(summarised_metrics, 6, old_obligatory_credit_demand + old_elective_credit_demand, 'Créditos totais adquiridos (antigo)')
     return_value["Créditos Totais (novo)"] = plot_function(summarised_metrics, 7, new_obligatory_credit_demand + new_elective_credit_demand, 'Créditos totais adquiridos (novo)')
 
+    print("Teste2")
+
+
     # Carrega as tabelas necessárias para fazer o histórico novo (novo histórico, com as cadeiras já liberadas, e nova demanda de cadeiras, com as cadeiras pendentes, e o dicionário de disciplinas)
     new_history = pd.read_csv(os.path.join(file_path,"novo_historico_flexivel.csv")).drop('cartao', axis=1)
 
     new_demand = pd.read_csv(os.path.join(file_path,"new_class_demand_from_novo_historico_flexivel.csv"))
     new_demand = new_demand[new_demand['qt_students_needing_it'] == 1]  # Filtra apenas as que ainda precisam ser feitas
+
+    print("Teste3")
+
 
     disciplines = pd.read_csv("disciplinas.csv")
 
@@ -219,6 +232,8 @@ async def calculate(tabela: list[list[str]]):
     # Junta o histórico (cadeiras liberadas) e a demanda (cadeiras pendentes) em uma única tabela
     history_table = pd.concat([new_demand, new_history], ignore_index=True)
     history_table = history_table.fillna(0)
+
+    print("Teste4")
 
     # Organiza o histórico em uma lista de dicionários, separando por etapa
     history_table_separated = [
@@ -265,7 +280,7 @@ async def calculate(tabela: list[list[str]]):
     
 
     # Remove o diretório temporário
-    shutil.rmtree(file_path)
+    #shutil.rmtree(file_path)
 
     return return_value
 

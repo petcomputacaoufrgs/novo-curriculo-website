@@ -1,0 +1,18 @@
+div .OuterTranscriptBox{
+    margin: 5%;
+    border-radius: 15px;
+    background-color: rgba(122, 142, 167, 1);
+    padding: 10px;
+    height: 400px;
+    width: auto;
+}
+
+div .InnerTranscriptBox{
+    border-radius: 10px;
+    background-color: #FEFEFE;
+    padding: 20px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
