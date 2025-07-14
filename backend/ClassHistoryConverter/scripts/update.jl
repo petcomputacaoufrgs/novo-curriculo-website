@@ -171,10 +171,9 @@ function main(ARGS = ARGS)
 	CLASSES_CSV        = joinpath(@__DIR__, "INF_UFRGS_DATA/disciplinas.csv")
 	FLEXIBLE_RULES_CSV = joinpath(@__DIR__, "INF_UFRGS_DATA/cenario_flexivel.csv")
 	ORTHODOX_RULES_CSV = joinpath(@__DIR__, "INF_UFRGS_DATA/cenario_ortodoxo.csv")
-	HISTORY_CSV        = joinpath(@__DIR__, "INF_UFRGS_DATA/historico.csv")
 	MIN_CRED_OPT_CSV   = joinpath(@__DIR__, "INF_UFRGS_DATA/minimo_eletivo.csv")
 
-	OUTPUT_DIR = "output"
+	OUTPUT_DIR = "outputTemp"
 
 	if !(length(ARGS) ∈ (1, 5, 6))
 		println("Usage: julia $(basename(@__FILE__)) classes.csv flexible_rules.csv orthodox_rules.csv history.csv [minimo_eletivo.csv]")
@@ -184,6 +183,7 @@ function main(ARGS = ARGS)
 
 	OUTPUT_DIR = ARGS[1]
 
+	HISTORY_CSV        = joinpath(OUTPUT_DIR, "historico.csv")
 
 	if length(ARGS) >= 5
 		CLASSES_CSV = ARGS[2]

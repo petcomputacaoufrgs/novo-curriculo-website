@@ -17,7 +17,8 @@ def LeHtml(conteudo_html):
     parsed_html = BeautifulSoup(conteudo_html, 'html.parser')
     print("Arquivo HTML lido com sucesso.")
     semestres, nomeDisciplinas, codigos = extraiDados(parsed_html)
-    dados = [[semestres[i], nomeDisciplinas[i], codigos[i]] for i in range(len(semestres))]
+    dados = [[semestres[i], nomeDisciplinas[i], codigos[i]] for i in range(len(semestres)) if codigos[i] != "Not Found"]
+
     return dados
     #criaHistoricoCSV(semestres, nomeDisciplinas, codDisciplinas)
 

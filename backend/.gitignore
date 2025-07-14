@@ -1,2 +1,4 @@
 /uploads/*
 /INF_UFRGS_DATA/*
+myenv
+__pycache__/*
