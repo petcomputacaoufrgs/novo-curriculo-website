@@ -1,15 +1,20 @@
 import { useRef, useState } from "react";
 import api from "../../api";
 
+import { FrontData } from "../../types";
+import Overview from "../Overview";
+import Tabs from "../Tabs";
 
 const UploadForm = () => {
   const [file, setFile] = useState<File | null>(null);
   const [message, setMessage] = useState("");
   const [charset, setCharset] = useState("");
 
-  const [state, setState] = useState({});
+  const [state, setState] = useState(null);
 
-  const [image, setImage] = useState<string | null>(null);  
+  const [frontData, setFrontData] = useState<null | FrontData>(null);
+
+
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 
@@ -49,7 +54,8 @@ const UploadForm = () => {
     try {
       const response = await api.post("/calculate/", state);
       
-      setImage(response.data["Créditos Obrigatórios (antigo)"]);
+      setFrontData(response.data);
+
       console.log(response.data);
 
       // Criar um Blob e carregar no iframe
@@ -69,8 +75,8 @@ const UploadForm = () => {
   }
 
 
-
-
+  console.log(frontData);
+  
   return (
     <div>
       <input type="file" accept=".html" onChange={handleFileChange} />
@@ -82,7 +88,9 @@ const UploadForm = () => {
       <iframe style={{width: "100vw", height: "60vh"}} id="meuIframe"></iframe>
 
 
-      {(image ? <img src={`data:image/png;base64,${image}`}></img> : null)}
+
+        
+      {frontData && <Tabs frontData={frontData}></Tabs>}
     </div >
   );
 };

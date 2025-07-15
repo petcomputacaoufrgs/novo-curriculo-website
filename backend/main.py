@@ -136,7 +136,9 @@ def plot_function(summarised_metrics, remaining_index, total_credits, title):
     plt.tight_layout()
 
     # Mostra a porcentagem de créditos obtidos no centro do gráfico
-    ax.text(0, 0, f"{completed_credits / total_credits * 100 :.1f}%",
+    percent_credits_done = completed_credits / total_credits * 100
+
+    ax.text(0, 0, f"{percent_credits_done:.1f}%",
             dict(size=30, ha='center', va='center'))
 
     # Salva o gráfico em um buffer de memória
@@ -152,7 +154,7 @@ def plot_function(summarised_metrics, remaining_index, total_credits, title):
 
     buf.close()  # Fecha o buffer de memória
 
-    return img_base64
+    return img_base64, [total_credits, completed_credits]
 
 
 @app.get(path="/api/regrasEquivalencia")
@@ -199,14 +201,19 @@ async def calculate(tabela: list[list[str]]):
 
     # Lista de imagens dos gráficos
     return_value = {}
-    
+
+    return_value["images"] = {}
+    return_value["summarized_metrics"] = {}
+
     # Geração dos gráficos de créditos completados
-    return_value["Créditos Obrigatórios (antigo)"] = plot_function(summarised_metrics, 0, old_obligatory_credit_demand, 'Créditos obrigatórios adquiridos (antigo)')
-    return_value["Créditos Obrigatórios (novo)"] = plot_function(summarised_metrics, 1, new_obligatory_credit_demand, 'Créditos obrigatórios adquiridos (novo)')
-    return_value["Créditos Eletivos (antigo)"] = plot_function(summarised_metrics, 3, old_elective_credit_demand, 'Créditos eletivos adquiridos (antigo)')
-    return_value["Créditos Eletivos (novo)"] = plot_function(summarised_metrics, 4, new_elective_credit_demand, 'Créditos eletivos adquiridos (novo)')
-    return_value["Créditos Totais (antigo)"] = plot_function(summarised_metrics, 6, old_obligatory_credit_demand + old_elective_credit_demand, 'Créditos totais adquiridos (antigo)')
-    return_value["Créditos Totais (novo)"] = plot_function(summarised_metrics, 7, new_obligatory_credit_demand + new_elective_credit_demand, 'Créditos totais adquiridos (novo)')
+    return_value["images"]["obrigatorios_antigos"], return_value["summarized_metrics"]["obrigatorios_antigos"] = plot_function(summarised_metrics, 0, old_obligatory_credit_demand, 'Créditos obrigatórios adquiridos (antigo)')
+    return_value["images"]["obrigatorios_novos"], return_value["summarized_metrics"]["obrigatorios_novos"] = plot_function(summarised_metrics, 1, new_obligatory_credit_demand, 'Créditos obrigatórios adquiridos (novo)')
+    return_value["images"]["eletivos_antigos"], return_value["summarized_metrics"]["eletivos_antigos"] = plot_function(summarised_metrics, 3, old_elective_credit_demand, 'Créditos eletivos adquiridos (antigo)')
+    return_value["images"]["eletivos_novos"], return_value["summarized_metrics"]["eletivos_novos"] = plot_function(summarised_metrics, 4, new_elective_credit_demand, 'Créditos eletivos adquiridos (novo)')
+    return_value["images"]["total_antigos"], return_value["summarized_metrics"]["total_antigos"] = plot_function(summarised_metrics, 6, old_obligatory_credit_demand + old_elective_credit_demand, 'Créditos totais adquiridos (antigo)')
+    return_value["images"]["total_novos"], return_value["summarized_metrics"]["total_novos"] = plot_function(summarised_metrics, 7, new_obligatory_credit_demand + new_elective_credit_demand, 'Créditos totais adquiridos (novo)')
+
+
 
     print("Teste2")
 
@@ -231,7 +238,8 @@ async def calculate(tabela: list[list[str]]):
 
     # Junta o histórico (cadeiras liberadas) e a demanda (cadeiras pendentes) em uma única tabela
     history_table = pd.concat([new_demand, new_history], ignore_index=True)
-    history_table = history_table.fillna(0)
+    history_table["qt_students_needing_it"] = history_table["qt_students_needing_it"].fillna(0)
+    history_table["rule_name"] = history_table["rule_name"].fillna("")
 
     print("Teste4")
 
@@ -240,6 +248,11 @@ async def calculate(tabela: list[list[str]]):
         history_table[history_table['etapa'] == i].to_dict()
         for i in range(int(history_table['etapa'].max()) + 1)
     ]
+
+    for line in history_table_separated:
+        line.pop('etapa', None)
+        print(line["rule_name"])
+
 
     return_value["historico"] = history_table_separated
 

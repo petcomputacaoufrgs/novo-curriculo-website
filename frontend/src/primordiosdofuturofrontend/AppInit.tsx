@@ -36,6 +36,7 @@ const AppInit = () => {
         <Tabs />
         <Footer />
       </ThemeProvider>
+
     </>
   )
 }
