@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import api from "../../api";
 
 import { FrontData } from "../../types";
@@ -27,6 +27,7 @@ const UploadForm = () => {
       return 3;
     if(window.innerWidth >= 300)
       return 4;
+    return 2;
   }
   const [show, setShow] = useState(getWhichGraphShow())
 
@@ -122,7 +123,7 @@ const UploadForm = () => {
       {show == 3 && <iframe style={{width: "600px", height: "60vh"}} id="meuIframe" src={blobUrl}></iframe>}
       {show == 4 && <iframe style={{width: "300px", height: "60vh"}} id="meuIframe" src={blobUrl}></iframe>}
         
-      {frontData && <Tabs frontData={frontData}></Tabs>}
+      {frontData && <Tabs frontData={frontData} blobUrl={blobUrl} show={show}></Tabs>}
 
     </div >
   );

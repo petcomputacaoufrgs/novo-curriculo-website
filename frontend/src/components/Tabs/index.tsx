@@ -2,12 +2,15 @@ import React, { useState } from 'react'
 import { AbaContainer, Aba, Conteudo } from './styled'
 import { FrontData } from '../../types'
 import Overview from '../Overview';
+import Diagram from '../Diagram';
 
 interface ITabs {
   frontData?: FrontData;
+  blobUrl: string;
+  show: number; 
 }
 
-const Tabs: React.FC<ITabs> = ({frontData}: ITabs) => {
+const Tabs: React.FC<ITabs> = ({frontData, blobUrl, show}: ITabs) => {
   const [abaAtiva, setAbaAtiva] = useState<'overview' | 'diagramas' | 'historico' | 'regras'>('overview')
 
   return (
@@ -21,7 +24,7 @@ const Tabs: React.FC<ITabs> = ({frontData}: ITabs) => {
 
       <Conteudo>
         {abaAtiva === 'overview' && frontData && <Overview images={frontData.images} metrics={frontData.summarized_metrics}/>}
-        {abaAtiva === 'diagramas' && <div>Conteúdo da aba "Diagramas"</div>}
+        {abaAtiva === 'diagramas' && <Diagram blobUrl={blobUrl} show={show} />}
         {abaAtiva === 'historico' && <div>Conteúdo da aba "Histórico Novo"</div>}
         {abaAtiva === 'regras' && <div>Conteúdo da aba "Regras de Transição"</div>}
       </Conteudo>

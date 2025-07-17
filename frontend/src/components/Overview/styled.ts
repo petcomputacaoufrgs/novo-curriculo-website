@@ -7,6 +7,14 @@ export const Container = styled.div`
   padding: 30px;
   gap: 64px;
 
+  border-radius: 10px;
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: ${({ theme }) => theme.background};
+  color: ${({ theme }) => theme.text};
+
+
   @media(max-width: 1430px){
     width: 100%;
   

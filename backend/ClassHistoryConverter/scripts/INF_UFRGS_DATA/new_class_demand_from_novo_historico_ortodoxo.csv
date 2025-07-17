@@ -1,0 +1,39 @@
+etapa,codigo,nome,qt_students_needing_it
+1,PC,Pensamento Computacional,0
+1,ALP,Algoritmos e Programação,0
+1,IntroCIC,Introdução à Ciência da Computação,0
+1,Calc1,Cálculo e Geometria Analítica I - A,0
+1,Logica,Lógica e Correção de Programas,0
+2,VerifTeste,Verificação e Teste de Software,0
+2,MatDisc,Matemática Discreta,0
+2,Arq,Arquitetura de Computadores,0
+2,ED,Estruturas de Dados,0
+2,Calc2,Cálculo e Geometria Analítica II - A,0
+2,ProbEst,Probabilidade e Estatística,1
+3,TeoComp1,Teoria da Computação I - Linguagens Formais e Autômatos,0
+3,CD,Circuitos Digitais,0
+3,PAA1,Projeto e Análise de Algoritmos I,0
+3,TCP,Desenvolvimento de Software de Qualidade (ex-TCP),0
+3,BD,Fundamentos de Bancos de Dados,0
+4,TeoComp2,Teoria da Computação II - Computabilidade e Complexidade,0
+4,PAA2,Projeto e Análise de Algoritmos II,0
+4,OrgComp,Organização de Computadores,0
+4,ES,Engenharia de Software,0
+4,IHC,Interação Humano-Computador e UX,0
+4,AlgLin,Álgebra Linear,1
+5,SisOp,Sistemas Operacionais,0
+5,IA,Inteligência Artificial,0
+5,CC,Computação Científica,0
+5,CGVis,Computação Gráfica e Visualização,0
+5,ProjCI,Projeto em Ciência e Inovação,1
+6,Redes,Redes de Computadores,0
+6,PIVC,Processamento de Imagens e Visão Computacional,0
+6,LP1,Linguagens de Programação I,0
+6,ML,Aprendizado de Máquina,1
+6,ProgPar,Programação Paralela,1
+7,PAA3,Projeto e Análise de Algoritmos III,0
+7,LP2,Linguagens de Programação II,0
+7,Seg,Segurança de Sistemas e da Informação,1
+7,SDTF,Sistemas Distribuídos e Tolerantes a Falhas,1
+7,PLN,Processamento de Linguagem Natural,1
+8,ProjInt,Projeto Integrador,1
