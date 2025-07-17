@@ -5,7 +5,7 @@ import { FrontData } from "../../types";
 import Tabs from "../Tabs";
 import './UploadForm.css'
 
-const UploadForm = () => {
+const UploadForm2 = () => {
   const [file, setFile] = useState<File | null>(null);
   const [message, setMessage] = useState("");
   const [charset, setCharset] = useState("");
@@ -18,6 +18,7 @@ const UploadForm = () => {
 
 
   const [windowSize, setWindowSize] = useState(window.innerWidth);
+
 
   const getWhichGraphShow = () => {
     if(window.innerWidth >= 1500)
@@ -107,13 +108,20 @@ const UploadForm = () => {
     }
   }
 
+  const handleConvert = async () => {
+    await handleUpload();
+    await calculate();
+  };
+
   console.log(blobUrl);
 
   return (
     <div>
-      <input type="file" accept=".html" onChange={handleFileChange} />
-      <button onClick={handleUpload}>Enviar</button>
-      <button onClick={calculate}>Calcular</button>
+      <label className = "load-history">
+        <input type="file" accept=".html" onChange={handleFileChange} style = {{display: "none"}} />
+        Carregar Histórico
+      </label>
+      <button className = "convert-button" onClick={handleConvert}>Converter</button>
       <p>{message}</p>
       <p>{charset}</p>
 
@@ -129,4 +137,4 @@ const UploadForm = () => {
   );
 };
 
-export default UploadForm;
+export default UploadForm2;

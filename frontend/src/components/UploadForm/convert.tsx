@@ -5,7 +5,7 @@ import { FrontData } from "../../types";
 import Tabs from "../Tabs";
 import './UploadForm.css'
 
-const UploadForm = () => {
+const ConvertButton = () => {
   const [file, setFile] = useState<File | null>(null);
   const [message, setMessage] = useState("");
   const [charset, setCharset] = useState("");
@@ -18,6 +18,7 @@ const UploadForm = () => {
 
 
   const [windowSize, setWindowSize] = useState(window.innerWidth);
+
 
   const getWhichGraphShow = () => {
     if(window.innerWidth >= 1500)
@@ -45,15 +46,6 @@ const UploadForm = () => {
         setShow(getWhichGraphShow());
         return () => {};
       }, [windowSize]);
-
-
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-
-    const files = event.target.files;
-    if (files && files.length > 0) {
-      setFile(files[0]);
-    }
-  };
 
   const handleUpload = async () => {
     if (!file) {
@@ -107,26 +99,21 @@ const UploadForm = () => {
     }
   }
 
+  const handleConvert = async () => {
+    await handleUpload();
+    await calculate();
+  };
+
   console.log(blobUrl);
 
   return (
     <div>
-      <input type="file" accept=".html" onChange={handleFileChange} />
-      <button onClick={handleUpload}>Enviar</button>
-      <button onClick={calculate}>Calcular</button>
-      <p>{message}</p>
-      <p>{charset}</p>
-
-      {/* Segue uma gambiarra das brabas aqui. Pelo menos é estável e funciona */}
-      {show == 1 && <iframe style={{width: "1500px", height: "60vh"}} id="meuIframe" src={blobUrl}></iframe>}
-      {show == 2 && <iframe style={{width: "1000px", height: "60vh"}} id="meuIframe" src={blobUrl}></iframe>}
-      {show == 3 && <iframe style={{width: "600px", height: "60vh"}} id="meuIframe" src={blobUrl}></iframe>}
-      {show == 4 && <iframe style={{width: "300px", height: "60vh"}} id="meuIframe" src={blobUrl}></iframe>}
-        
-      {frontData && <Tabs frontData={frontData}></Tabs>}
-
-    </div >
+        <div className = "center-converter">
+            <button className = "convert-button" onClick={handleConvert}>Converter</button>
+        </div>
+        <p>{message}</p>
+    </div>  
   );
 };
 
-export default UploadForm;
+export default ConvertButton;
