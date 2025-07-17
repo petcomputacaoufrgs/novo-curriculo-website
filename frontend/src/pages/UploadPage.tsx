@@ -9,7 +9,7 @@ export function UploadPage() {
   return (
     
     <div className="card">
-      <UploadForm />
+      <UploadForm2 />
     </div>
     
   )

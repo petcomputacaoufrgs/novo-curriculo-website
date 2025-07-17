@@ -21,6 +21,26 @@
   border-radius: 8px;
   cursor: pointer;
   font-weight: bold;
+  align-items: center;
+  justify-content: center;
+}
+
+.convert-button:hover{
+    transform: scale(1.05);
+    transition: all 0.3s ease;
+}
+
+.load-history:hover{
+    transform: scale(1.05);
+    transition: all 0.3s ease;
+}
+
+.load-history:active{
+    transform: scale(0.95);
+}
+
+.convert-button:active{
+    transform: scale(0.95);
 }
 
 .center-button{
