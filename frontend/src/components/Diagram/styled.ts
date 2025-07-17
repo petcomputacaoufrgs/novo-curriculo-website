@@ -11,5 +11,7 @@ export const Container = styled.div`
   color: ${({ theme }) => theme.text};
   justify-content: center;
   align-items: center;
-
+  iframe{
+    border: none;
+  }
 `;
