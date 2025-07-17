@@ -1,131 +1,135 @@
 tipo_regra,nome_fez,carater_fez,creditos_fez,nome_obtem,carater_obtem,creditos_obtem
-mapeamento não direto,EMPREENDIMENTO EM INFORMÁTICA,Obrigatória,4,ANTIGA EMPREENDIMENTO EM INFORMÁTICA,Eletiva,4
-mapeamento não direto,CLASSIFICAÇÃO E PESQUISA DE DADOS,Obrigatória,4,ANTIGA CLASSIFICAÇÃO E PESQUISA DE DADOS,Eletiva,4
-mapeamento não direto,ARQUITETURA E ORGANIZAÇÃO DE COMPUTADORES II,Obrigatória,4,ARQUITETURA E ORGANIZAÇÃO DE COMPUTADORES II,Eletiva,4
-mapeamento direto,ECONOMIA A,Eletiva,4,Economia A,Eletiva,4
-mapeamento direto,ESPECIFICAÇÃO FORMAL N,Eletiva,4,Especificacao Formal N,Eletiva,4
-mapeamento direto,PROTOCOLOS DE COMUNICAÇÃO,Eletiva,4,Protocolos de Comunicacao,Eletiva,4
-mapeamento direto,COMUNICAÇÃO DE DADOS,Eletiva,4,Comunicacao de Dados,Eletiva,4
-mapeamento direto,PROJETO DE BANCO DE DADOS,Eletiva,4,Projeto de Banco de Dados,Eletiva,4
-mapeamento não direto,PROGRAMAÇÃO DISTRIBUÍDA E PARALELA,Eletiva,4,Programação Paralela,Obrigatória,4
-mapeamento direto,COMPUTAÇÃO GRÁFICA,Eletiva,4,Computacao Grafica,Eletiva,4
-mapeamento direto,SISTEMAS DE BANCO DE DADOS DISTRIBUÍDOS,Eletiva,4,Sistemas de Banco de Dados Distribuidos,Eletiva,4
-mapeamento direto,GERÊNCIA E APLICAÇÕES EM REDES,Eletiva,4,Gerencia e Aplicacoes em Redes,Eletiva,4
-mapeamento direto,GERÊNCIA E ADMINISTRAÇÃO DE PROJETOS,Eletiva,4,Gerencia e Administracao de Projetos,Eletiva,4
-mapeamento não direto,APRENDIZADO DE MÁQUINA,Eletiva,4,Aprendizado de Máquina,Obrigatória,4
-mapeamento direto,SISTEMAS OPERACIONAIS DISTRIBUÍDOS E DE REDES,Eletiva,4,Sistemas Operacionais Distribuidos e de Redes,Eletiva,4
-mapeamento direto,PROJETO EM COMPUTAÇÃO GRÁFICA,Eletiva,4,Projeto em Computacao Grafica,Eletiva,4
-mapeamento direto,PROJETO DE HIPERDOCUMENTOS,Eletiva,4,Projeto de Hiperdocumentos,Eletiva,4
-mapeamento direto,LABORATÓRIO DE SISTEMA DE SOFTWARE,Eletiva,4,Laboratorio de Sistema de Software,Eletiva,4
-mapeamento direto,ARQUITETURA E DESEMPENHO DE BANCO DE DADOS,Eletiva,4,Arquitetura e Desempenho de Banco de Dados,Eletiva,4
-mapeamento direto,FUNDAMENTOS DE VISÃO COMPUTACIONAL,Eletiva,4,Fundamentos de Visao Computacional,Eletiva,4
-mapeamento direto,ROBÓTICA II,Eletiva,4,Robotica Ii,Eletiva,4
-mapeamento direto,COMPUTAÇÃO EVOLUTIVA,Eletiva,4,Computacao Evolutiva,Eletiva,4
-mapeamento direto,SISTEMAS ESPECIALISTAS N,Eletiva,4,Sistemas Especialistas N,Eletiva,4
-mapeamento direto,HISTÓRIA DA COMPUTAÇÃO,Eletiva,4,Historia da Computacao,Eletiva,4
-mapeamento direto,INTERAÇÃO HOMEM-COMPUTADOR,Obrigatória,4,Interação Humano-Computador e UX,Obrigatória,4
-mapeamento não direto,SEGURANÇA EM SISTEMAS DE COMPUTAÇÃO,Eletiva,4,Segurança de Sistemas e da Informação,Obrigatória,4
-mapeamento não direto,FUNDAMENTOS DE PROCESSAMENTO DE IMAGENS,Obrigatória,4,Processamento de Imagens e Visão Computacional,Obrigatória,4
-mapeamento não direto,FUNDAMENTOS DE COMPUTAÇÃO GRÁFICA,Obrigatória,4,Computação Gráfica e Visualização,Obrigatória,4
-mapeamento direto,INTELIGÊNCIA ARTIFICIAL,Obrigatória,4,Inteligência Artificial,Obrigatória,4
-mapeamento direto,INTRODUÇÃO À PESQUISA EM INFORMÁTICA,Eletiva,2,Introducao A Pesquisa em Informatica,Eletiva,2
-mapeamento não direto,TÓPICOS ESPECIAIS EM ENGENHARIA DE COMPUTAÇÃO I,Eletiva,4,Processamento de Linguagem Natural,Obrigatória,4
-mapeamento direto,TÓPICOS ESPECIAIS EM ENGENHARIA DE COMPUTAÇÃO IV,Eletiva,2,TOPICOS ESPECIAIS EM ENGENHARIA DE COMPUTACAO IV,Eletiva,2
-mapeamento direto,TÓPICOS ESPECIAIS EM COMPUTAÇÃO VII,Eletiva,4,TOPICOS ESPECIAIS EM COMPUTACAO VII,Eletiva,4
-mapeamento direto,TÓPICOS ESPECIAIS EM COMPUTAÇÃO VIII,Eletiva,4,TOPICOS ESPECIAIS EM COMPUTACAO VIII,Eletiva,4
-mapeamento direto,DESAFIOS DE PROGRAMAÇÃO,Eletiva,4,Desafios de Programacao,Eletiva,4
-mapeamento não direto,CIRCUITOS DIGITAIS,Obrigatória,4,Circuitos Digitais,Obrigatória,6
-mapeamento direto,SISTEMAS EMBARCADOS,Eletiva,4,Sistemas Embarcados,Eletiva,4
-mapeamento direto,TÓPICOS ESPECIAIS EM COMPUTAÇÃO XVIII,Eletiva,4,TOPICOS ESPECIAIS EM COMPUTACAO XVIII,Eletiva,4
-mapeamento direto,TÓPICOS ESPECIAIS EM COMPUTAÇÃO XVII,Eletiva,2,TOPICOS ESPECIAIS EM COMPUTACAO XVII,Eletiva,2
-mapeamento direto,TÓPICOS ESPECIAIS EM COMPUTAÇÃO XVI,Eletiva,2,TOPICOS ESPECIAIS EM COMPUTACAO XVI,Eletiva,2
-mapeamento direto,TÓPICOS ESPECIAIS EM COMPUTAÇÃO XII,Eletiva,4,TOPICOS ESPECIAIS EM COMPUTACAO XII,Eletiva,4
-mapeamento direto,TÓPICOS ESPECIAIS EM COMPUTAÇÃO XI,Eletiva,2,TOPICOS ESPECIAIS EM COMPUTACAO XI,Eletiva,2
-mapeamento direto,TÓPICOS ESPECIAIS EM COMPUTAÇÃO X,Eletiva,2,TOPICOS ESPECIAIS EM COMPUTACAO X,Eletiva,2
-mapeamento direto,TÓPICOS ESPECIAIS EM COMPUTAÇÃO XXII,Eletiva,2,TOPICOS ESPECIAIS EM COMPUTACAO XXII,Eletiva,2
-mapeamento direto,TÓPICOS ESPECIAIS EM COMPUTAÇÃO XXIII,Eletiva,2,TOPICOS ESPECIAIS EM COMPUTACAO XXIII,Eletiva,2
-mapeamento direto,TÓPICOS ESPECIAIS EM COMPUTAÇÃO XXIV,Eletiva,4,TOPICOS ESPECIAIS EM COMPUTACAO XXIV,Eletiva,4
-mapeamento direto,TÓPICOS ESPECIAIS EM COMPUTAÇÃO XXIX,Eletiva,2,TOPICOS ESPECIAIS EM COMPUTACAO XXIX,Eletiva,2
-mapeamento direto,TÓPICOS ESPECIAIS EM COMPUTAÇÃO XXX,Eletiva,2,TOPICOS ESPECIAIS EM COMPUTACAO XXX,Eletiva,2
-mapeamento direto,TÓPICOS ESPECIAIS EM COMPUTAÇÃO XXXI,Eletiva,2,TOPICOS ESPECIAIS EM COMPUTACAO XXXI,Eletiva,2
-mapeamento direto,TÓPICOS ESPECIAIS EM COMPUTAÇÃO XXXII,Eletiva,2,TOPICOS ESPECIAIS EM COMPUTACAO XXXII,Eletiva,2
-mapeamento não direto,INTRODUÇÃO À ARQUITETURA DE COMPUTADORES,Obrigatória,4,Introdução à Ciência da Computação,Obrigatória,4
-mapeamento não direto,ARQUITETURA E ORGANIZAÇÃO DE COMPUTADORES I,Obrigatória,4,Arquitetura de Computadores,Obrigatória,4
-mapeamento direto,ORGANIZAÇÃO DE COMPUTADORES B,Obrigatória,4,Organização de Computadores,Obrigatória,4
-mapeamento não direto,TÉCNICAS DE CONSTRUÇÃO DE PROGRAMAS,Obrigatória,4,Desenvolvimento de Software de Qualidade (ex-TCP),Obrigatória,4
-mapeamento não direto,MODELOS DE LINGUAGEM DE PROGRAMAÇÃO,Obrigatória,4,Modelos de Linguagem de Programacao,Eletiva,4
-mapeamento direto,ENGENHARIA DE SOFTWARE N,Obrigatória,4,Engenharia de Software,Obrigatória,4
-mapeamento direto,COMPUTADOR E SOCIEDADE,Eletiva,4,Computador e Sociedade,Eletiva,4
-mapeamento direto,SISTEMAS OPERACIONAIS I N,Obrigatória,4,Sistemas Operacionais,Obrigatória,4
-mapeamento direto,FUNDAMENTOS DE BANCO DE DADOS,Obrigatória,4,Fundamentos de Bancos de Dados,Obrigatória,4
-mapeamento direto,AVALIAÇÃO DE DESEMPENHO,Eletiva,4,Avaliacao de Desempenho,Eletiva,4
-mapeamento não direto,COMPILADORES,Obrigatória,4,Linguagens de Programação II,Obrigatória,4
-mapeamento não direto,SISTEMAS OPERACIONAIS II N,Obrigatória,4,Sistemas Distribuídos e Tolerantes a Falhas,Obrigatória,4
-mapeamento não direto,REDES DE COMPUTADORES N,Obrigatória,6,Redes de Computadores,Obrigatória,4
-mapeamento direto,SISTEMAS DIGITAIS PARA COMPUTADORES A,Eletiva,4,Sistemas Digitais para Computadores A,Eletiva,4
-mapeamento direto,TÓPICOS ESPECIAIS EM COMPUTAÇÃO I,Eletiva,2,TOPICOS ESPECIAIS EM COMPUTACAO I,Eletiva,2
-mapeamento direto,TÓPICOS ESPECIAIS EM COMPUTAÇÃO II,Eletiva,2,TOPICOS ESPECIAIS EM COMPUTACAO II,Eletiva,2
-mapeamento direto,CONCEPÇÃO DE CIRCUITOS INTEGRADOS I,Eletiva,4,Concepcao de Circuitos Integrados I,Eletiva,4
-mapeamento direto,TÓPICOS ESPECIAIS EM COMPUTAÇÃO III,Eletiva,2,TOPICOS ESPECIAIS EM COMPUTACAO III,Eletiva,2
-mapeamento direto,ARQUITETURAS AVANÇADAS DE COMPUTADORES,Eletiva,4,Arquiteturas Avancadas de Computadores,Eletiva,4
-mapeamento direto,TÓPICOS ESPECIAIS EM COMPUTAÇÃO IV,Eletiva,2,TOPICOS ESPECIAIS EM COMPUTACAO IV,Eletiva,2
-mapeamento direto,ALGORÍTMOS E PROGRAMAÇÃO - CIC,Obrigatória,6,Algoritmos e Programação,Obrigatória,6
-mapeamento direto,ESTRUTURAS DE DADOS,Obrigatória,4,Estruturas de Dados,Obrigatória,4
-mapeamento direto,CAD PARA SISTEMAS DIGITAIS,Eletiva,4,Cad para Sistemas Digitais,Eletiva,4
-mapeamento direto,FUNDAMENTOS DE TOLERÂNCIA A FALHAS,Obrigatória,4,Fundamentos de Tolerancia A Falhas,Eletiva,4
-mapeamento direto,FOTOGRAFIA COMPUTACIONAL,Eletiva,4,Fotografia Computacional,Eletiva,4
-mapeamento direto,TESTE DE SOFTWARE,Eletiva,4,Teste de Software,Eletiva,4
-mapeamento direto,MÉTODOS ÁGEIS,Eletiva,4,Metodos Ageis,Eletiva,4
-mapeamento direto,MODELAGEM E GERENCIAMENTO DE PROCESSOS DE NEGÓCIO,Eletiva,4,Modelagem e Gerenciamento de Processos de Negocio,Eletiva,4
-mapeamento direto,TENDÊNCIAS EM ENGENHARIA DE SOFTWARE,Eletiva,4,Tendencias em Engenharia de Software,Eletiva,4
-mapeamento direto,TÓPICOS ESPECIAIS EM COMPUTAÇÃO XXXIII,Eletiva,4,TOPICOS ESPECIAIS EM COMPUTACAO XXXIII,Eletiva,4
-mapeamento não direto,TÓPICOS ESPECIAIS EM COMPUTAÇÃO XXXIV,Eletiva,4,Processamento de Linguagem Natural,Obrigatória,4
-mapeamento direto,TÓPICOS ESPECIAIS EM COMPUTAÇÃO XXXV,Eletiva,4,TOPICOS ESPECIAIS EM COMPUTACAO XXXV,Eletiva,4
-mapeamento não direto,TÓPICOS ESPECIAIS EM COMPUTAÇÃO XXXVI,Eletiva,4,Processamento de Linguagem Natural,Obrigatória,4
-mapeamento direto,LABORATÓRIO DE PROGRAMAÇÃO EM LÓGICA,Eletiva,4,Laboratorio de Programacao em Logica,Eletiva,4
-mapeamento direto,TEORIA DA COMPUTAÇÃO DISTRIBUÍDA,Eletiva,4,Teoria da Computacao Distribuida,Eletiva,4
-mapeamento não direto,INTELIGÊNCIA ARTIFICIAL AVANÇADA,Eletiva,4,Aprendizado de Máquina,Obrigatória,4
-mapeamento direto,INTELIGÊNCIA ARTIFICIAL AVANÇADA,Eletiva,4,Inteligencia Artificial Avancada,Eletiva,4
-mapeamento não direto,LINGUAGENS FORMAIS E AUTÔMATOS N,Obrigatória,4,Teoria da Computação I - Linguagens Formais e Autômatos,Obrigatória,4
-mapeamento direto,CATEGORIAS COMPUTACIONAIS N,Eletiva,4,Categorias Computacionais N,Eletiva,4
-mapeamento não direto,FUNDAMENTOS DE ALGORITMOS,Obrigatória,4,Pensamento Computacional,Obrigatória,4
-mapeamento direto,TÓPICOS ESPECIAIS EM COMPUTAÇÃO IX,Eletiva,4,TOPICOS ESPECIAIS EM COMPUTACAO IX,Eletiva,4
-mapeamento não direto,OTIMIZAÇÃO COMBINATÓRIA,Obrigatória,4,Projeto e Análise de Algoritmos III,Obrigatória,4
-mapeamento direto,TÓPICOS ESPECIAIS EM COMPUTAÇÃO XIII,Eletiva,2,TOPICOS ESPECIAIS EM COMPUTACAO XIII,Eletiva,2
-mapeamento direto,TÓPICOS ESPECIAIS EM COMPUTAÇÃO XIV,Eletiva,2,TOPICOS ESPECIAIS EM COMPUTACAO XIV,Eletiva,2
-mapeamento direto,TÓPICOS ESPECIAIS EM COMPUTAÇÃO XV,Eletiva,4,TOPICOS ESPECIAIS EM COMPUTACAO XV,Eletiva,4
-mapeamento direto,TÓPICOS ESPECIAIS EM COMPUTAÇÃO XIX,Eletiva,2,TOPICOS ESPECIAIS EM COMPUTACAO XIX,Eletiva,2
-mapeamento direto,TÓPICOS ESPECIAIS EM COMPUTAÇÃO XX,Eletiva,2,TOPICOS ESPECIAIS EM COMPUTACAO XX,Eletiva,2
-mapeamento direto,TÓPICOS ESPECIAIS EM COMPUTAÇÃO XXI,Eletiva,4,TOPICOS ESPECIAIS EM COMPUTACAO XXI,Eletiva,4
-mapeamento direto,BIOLOGIA COMPUTACIONAL,Eletiva,4,Biologia Computacional,Eletiva,4
-mapeamento direto,AGENTES AUTÔNOMOS E SISTEMAS MULTIAGENTES,Eletiva,4,Agentes Autonomos e Sistemas Multiagentes,Eletiva,4
-mapeamento direto,TÓPICOS ESPECIAIS EM COMPUTAÇÃO XXV,Eletiva,2,TOPICOS ESPECIAIS EM COMPUTACAO XXV,Eletiva,2
-mapeamento direto,TÓPICOS ESPECIAIS EM COMPUTAÇÃO XXVI,Eletiva,2,TOPICOS ESPECIAIS EM COMPUTACAO XXVI,Eletiva,2
-mapeamento direto,TÓPICOS ESPECIAIS EM COMPUTAÇÃO XXVII,Eletiva,4,TOPICOS ESPECIAIS EM COMPUTACAO XXVII,Eletiva,4
-mapeamento direto,TÓPICOS ESPECIAIS EM COMPUTAÇÃO XXVIII,Eletiva,4,TOPICOS ESPECIAIS EM COMPUTACAO XXVIII,Eletiva,4
-mapeamento não direto,TÓPICOS ESPECIAIS EM ENGENHARIA DE COMPUTAÇÃO V,Eletiva,2,Projeto em Ciência e Inovação,Obrigatória,8
-mapeamento direto,TÓPICOS ESPECIAIS EM ENGENHARIA DE COMPUTAÇÃO V,Eletiva,2,TOPICOS ESPECIAIS EM ENGENHARIA DE COMPUTACAO V,Eletiva,2
-mapeamento direto,TÓPICOS ESPECIAIS EM ENGENHARIA DE COMPUTAÇÃO VI,Eletiva,2,TOPICOS ESPECIAIS EM ENGENHARIA DE COMPUTACAO VI,Eletiva,2
-mapeamento não direto,TEORIA DA COMPUTAÇÃO N,Obrigatória,4,Teoria da Computação II - Computabilidade e Complexidade,Obrigatória,4
-mapeamento direto,TÓPICOS ESPECIAIS EM COMPUTAÇÃO V,Eletiva,2,TOPICOS ESPECIAIS EM COMPUTACAO V,Eletiva,2
-mapeamento direto,TÓPICOS ESPECIAIS EM COMPUTAÇÃO VI,Eletiva,2,TOPICOS ESPECIAIS EM COMPUTACAO VI,Eletiva,2
-mapeamento não direto,LÓGICA PARA COMPUTAÇÃO,Obrigatória,4,Lógica e Correção de Programas,Obrigatória,4
-mapeamento não direto,LÓGICA PARA COMPUTAÇÃO,Obrigatória,4,Verificação e Teste de Software,Obrigatória,2
-mapeamento não direto,TEORIA DOS GRAFOS E ANÁLISE COMBINATÓRIA,Obrigatória,4,Projeto e Análise de Algoritmos I,Obrigatória,4
-mapeamento não direto,COMPLEXIDADE DE ALGORITMOS - B,Obrigatória,4,Projeto e Análise de Algoritmos II,Obrigatória,4
-mapeamento não direto,SEMÂNTICA FORMAL N,Obrigatória,4,Linguagens de Programação I,Obrigatória,4
-mapeamento direto,INGLÊS INSTRUMENTAL PARA PROCESSAMENTO DE DADOS I,Eletiva,4,Ingles Instrumental para Processamento de Dados I,Eletiva,4
-mapeamento não direto,CÁLCULO NUMÉRICO A,Obrigatória,4,Computação Científica,Obrigatória,4
-mapeamento direto,CÁLCULO E GEOMETRIA ANALÍTICA I - A,Obrigatória,6,Cálculo e Geometria Analítica I - A,Obrigatória,6
-mapeamento direto,CÁLCULO E GEOMETRIA ANALÍTICA II - A,Obrigatória,6,Cálculo e Geometria Analítica II - A,Obrigatória,6
-mapeamento direto,ÁLGEBRA LINEAR I - A,Obrigatória,4,Álgebra Linear,Obrigatória,4
-mapeamento direto,MATEMÁTICA DISCRETA B,Obrigatória,4,Matemática Discreta,Obrigatória,4
-mapeamento direto,PROBABILIDADE E ESTATÍSTICA,Obrigatória,4,Probabilidade e Estatística,Obrigatória,4
-mapeamento direto,VÍNCULO ACADÊMICO - ERE 2020/1,Eletiva,0,VINCULO ACADEMICO - ERE 2020/1,Eletiva,0
-mapeamento direto,VÍNCULO ACADÊMICO - ERE 2020/2,Eletiva,0,VINCULO ACADEMICO - ERE 2020/2,Eletiva,0
-temporalidade,Ingresso até Temp-4,Eletiva,0,Projeto em Ciência e Inovação,Obrigatória,8
-temporalidade,Ingresso até Temp-5,Eletiva,0,Aprendizado de Máquina,Obrigatória,4
-temporalidade,Ingresso até Temp-5,Eletiva,0,Programação Paralela,Obrigatória,4
-temporalidade,Ingresso até Temp-6,Eletiva,0,Segurança de Sistemas e da Informação,Obrigatória,4
-temporalidade,Ingresso até Temp-6,Eletiva,0,Processamento de Linguagem Natural,Obrigatória,4
-temporalidade,Ingresso até Temp-7,Eletiva,0,Projeto Integrador,Obrigatória,8
+mudança de caráter,Empreendimento Em Informática,Obrigatória,4,Empreendimento Em Informática,Eletiva,4
+mudança de caráter,Classificação E Pesquisa De Dados,Obrigatória,4,Classificação E Pesquisa De Dados,Eletiva,4
+mudança de caráter,Arquitetura E Organização De Computadores II,Obrigatória,4,Arquitetura E Organização De Computadores II,Eletiva,4
+mapeamento direto,Economia A,Eletiva,4,Economia A,Eletiva,4
+mapeamento direto,Especificação Formal N,Eletiva,4,Especificacao Formal N,Eletiva,4
+mapeamento direto,Protocolos De Comunicação,Eletiva,4,Protocolos De Comunicacao,Eletiva,4
+mapeamento direto,Comunicação De Dados,Eletiva,4,Comunicacao De Dados,Eletiva,4
+mapeamento direto,Projeto De Banco De Dados,Eletiva,4,Projeto De Banco De Dados,Eletiva,4
+mapeamento não direto,Programação Distribuída E Paralela,Eletiva,4,Programação Paralela,Obrigatória,4
+mapeamento direto,Computação Gráfica,Eletiva,4,Computacao Grafica,Eletiva,4
+mapeamento direto,Sistemas De Banco De Dados Distribuídos,Eletiva,4,Sistemas De Banco De Dados Distribuidos,Eletiva,4
+mapeamento direto,Gerência E Aplicações Em Redes,Eletiva,4,Gerencia E Aplicacoes Em Redes,Eletiva,4
+mapeamento direto,Gerência E Administração De Projetos,Eletiva,4,Gerencia E Administracao De Projetos,Eletiva,4
+mudança de caráter,Aprendizado De Máquina,Eletiva,4,Aprendizado De Máquina,Obrigatória,4
+mapeamento direto,Sistemas Operacionais Distribuídos E De Redes,Eletiva,4,Sistemas Operacionais Distribuidos E De Redes,Eletiva,4
+mapeamento direto,Projeto Em Computação Gráfica,Eletiva,4,Projeto Em Computacao Grafica,Eletiva,4
+mapeamento direto,Projeto De Hiperdocumentos,Eletiva,4,Projeto De Hiperdocumentos,Eletiva,4
+mapeamento direto,Laboratório De Sistema De Software,Eletiva,4,Laboratorio De Sistema De Software,Eletiva,4
+mapeamento direto,Arquitetura E Desempenho De Banco De Dados,Eletiva,4,Arquitetura E Desempenho De Banco De Dados,Eletiva,4
+mapeamento direto,Fundamentos De Visão Computacional,Eletiva,4,Fundamentos De Visao Computacional,Eletiva,4
+mapeamento direto,Robótica II,Eletiva,4,Robotica II,Eletiva,4
+mapeamento direto,Computação Evolutiva,Eletiva,4,Computacao Evolutiva,Eletiva,4
+mapeamento direto,Sistemas Especialistas N,Eletiva,4,Sistemas Especialistas N,Eletiva,4
+mapeamento direto,História Da Computação,Eletiva,4,Historia Da Computacao,Eletiva,4
+mapeamento direto,Interação Homem-Computador,Obrigatória,4,Interação Humano-Computador E Ux,Obrigatória,4
+mudança de caráter,Segurança Em Sistemas De Computação,Eletiva,4,Segurança De Sistemas E Da Informação,Obrigatória,4
+mapeamento não direto,Fundamentos De Processamento De Imagens,Obrigatória,4,Processamento De Imagens E Visão Computacional,Obrigatória,4
+mapeamento não direto,Fundamentos De Computação Gráfica,Obrigatória,4,Computação Gráfica E Visualização,Obrigatória,4
+mapeamento direto,Inteligência Artificial,Obrigatória,4,Inteligência Artificial,Obrigatória,4
+mapeamento direto,Introdução À Pesquisa Em Informática,Eletiva,2,Introducao A Pesquisa Em Informatica,Eletiva,2
+mudança de caráter,Tópicos Especiais Em Engenharia De Computação I,Eletiva,4,Processamento De Linguagem Natural,Obrigatória,4
+mapeamento direto,Tópicos Especiais Em Engenharia De Computação IV,Eletiva,2,Topicos Especiais Em Engenharia De Computacao IV,Eletiva,2
+mapeamento direto,Tópicos Especiais Em Computação VII,Eletiva,4,Topicos Especiais Em Computacao VII,Eletiva,4
+mapeamento direto,Tópicos Especiais Em Computação VIII,Eletiva,4,Topicos Especiais Em Computacao VIII,Eletiva,4
+mapeamento direto,Desafios De Programação,Eletiva,4,Desafios De Programacao,Eletiva,4
+mudança no número de créditos,Circuitos Digitais,Obrigatória,4,Circuitos Digitais,Obrigatória,6
+mapeamento direto,Sistemas Embarcados,Eletiva,4,Sistemas Embarcados,Eletiva,4
+mapeamento direto,Tópicos Especiais Em Computação XVIII,Eletiva,4,Topicos Especiais Em Computacao XVIII,Eletiva,4
+mapeamento direto,Tópicos Especiais Em Computação XVII,Eletiva,2,Topicos Especiais Em Computacao XVII,Eletiva,2
+mapeamento direto,Tópicos Especiais Em Computação XVI,Eletiva,2,Topicos Especiais Em Computacao XVI,Eletiva,2
+mapeamento direto,Tópicos Especiais Em Computação XII,Eletiva,4,Topicos Especiais Em Computacao XII,Eletiva,4
+mapeamento direto,Tópicos Especiais Em Computação XI,Eletiva,2,Topicos Especiais Em Computacao XI,Eletiva,2
+mapeamento direto,Tópicos Especiais Em Computação X,Eletiva,2,Topicos Especiais Em Computacao X,Eletiva,2
+mapeamento direto,Tópicos Especiais Em Computação XXII,Eletiva,2,Topicos Especiais Em Computacao XXII,Eletiva,2
+mapeamento direto,Tópicos Especiais Em Computação XXIII,Eletiva,2,Topicos Especiais Em Computacao XXIII,Eletiva,2
+mapeamento direto,Tópicos Especiais Em Computação XXIV,Eletiva,4,Topicos Especiais Em Computacao XXIV,Eletiva,4
+mapeamento direto,Tópicos Especiais Em Computação XXIX,Eletiva,2,Topicos Especiais Em Computacao XXIX,Eletiva,2
+mapeamento direto,Tópicos Especiais Em Computação XXX,Eletiva,2,Topicos Especiais Em Computacao XXX,Eletiva,2
+mapeamento direto,Tópicos Especiais Em Computação XXXI,Eletiva,2,Topicos Especiais Em Computacao XXXXI,Eletiva,2
+mapeamento direto,Tópicos Especiais Em Computação XXXII,Eletiva,2,Topicos Especiais Em Computacao XXXII,Eletiva,2
+mapeamento não direto,Introdução À Arquitetura De Computadores,Obrigatória,4,Introdução À Ciência Da Computação,Obrigatória,4
+mapeamento não direto,Arquitetura E Organização De Computadores I,Obrigatória,4,Arquitetura De Computadores,Obrigatória,4
+mapeamento direto,Organização De Computadores B,Obrigatória,4,Organização De Computadores,Obrigatória,4
+mapeamento não direto,Técnicas De Construção De Programas,Obrigatória,4,Desenvolvimento De Software De Qualidade,Obrigatória,4
+mudança de caráter,Modelos De Linguagem De Programação,Obrigatória,4,Modelos De Linguagem De Programacao,Eletiva,4
+mapeamento direto,Engenharia De Software N,Obrigatória,4,Engenharia De Software,Obrigatória,4
+mapeamento direto,Computador E Sociedade,Eletiva,4,Computador E Sociedade,Eletiva,4
+mapeamento direto,Sistemas Operacionais I N,Obrigatória,4,Sistemas Operacionais,Obrigatória,4
+mapeamento direto,Fundamentos De Banco De Dados,Obrigatória,4,Fundamentos De Bancos De Dados,Obrigatória,4
+mapeamento direto,Avaliação De Desempenho,Eletiva,4,Avaliacao De Desempenho,Eletiva,4
+mapeamento não direto,Compiladores,Obrigatória,4,Linguagens De Programação II,Obrigatória,4
+mapeamento não direto,Sistemas Operacionais II N,Obrigatória,4,Sistemas Distribuídos E Tolerantes A Falhas,Obrigatória,4
+mudança no número de créditos,Redes De Computadores N,Obrigatória,6,Redes De Computadores,Obrigatória,4
+mapeamento direto,Sistemas Digitais Para Computadores A,Eletiva,4,Sistemas Digitais Para Computadores A,Eletiva,4
+mapeamento direto,Tópicos Especiais Em Computação I,Eletiva,2,Topicos Especiais Em Computacao I,Eletiva,2
+mapeamento direto,Tópicos Especiais Em Computação II,Eletiva,2,Topicos Especiais Em Computacao II,Eletiva,2
+mapeamento direto,Concepção De Circuitos Integrados I,Eletiva,4,Concepcao De Circuitos Integrados I,Eletiva,4
+mapeamento direto,Tópicos Especiais Em Computação III,Eletiva,2,Topicos Especiais Em Computacao III,Eletiva,2
+mapeamento direto,Arquiteturas Avançadas De Computadores,Eletiva,4,Arquiteturas Avancadas De Computadores,Eletiva,4
+mapeamento direto,Tópicos Especiais Em Computação IV,Eletiva,2,Topicos Especiais Em Computacao IV,Eletiva,2
+mapeamento direto,Algorítmos E Programação - Cic,Obrigatória,6,Algoritmos E Programação,Obrigatória,6
+mapeamento direto,Estruturas De Dados,Obrigatória,4,Estruturas De Dados,Obrigatória,4
+mapeamento direto,Cad Para Sistemas Digitais,Eletiva,4,Cad Para Sistemas Digitais,Eletiva,4
+mapeamento direto,Fundamentos De Tolerância A Falhas,Obrigatória,4,Fundamentos De Tolerancia A Falhas,Eletiva,4
+mapeamento direto,Fotografia Computacional,Eletiva,4,Fotografia Computacional,Eletiva,4
+mapeamento direto,Teste De Software,Eletiva,4,Teste De Software,Eletiva,4
+mapeamento direto,Métodos Ágeis,Eletiva,4,Metodos Ageis,Eletiva,4
+mapeamento direto,Modelagem E Gerenciamento De Processos De Negócio,Eletiva,4,Modelagem E Gerenciamento De Processos De Negocio,Eletiva,4
+mapeamento direto,Tendências Em Engenharia De Software,Eletiva,4,Tendencias Em Engenharia De Software,Eletiva,4
+mapeamento direto,Tópicos Especiais Em Computação XXXIII,Eletiva,4,Topicos Especiais Em Computacao XXXIII,Eletiva,4
+mudança de caráter,Tópicos Especiais Em Computação XXXIV,Eletiva,4,Processamento De Linguagem Natural,Obrigatória,4
+mapeamento direto,Tópicos Especiais Em Computação XXXV,Eletiva,4,Topicos Especiais Em Computacao Xxxv,Eletiva,4
+mudança de caráter,Tópicos Especiais Em Computação XXXVI,Eletiva,4,Processamento De Linguagem Natural,Obrigatória,4
+mapeamento direto,Laboratório De Programação Em Lógica,Eletiva,4,Laboratorio De Programacao Em Logica,Eletiva,4
+mapeamento direto,Teoria Da Computação Distribuída,Eletiva,4,Teoria Da Computacao Distribuida,Eletiva,4
+mapeamento não direto,Inteligência Artificial Avançada,Eletiva,4,Aprendizado De Máquina,Obrigatória,4
+mapeamento direto,Inteligência Artificial Avançada,Eletiva,4,Inteligencia Artificial Avancada,Eletiva,4
+mapeamento não direto,Linguagens Formais E Autômatos N,Obrigatória,4,Teoria Da Computação I - Linguagens Formais E Autômatos,Obrigatória,4
+mapeamento direto,Categorias Computacionais N,Eletiva,4,Categorias Computacionais N,Eletiva,4
+mapeamento não direto,Fundamentos De Algoritmos,Obrigatória,4,Pensamento Computacional,Obrigatória,4
+mapeamento direto,Tópicos Especiais Em Computação IX,Eletiva,4,Topicos Especiais Em Computacao IX,Eletiva,4
+mapeamento não direto,Otimização Combinatória,Obrigatória,4,Projeto E Análise De Algoritmos III,Obrigatória,4
+mapeamento direto,Tópicos Especiais Em Computação XIII,Eletiva,2,Topicos Especiais Em Computacao XIII,Eletiva,2
+mapeamento direto,Tópicos Especiais Em Computação XIV,Eletiva,2,Topicos Especiais Em Computacao XIV,Eletiva,2
+mapeamento direto,Tópicos Especiais Em Computação XV,Eletiva,4,Topicos Especiais Em Computacao XV,Eletiva,4
+mapeamento direto,Tópicos Especiais Em Computação XIX,Eletiva,2,Topicos Especiais Em Computacao XIX,Eletiva,2
+mapeamento direto,Tópicos Especiais Em Computação XX,Eletiva,2,Topicos Especiais Em Computacao XX,Eletiva,2
+mapeamento direto,Tópicos Especiais Em Computação XXI,Eletiva,4,Topicos Especiais Em Computacao XXI,Eletiva,4
+mapeamento direto,Biologia Computacional,Eletiva,4,Biologia Computacional,Eletiva,4
+mapeamento direto,Agentes Autônomos E Sistemas Multiagentes,Eletiva,4,Agentes Autonomos E Sistemas Multiagentes,Eletiva,4
+mapeamento direto,Tópicos Especiais Em Computação XXV,Eletiva,2,Topicos Especiais Em Computacao XXV,Eletiva,2
+mapeamento direto,Tópicos Especiais Em Computação XXVI,Eletiva,2,Topicos Especiais Em Computacao XXVI,Eletiva,2
+mapeamento direto,Tópicos Especiais Em Computação XXVII,Eletiva,4,Topicos Especiais Em Computacao XXVII,Eletiva,4
+mapeamento direto,Tópicos Especiais Em Computação XXVIII,Eletiva,4,Topicos Especiais Em Computacao XXVIII,Eletiva,4
+mudança de caráter,Tópicos Especiais Em Engenharia De Computação V,Eletiva,2,Projeto Em Ciência E Inovação,Obrigatória,8
+mapeamento direto,Tópicos Especiais Em Engenharia De Computação V,Eletiva,2,Topicos Especiais Em Engenharia De Computacao V,Eletiva,2
+mapeamento direto,Tópicos Especiais Em Engenharia De Computação VI,Eletiva,2,Topicos Especiais Em Engenharia De Computacao VI,Eletiva,2
+mapeamento não direto,Teoria Da Computação N,Obrigatória,4,Teoria Da Computação II - Computabilidade E Complexidade,Obrigatória,4
+mapeamento direto,Tópicos Especiais Em Computação V,Eletiva,2,Topicos Especiais Em Computacao V,Eletiva,2
+mapeamento direto,Tópicos Especiais Em Computação VI,Eletiva,2,Topicos Especiais Em Computacao VI,Eletiva,2
+mapeamento não direto,Lógica Para Computação,Obrigatória,4,Lógica E Correção De Programas,Obrigatória,4
+mapeamento não direto,Lógica Para Computação,Obrigatória,4,Verificação E Teste De Software,Obrigatória,2
+mapeamento não direto,Teoria Dos Grafos E Análise Combinatória,Obrigatória,4,Projeto E Análise De Algoritmos I,Obrigatória,4
+mapeamento não direto,Complexidade De Algoritmos - B,Obrigatória,4,Projeto E Análise De Algoritmos II,Obrigatória,4
+mapeamento não direto,Semântica Formal N,Obrigatória,4,Linguagens De Programação I,Obrigatória,4
+mapeamento direto,Inglês Instrumental Para Processamento De Dados I,Eletiva,4,Ingles Instrumental Para Processamento De Dados I,Eletiva,4
+mapeamento não direto,Cálculo Numérico A,Obrigatória,4,Computação Científica,Obrigatória,4
+mapeamento direto,Cálculo E Geometria Analítica I - A,Obrigatória,6,Cálculo E Geometria Analítica I - A,Obrigatória,6
+mapeamento direto,Cálculo E Geometria Analítica II - A,Obrigatória,6,Cálculo E Geometria Analítica II - A,Obrigatória,6
+mapeamento direto,Algebra Linear I - A,Obrigatória,4,Álgebra Linear,Obrigatória,4
+mapeamento direto,Matemática Discreta B,Obrigatória,4,Matemática Discreta,Obrigatória,4
+mapeamento direto,Probabilidade E Estatística,Obrigatória,4,Probabilidade E Estatística,Obrigatória,4
+mapeamento direto,Vínculo Acadêmico - Ere 2020/1,Eletiva,0,Vinculo Academico - Ere 2020/1,Eletiva,0
+mapeamento direto,Vínculo Acadêmico - Ere 2020/2,Eletiva,0,Vinculo Academico - Ere 2020/2,Eletiva,0
+temporalidade,Ingresso Até Temp-4,Eletiva,0,Projeto Em Ciência E Inovação,Obrigatória,8
+temporalidade,Ingresso Até Temp-5,Eletiva,0,Aprendizado De Máquina,Obrigatória,4
+temporalidade,Ingresso Até Temp-5,Eletiva,0,Programação Paralela,Obrigatória,4
+temporalidade,Ingresso Até Temp-6,Eletiva,0,Segurança De Sistemas E Da Informação,Obrigatória,4
+temporalidade,Ingresso Até Temp-6,Eletiva,0,Processamento De Linguagem Natural,Obrigatória,4
+temporalidade,Ingresso Até Temp-7,Eletiva,0,Projeto Integrador,Obrigatória,8
+mapeamento não direto,Empreendimento Em Informática + Laboratório De Sistema De Software,Obrigatória e Eletiva respectivamente,4 + 4,Projeto Integrador,Obrigatória,8
+mapeamento não direto,Empreendimento Em Informática + Projeto Em Computação Gráfica,Obrigatória e Eletiva respectivamente,4 + 4,Projeto Integrador,Obrigatória,8
+mapeamento não direto,Empreendimento Em Informática + Projeto De Banco De Dados,Obrigatória e Eletiva respectivamente,4 + 4,Projeto Integrador,Obrigatória,8
+mapeamento não direto,Empreendimento Em Informática + Métodos Ágeis,Obrigatória e Eletiva respectivamente,4 + 4,Projeto Integrador,Obrigatória,8

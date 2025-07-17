@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { AbaContainer, Aba, Conteudo } from './styles'
+import { AbaContainer, Aba, Conteudo } from './styled'
 import { FrontData } from '../../types'
 import Overview from '../Overview';
 

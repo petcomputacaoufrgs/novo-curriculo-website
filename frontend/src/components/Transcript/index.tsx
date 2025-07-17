@@ -1,4 +1,4 @@
-import { OuterTranscriptBox, InnerTranscriptBox } from './styles';
+import { OuterTranscriptBox, InnerTranscriptBox } from './styled';
 
 const Transcript = () => {
   return (

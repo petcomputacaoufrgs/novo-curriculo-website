@@ -159,9 +159,11 @@ def plot_function(summarised_metrics, remaining_index, total_credits, title):
 
 @app.get(path="/api/regrasEquivalencia")
 async def get_regras_equivalencia():
-    regras = pd.read_csv("ClassHistoryConverter/scripts/INF_UFRGS_DATA/equivalencias_completas.csv")
+    regras = pd.read_csv("ClassHistoryConverter/scripts/INF_UFRGS_DATA/equivalencias_completas_final.csv")
 
     regras = regras.sort_values(by=["nome_fez"])
+
+    print(regras)
     return regras.to_dict(orient="records")
 
 
@@ -174,6 +176,9 @@ async def calculate(tabela: list[list[str]]):
     
     """
 
+    # Testa se a tabela está vazia. Se estiver, encerra
+
+
     # Cria um diretório temporário para salvar os arquivos gerados
     nome_unico = generate_unique_filename("1000")
     os.mkdir(nome_unico)
@@ -185,6 +190,9 @@ async def calculate(tabela: list[list[str]]):
         criaHistoricoCSV(tabela, os.path.join(file_path, "historico.csv"))
     except:
         raise HTTPException(status_code=400, detail="Erro ao criar o histórico.") 
+
+    file_path = os.path.join(os.path.dirname(__file__), "teste_historico_completo")
+
     # Executa os scripts
     result = subprocess.run(["ClassHistoryConverter/scripts/update.sh", file_path], capture_output=True, text=True, check=True)
 
@@ -215,8 +223,6 @@ async def calculate(tabela: list[list[str]]):
 
 
 
-    print("Teste2")
-
 
     # Carrega as tabelas necessárias para fazer o histórico novo (novo histórico, com as cadeiras já liberadas, e nova demanda de cadeiras, com as cadeiras pendentes, e o dicionário de disciplinas)
     new_history = pd.read_csv(os.path.join(file_path,"novo_historico_flexivel.csv")).drop('cartao', axis=1)
@@ -224,7 +230,6 @@ async def calculate(tabela: list[list[str]]):
     new_demand = pd.read_csv(os.path.join(file_path,"new_class_demand_from_novo_historico_flexivel.csv"))
     new_demand = new_demand[new_demand['qt_students_needing_it'] == 1]  # Filtra apenas as que ainda precisam ser feitas
 
-    print("Teste3")
 
 
     disciplines = pd.read_csv("disciplinas.csv")
@@ -241,7 +246,6 @@ async def calculate(tabela: list[list[str]]):
     history_table["qt_students_needing_it"] = history_table["qt_students_needing_it"].fillna(0)
     history_table["rule_name"] = history_table["rule_name"].fillna("")
 
-    print("Teste4")
 
     # Organiza o histórico em uma lista de dicionários, separando por etapa
     history_table_separated = [
@@ -251,19 +255,34 @@ async def calculate(tabela: list[list[str]]):
 
     for line in history_table_separated:
         line.pop('etapa', None)
-        print(line["rule_name"])
 
 
     return_value["historico"] = history_table_separated
 
     # TODO: editar diagrama
 
-    HTML_FILE_PATH = "ULTIMO-DIAGRAMA.html"
+    HTML_FILE_PATH = "DiagramaFinalBrabuleta.html"
     
     obligatoryClasses = history_table[history_table["etapa"] != 0]
     alreadyDoneClasses = obligatoryClasses[obligatoryClasses["qt_students_needing_it"] == 0]["nome"]
 
+    print("///////////////////////////////")
+    print(alreadyDoneClasses)
+    print("///////////////////////////////")
 
+
+    # Remove duplicatas (porque se uma mesma cadeira é obtida por mais de 1 regra diferente, ela vai aparecer múltiplas vezes)    
+    alreadyDoneClasses = alreadyDoneClasses.drop_duplicates()
+
+    # Adiciona 130 créditos obrigatórios e 166 créditos obrigatórios à lista se a pessoa já os fez
+    numAlreadyDoneCredits = return_value["summarized_metrics"]["obrigatorios_novos"][1]
+
+    if numAlreadyDoneCredits >= 130:
+        alreadyDoneClasses = pd.concat([alreadyDoneClasses, pd.Series(["130 Créditos Obrigatórios"])])
+    if numAlreadyDoneCredits >= 166:
+        alreadyDoneClasses = pd.concat([alreadyDoneClasses, pd.Series(["166 Créditos Obrigatórios"])])
+
+    
     try:
         # Ler o arquivo HTML
         with open(HTML_FILE_PATH, "r") as f:
@@ -271,15 +290,14 @@ async def calculate(tabela: list[list[str]]):
                 
         # Modificar o conteúdo do HTML
         for disciplina in alreadyDoneClasses:
-            teste = re.findall(rf"{disciplina}.*?style=.*?fillColor=#FFFFFA", html_texto)
+            nome_escapado = re.escape(disciplina)
+            teste = re.findall(rf"{nome_escapado}(?=[\\&]).*?style=.*?fillColor=#FFFFFA", html_texto)
             
-            print(teste)
-            print("==========================")
             if len(teste) > 0:
                 substituido = re.sub(r"fillColor=#\w{6}", "fillColor=red", teste[0])
                 html_texto = html_texto.replace(teste[0], substituido)
                 
-                print(disciplina)
+                
 
     
         with open("HTML_MODIFICADO.html", "w") as f:

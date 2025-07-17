@@ -1,24 +1,32 @@
 import { useEffect, useState } from 'react';
 import api from '../../api';
-import { Card, DataCell, DropdownButton, DropdownContent, Explicacao, HeaderCell, SmallInfo, Tabela, Wrapper } from './styles';
+import { Card, DataCell, DropdownButton, DropdownContent, Explicacao, HeaderCell, SmallInfo, Tabela, Wrapper } from './styled';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 
 
 const regraExplicacoes = {
-  'temporalidade': 'Regras baseadas no tempo de curso. É contada a partir do semestre em que a primeira cadeira foi completada. Ex: no semestre 2026/01, uma pessoa que completou a primeira cadeira em 2023/01 terá temporalidade 7 (Temp-7).',
-  'mapeamento não direto': 'Disciplinas que mudam com a mudança de currículo e precisam de equivalência específica. Ex: disciplinas que mudam de caráter (obrigatória para eletiva e vice-versa)',
-  'mapeamento direto': 'Disciplinas que permanecem as mesmas após a mudança curricular.',
+  'temporalidade': 'Regras baseadas no tempo de curso. A temporalidade é contada a partir do semestre em que a primeira cadeira foi completada. Ex: no semestre 2026/01, uma pessoa que completou a primeira cadeira em 2023/01 terá temporalidade 7 (Temp-7).',
+  'mudança de caráter': 'Disciplinas que eram obrigatórias e vão virar eletivas ou disciplinas que eram eletivas e se tornarão obrigatórias. Uma pessoa que tenha feito uma das cadeiras obrigatórias que se tornarão eletivas pode optar por fazer a conversão dos créditos ou manter seus créditos obrigatórios?',
+  'mudança no número de créditos': 'Disciplinas que permanecem com o mesmo nome, mas que tiveram seu número de créditos alterado',
+  'mapeamento não direto': 'Disciplinas que tem seu nome alterado com a mudança do currículo.',
+  'mapeamento direto': 'Disciplinas que permanecem as mesmas após a mudança curricular.'
+
 };
 
 type Regra = {
-  tipo_regra: string;
-  nome_fez: string;
+  codigo_fez: string;
   carater_fez: string;
   creditos_fez: number;
-  nome_obtem: string;
+  codigo_obtem: string;
   carater_obtem: string;
   creditos_obtem: number;
+  nome_regra: string;
+  nome_fez: string;
+  nome_obtem: string;
+  tipo_regra: string;
 };
+
+
 
 export default function RegrasEquivalencia() {
   const [regras, setRegras] = useState<Regra[]>([]);
@@ -62,6 +70,7 @@ return (
             <Tabela>
               <thead>
                 <tr>
+                  <HeaderCell>Código</HeaderCell>
                   <HeaderCell>Fez</HeaderCell>
                   <HeaderCell>Obtém</HeaderCell>
                 </tr>
@@ -69,6 +78,9 @@ return (
               <tbody>
                 {(regrasPorTipo[tipo] || []).map((regra, index) => (
                   <tr key={index}>
+                    <DataCell>
+                      <div>{regra.nome_regra}</div>
+                    </DataCell>
                     <DataCell>
                       <div>{regra.nome_fez}</div>
                       <SmallInfo>

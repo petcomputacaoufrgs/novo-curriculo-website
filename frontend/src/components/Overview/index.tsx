@@ -11,7 +11,7 @@ import {
   Column,
   SectionTitle,
   WarningText
-} from "./styles";
+} from "./styled";
 
 type OverviewCategory = "Total" | "Obrigatórios" | "Eletivos";
 
@@ -24,8 +24,6 @@ const Overview: React.FC<OverviewProps> = ({ images, metrics }) => {
   const [selectedCategory, setSelectedCategory] = useState<OverviewCategory>("Total");
   const [windowSize, setWindowSize] = useState(window.innerWidth);
 
-  console.log(images);
-  console.log(metrics);
 
   useEffect(() => {
     const handleResize = () => {

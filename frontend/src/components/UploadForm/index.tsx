@@ -1,8 +1,7 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import api from "../../api";
 
 import { FrontData } from "../../types";
-import Overview from "../Overview";
 import Tabs from "../Tabs";
 
 const UploadForm = () => {
@@ -10,10 +9,41 @@ const UploadForm = () => {
   const [message, setMessage] = useState("");
   const [charset, setCharset] = useState("");
 
-  const [state, setState] = useState(null);
+  const [state, setState] = useState<string[][]>([]);
 
   const [frontData, setFrontData] = useState<null | FrontData>(null);
 
+  const [blobUrl, setBlobUrl] = useState("");
+
+
+  const [windowSize, setWindowSize] = useState(window.innerWidth);
+
+  const getWhichGraphShow = () => {
+    if(window.innerWidth >= 1500)
+      return 1;
+    if(window.innerWidth >= 1000)
+      return 2;
+    if(window.innerWidth >= 500)
+      return 3;
+    if(window.innerWidth >= 300)
+      return 4;
+  }
+  const [show, setShow] = useState(getWhichGraphShow())
+
+
+    useEffect(() => {
+      const handleResize = () => {
+        setWindowSize(window.innerWidth);
+      };
+  
+      window.addEventListener("resize", handleResize);
+      return () => window.removeEventListener("resize", handleResize);
+    }, []);
+
+      useEffect(() => {
+        setShow(getWhichGraphShow());
+        return () => {};
+      }, [windowSize]);
 
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -67,6 +97,8 @@ const UploadForm = () => {
                 (iframe as HTMLIFrameElement).src = urlBlob;
             }
 
+      setBlobUrl(urlBlob);
+
 
     } catch (error) {
       setMessage("Erro no cálculo");
@@ -74,9 +106,8 @@ const UploadForm = () => {
     }
   }
 
+  console.log(blobUrl);
 
-  console.log(frontData);
-  
   return (
     <div>
       <input type="file" accept=".html" onChange={handleFileChange} />
@@ -85,12 +116,14 @@ const UploadForm = () => {
       <p>{message}</p>
       <p>{charset}</p>
 
-      <iframe style={{width: "100vw", height: "60vh"}} id="meuIframe"></iframe>
-
-
-
+      {/* Segue uma gambiarra das brabas aqui. Pelo menos é estável e funciona */}
+      {show == 1 && <iframe style={{width: "1500px", height: "60vh"}} id="meuIframe" src={blobUrl}></iframe>}
+      {show == 2 && <iframe style={{width: "1000px", height: "60vh"}} id="meuIframe" src={blobUrl}></iframe>}
+      {show == 3 && <iframe style={{width: "600px", height: "60vh"}} id="meuIframe" src={blobUrl}></iframe>}
+      {show == 4 && <iframe style={{width: "300px", height: "60vh"}} id="meuIframe" src={blobUrl}></iframe>}
         
       {frontData && <Tabs frontData={frontData}></Tabs>}
+
     </div >
   );
 };

@@ -1,8 +1,8 @@
-import Navbar from "../../primordiosdofuturofrontend/components/Navbar/Navbar"
-import About from "../../primordiosdofuturofrontend/components/About/About"
-import Divider from "../../primordiosdofuturofrontend/components/Divider"
-import Footer from "../../primordiosdofuturofrontend/components/Footer/Footer"
-import RegrasEquivalencia from "../../components/RegrasDeEquivalencia"
+import Navbar from "../components/Navbar"
+import About from "../components/About"
+import Divider from "../components/Divider"
+import Footer from "../components/Footer"
+import RegrasEquivalencia from "../components/RegrasDeEquivalencia"
 
 
 

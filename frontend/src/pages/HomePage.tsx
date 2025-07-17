@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react'
-import Navbar from "./components/Navbar/Navbar"
-import About from "./components/About/About"
-import Transcript from "./components/Transcript"
-import Divider from "./components/Divider"
-import Footer from "./components/Footer/Footer"
+import Navbar from "../components/Navbar"
+import About from "../components/About"
+import Transcript from "../components/Transcript"
+import Divider from "../components/Divider"
+import Footer from "../components/Footer"
 import Tabs from "../components/Tabs"
 import { ThemeProvider } from 'styled-components'
 import { lightTheme, darkTheme } from '../themes'
 
+import './App.css'
 
-const AppInit = () => {
+const HomePage = () => {
   const [isDark, setIsDark] = useState(false)
 
   useEffect(() => {
@@ -41,4 +42,4 @@ const AppInit = () => {
   )
 }
 
-export default AppInit
+export default HomePage
