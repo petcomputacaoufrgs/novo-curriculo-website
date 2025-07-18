@@ -16,11 +16,12 @@ def LeHtml(conteudo_html):
 
     parsed_html = BeautifulSoup(conteudo_html, 'html.parser')
     print("Arquivo HTML lido com sucesso.")
-    semestres, nomeDisciplinas, codigos = extraiDados(parsed_html)
-    dados = [[semestres[i], nomeDisciplinas[i], codigos[i]] for i in range(len(semestres)) if codigos[i] != "Not Found"]
+    semestres, nomeDisciplinas, codigos, semestre_ingresso = extraiDados(parsed_html)
+
+    
+    dados = {"dados": [[semestres[i], nomeDisciplinas[i], codigos[i]] for i in range(len(semestres)) if codigos[i] != "Not Found"], "semestre_ingresso": semestre_ingresso}
 
     return dados
-    #criaHistoricoCSV(semestres, nomeDisciplinas, codDisciplinas)
 
 def extraiDados(parsed_html):
     historicoCurso = verificaTipoHistorico(parsed_html)
@@ -42,6 +43,14 @@ def verificaTipoHistorico(parsed_html):
         if "Histórico Escolar" in titulo_elemento.text.strip():
             print("Histórico Escolar identificado.")
             return False
+
+def calculaSemestreIngresso(semestres: list[str]):
+    # Para garantir que vai pegar o semestre correto caso sejam inseridos zeros à esquerda, como em "2024/01" em comparação com "2024/2"
+    def parse(sem: str) -> tuple[int, int]:
+        ano, semestre = sem.split("/")
+        return (int(ano), int(semestre))
+
+    return min(semestres, key=parse)
 
 def leHistoricoCurso(parsed_html):
     # Encontra a tabela com o histórico do aluno.
@@ -69,7 +78,9 @@ def leHistoricoCurso(parsed_html):
     else:
         print("Tabela do histórico não encontrada.")
 
-    return semestres, nomeDisciplinas, codigos
+    semestre_ingresso = calculaSemestreIngresso(semestres)
+
+    return semestres, nomeDisciplinas, codigos, semestre_ingresso
 
 def leHistoricoEscolar(parsed_html):
     # Encontra a tabela com o histórico do aluno.
@@ -94,7 +105,10 @@ def leHistoricoEscolar(parsed_html):
         print("Tabela do histórico não encontrada.")
 
     codDisciplinas = getCodCadeiras(nomeDisciplinas)
-    return semestres, nomeDisciplinas, codDisciplinas
+
+    semestre_ingresso = calculaSemestreIngresso(semestres)
+
+    return semestres, nomeDisciplinas, codDisciplinas, semestre_ingresso
 
 def getCodCadeiras(nomeDisciplinas):
     # Carrega CSV com nome e códigos de disciplinas
@@ -121,12 +135,32 @@ def getCodCadeiras(nomeDisciplinas):
         #print(f"Disciplina: {discipline_name}\n Código: {codDisciplinas[-1]}")
     return codDisciplinas
 
-def criaHistoricoCSV(dados, filePath):
+def criaHistoricoCSV(dados, filePath, temporalidade):
     # Cria um DataFrame com os dados lidos do HTML de histórico. Código de matrícula não é necessário.
     #df = pd.DataFrame({'cartao': 12345678, 'ingresso': semestres, 'codigo': codDisciplinas, 'titulo': ]#nomeDisciplinas, 'situacao': 'Aprovado'})
 
     df = pd.DataFrame(dados, columns=['ingresso', 'titulo', 'codigo'])
     
+    print("Chegando em criaHistorico")
+
+    # Adiciona as regras de temporalidade
+    limite_inferior_regras_temporalidade = 4
+    limite_superior_regras_temporalidade = 7
+    
+    if temporalidade > limite_superior_regras_temporalidade:
+        temporalidade = limite_superior_regras_temporalidade
+
+    print("Chegando em criaHistorico")
+
+    while temporalidade >= limite_inferior_regras_temporalidade:
+        print("Chegando em criaHistorico")
+        print(len(df))
+        df.loc[len(df)] = ['2026/1', f'Ingresso até Temp-{temporalidade}', f'Temp-{temporalidade}']
+        print("A")
+        temporalidade = temporalidade - 1
+
+
+
     # Adiciona as colunas fixas.
     df['cartao'] = 12345678
     df['situacao'] = 'Aprovado'

@@ -4,6 +4,7 @@ import re
 import subprocess
 from fastapi import FastAPI, File, HTTPException, UploadFile
 
+
 # Middleware do FastAPI para controlar as permissões de CORS (Cross-Origin Resource Sharing). Isso permite configurar DE QUAIS domínios ou portas o servidor pode receber requisições
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -17,7 +18,6 @@ import shutil
 from bs4 import BeautifulSoup
 
 
-from fastapi.responses import FileResponse, HTMLResponse
 from matplotlib import pyplot as plt
 from matplotlib.figure import Figure
 
@@ -26,16 +26,12 @@ import time
 import hashlib
 
 from pydantic import BaseModel
+from typing import List
 
 from readHtml import LeHtml, criaHistoricoCSV
 
 import pandas as pd
 
-
-class Linha(BaseModel):
-    disciplina: str 
-    codigo: str 
-    semestre: str
 
 
 def generate_unique_filename(filename):
@@ -46,8 +42,6 @@ def generate_unique_filename(filename):
 
 
 app = FastAPI()
-
-UPLOAD_DIR = "uploads"
 
 
 # Define as origens de onde pode receber requisições
@@ -64,9 +58,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Dicionario global para armazenar os resultados do processamento
-RESULTS = {}
-
 
 # a palavra-chave async nas funções de endpoint permite que a função seja executada de maneira assíncrona, sem bloquear outras requisições.
 # Essa é uma das vantagens da FastAPI, que já suporta programação assíncrona nativamente
@@ -77,12 +68,13 @@ async def upload_html(file: UploadFile = File(...)):
     
     # processa o conteúdo do arquivo para retornar os dados dele
     conteudo_arquivo = file.file.read() 
-    dados_extraidos = LeHtml(conteudo_arquivo)
+
+    try:
+        dados_extraidos = LeHtml(conteudo_arquivo)
+    except:
+        raise HTTPException(status_code=400, detail = "Tipo de HTML não identificado. Verifique se é o historico escolar ou histórico do curso disponibilizado no Portal do Aluno.")
+        
     return dados_extraidos
-
-    
-
-
 
 
 def plot_function(summarised_metrics, remaining_index, total_credits, title):
@@ -168,33 +160,69 @@ async def get_regras_equivalencia():
 
 
 
+ANO_ATUAL = 2026
+BARRA_ATUAL = 1
+
+def calculate_temporality(semestre_ingresso: str):
+    ano_ingresso, barra_ingresso = semestre_ingresso.split("/")
+    
+
+    diff_anos = ANO_ATUAL - int(ano_ingresso)
+    diff_barra = BARRA_ATUAL - int(barra_ingresso)
+
+    return diff_anos * 2 + diff_barra + 1
+
+
+
+
+class CalculateRequest(BaseModel):
+    tabela: List[List[str]]
+    semestre_ingresso: str
+
 @app.post(path="/calculate/")
-async def calculate(tabela: list[list[str]]):
+async def calculate(dados: CalculateRequest):
     """
     Recebe uma tabela de histórico via POST, processa os dados,
     gera gráficos e retorna um histórico organizado por etapas.
     
     """
 
+    tabela = dados.tabela
+    semestre_ingresso = dados.semestre_ingresso
+
+
+
     # Testa se a tabela está vazia. Se estiver, encerra
+    if len(tabela) == 0:
+        raise HTTPException(status_code=400, detail="Histórico Vazio. Insira alguma cadeira para continuar")
+
+    temporalidade = calculate_temporality(semestre_ingresso)
+
+    if temporalidade <= 0:
+        raise HTTPException(status_code=400, detail=f"Semestre de ingresso inserido inválido. Insira um semestre anterior ou igual ao atual: {ANO_ATUAL}/{BARRA_ATUAL}")
 
 
     # Cria um diretório temporário para salvar os arquivos gerados
-    nome_unico = generate_unique_filename("1000")
+    nome_unico = generate_unique_filename(str(int(time.time())))
     os.mkdir(nome_unico)
     file_path = os.path.join(os.path.dirname(__file__), nome_unico)
 
     # Salva o CSV com o histórico enviado
 
     try:
-        criaHistoricoCSV(tabela, os.path.join(file_path, "historico.csv"))
+        criaHistoricoCSV(tabela, os.path.join(file_path, "historico.csv"), temporalidade)
     except:
         raise HTTPException(status_code=400, detail="Erro ao criar o histórico.") 
 
-    file_path = os.path.join(os.path.dirname(__file__), "teste_historico_completo")
 
     # Executa os scripts
-    result = subprocess.run(["ClassHistoryConverter/scripts/update.sh", file_path], capture_output=True, text=True, check=True)
+    try:
+        result = subprocess.run(
+        ["ClassHistoryConverter/scripts/update.sh", file_path], capture_output=True, text=True, check=True)
+    except subprocess.CalledProcessError as e:
+        print("STDOUT:", e.stdout)
+        print("STDERR:", e.stderr)
+        raise HTTPException(status_code=500, detail=f"Erro no script: {e.stderr}")
 
     # Carrega os dados resumidos gerados pelo script
     summarised_metrics = pd.read_csv(os.path.join(file_path, "summarised_metrics_from_novo_historico_ortodoxo.csv"))
@@ -205,7 +233,6 @@ async def calculate(tabela: list[list[str]]):
     new_obligatory_credit_demand = 166
     new_elective_credit_demand = 20
 
-    print("Teste")
 
     # Lista de imagens dos gráficos
     return_value = {}
@@ -265,10 +292,6 @@ async def calculate(tabela: list[list[str]]):
     
     obligatoryClasses = history_table[history_table["etapa"] != 0]
     alreadyDoneClasses = obligatoryClasses[obligatoryClasses["qt_students_needing_it"] == 0]["nome"]
-
-    print("///////////////////////////////")
-    print(alreadyDoneClasses)
-    print("///////////////////////////////")
 
 
     # Remove duplicatas (porque se uma mesma cadeira é obtida por mais de 1 regra diferente, ela vai aparecer múltiplas vezes)    

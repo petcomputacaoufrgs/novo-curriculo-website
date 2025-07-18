@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import api from "../../api";
 
+import {isAxiosError} from "axios";
+
 import { FrontData } from "../../types";
 import Tabs from "../Tabs";
 
@@ -13,7 +15,7 @@ const UploadForm = () => {
 
   const [frontData, setFrontData] = useState<null | FrontData>(null);
 
-  const [blobUrl, setBlobUrl] = useState("");
+  const [blobUrl, setBlobUrl] = useState<string | null>(null);
 
 
   const [windowSize, setWindowSize] = useState(window.innerWidth);
@@ -28,6 +30,28 @@ const UploadForm = () => {
     if(window.innerWidth >= 300)
       return 4;
   }
+
+
+  const handleError = (e: unknown) => {
+    if (isAxiosError(e)) {
+
+      if (e.response) {
+        // erro com resposta do backend
+        const detail = e.response.data.detail;
+        setMessage(`Erro: ${detail}`);
+      } 
+      
+      else {
+        setMessage("Erro: Não foi possível conectar ao servidor.");
+      }
+    } 
+    
+    else {
+      setMessage("Erro inesperado.");
+    }
+
+}
+
   const [show, setShow] = useState(getWhichGraphShow())
 
 
@@ -68,21 +92,20 @@ const UploadForm = () => {
 
       const response = await api.post("/upload/", formData);
 
-      setState(response.data);
-      console.log(response.data);
+      console.log(response.data)
 
-      //setMessage(response.data.message);
-      //setCharset(response.data.charset);
+      setState(response.data.dados);
+
+      setMessage("");
 
     } catch (error) {
-      setMessage("Erro no upload");
-      setCharset("");
+      handleError(error);
     }
   };
 
   const calculate = async () => {
     try {
-      const response = await api.post("/calculate/", state);
+      const response = await api.post("/calculate/", { tabela: state, semestre_ingresso: "2023/1" });
       
       setFrontData(response.data);
 
@@ -98,15 +121,14 @@ const UploadForm = () => {
             }
 
       setBlobUrl(urlBlob);
+      setMessage("");
+
 
 
     } catch (error) {
-      setMessage("Erro no cálculo");
-      setCharset("");
+      handleError(error);
     }
   }
-
-  console.log(blobUrl);
 
   return (
     <div>
@@ -117,10 +139,10 @@ const UploadForm = () => {
       <p>{charset}</p>
 
       {/* Segue uma gambiarra das brabas aqui. Pelo menos é estável e funciona */}
-      {show == 1 && <iframe style={{width: "1500px", height: "60vh"}} id="meuIframe" src={blobUrl}></iframe>}
-      {show == 2 && <iframe style={{width: "1000px", height: "60vh"}} id="meuIframe" src={blobUrl}></iframe>}
-      {show == 3 && <iframe style={{width: "600px", height: "60vh"}} id="meuIframe" src={blobUrl}></iframe>}
-      {show == 4 && <iframe style={{width: "300px", height: "60vh"}} id="meuIframe" src={blobUrl}></iframe>}
+      {show == 1 && blobUrl && <iframe style={{width: "1500px", height: "60vh"}} id="meuIframe" src={blobUrl}></iframe>}
+      {show == 2 && blobUrl && <iframe style={{width: "1000px", height: "60vh"}} id="meuIframe" src={blobUrl}></iframe>}
+      {show == 3 && blobUrl && <iframe style={{width: "600px", height: "60vh"}} id="meuIframe" src={blobUrl}></iframe>}
+      {show == 4 && blobUrl && <iframe style={{width: "300px", height: "60vh"}} id="meuIframe" src={blobUrl}></iframe>}
         
       {frontData && <Tabs frontData={frontData}></Tabs>}
 
