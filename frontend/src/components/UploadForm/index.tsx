@@ -33,6 +33,8 @@ const UploadForm = () => {
       return 3;
     if(window.innerWidth >= 300)
       return 4;
+    else
+      return -1;
   }
 
 
@@ -56,7 +58,7 @@ const UploadForm = () => {
 
 }
 
-  const [show, setShow] = useState(getWhichGraphShow())
+  const [show, setShow] = useState<number>(getWhichGraphShow())
 
 
     useEffect(() => {
@@ -110,7 +112,7 @@ const UploadForm = () => {
 
   const calculate = async () => {
     try {
-      const response = await api.post("/calculate/", { tabela: state, semestre_ingresso: "2023/1" });
+      const response = await api.post("/calculate/", { tabela: state, semestre_ingresso: semester });
       
       setFrontData(response.data);
 
@@ -160,14 +162,8 @@ const UploadForm = () => {
       <button onClick={handleUpload}>Enviar</button>
       <button onClick={calculate}>Calcular</button>
       <p>{message}</p>
-
-      {/* Segue uma gambiarra das brabas aqui. Pelo menos é estável e funciona */}
-      {show == 1 && blobUrl && <iframe style={{width: "1500px", height: "60vh"}} id="meuIframe" src={blobUrl}></iframe>}
-      {show == 2 && blobUrl && <iframe style={{width: "1000px", height: "60vh"}} id="meuIframe" src={blobUrl}></iframe>}
-      {show == 3 && blobUrl && <iframe style={{width: "600px", height: "60vh"}} id="meuIframe" src={blobUrl}></iframe>}
-      {show == 4 && blobUrl && <iframe style={{width: "300px", height: "60vh"}} id="meuIframe" src={blobUrl}></iframe>}
         
-      {frontData && <Tabs frontData={frontData}></Tabs>}
+      {frontData && <Tabs frontData={frontData} blobUrl={blobUrl}></Tabs>}
 
       <div style={{display: "flex"}}>
         <p>Selecione o semestre de conclusão da sua primeira cadeira</p>

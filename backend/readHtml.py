@@ -141,7 +141,6 @@ def criaHistoricoCSV(dados, filePath, temporalidade):
 
     df = pd.DataFrame(dados, columns=['ingresso', 'titulo', 'codigo'])
     
-    print("Chegando em criaHistorico")
 
     # Adiciona as regras de temporalidade
     limite_inferior_regras_temporalidade = 4
@@ -150,13 +149,9 @@ def criaHistoricoCSV(dados, filePath, temporalidade):
     if temporalidade > limite_superior_regras_temporalidade:
         temporalidade = limite_superior_regras_temporalidade
 
-    print("Chegando em criaHistorico")
 
     while temporalidade >= limite_inferior_regras_temporalidade:
-        print("Chegando em criaHistorico")
-        print(len(df))
         df.loc[len(df)] = ['2026/1', f'Ingresso até Temp-{temporalidade}', f'Temp-{temporalidade}']
-        print("A")
         temporalidade = temporalidade - 1
 
 

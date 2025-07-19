@@ -63,7 +63,7 @@ type Props = {
 export const DropdownInput: React.FC<Props> = ({ options, value, onSelect, backgroundColor = "white", fontWeight = "normal", borderRadius = "4px"}) => {
 
   const [open, setOpen] = useState(false);
-  const validOption = options.map((option) => option.toLowerCase()).includes(value.toLowerCase());
+  const validOption = options.includes(value);
 
   const ref = useRef<HTMLDivElement>(null);
 

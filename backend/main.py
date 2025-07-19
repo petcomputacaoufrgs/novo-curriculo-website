@@ -155,7 +155,6 @@ async def get_regras_equivalencia():
 
     regras = regras.sort_values(by=["nome_fez"])
 
-    print(regras)
     return regras.to_dict(orient="records")
 
 
@@ -172,6 +171,16 @@ def calculate_temporality(semestre_ingresso: str):
 
     return diff_anos * 2 + diff_barra + 1
 
+
+def traduzir_path(path_col: pd.Series, df_nomes: pd.DataFrame) -> pd.Series:
+    mapa = df_nomes.set_index('codigo')['nome'].to_dict()
+    
+    return (
+        path_col
+        .str.split('>')                # separa os códigos
+        .apply(lambda cods: [mapa.get(c, c) for c in cods])  # traduz cada código
+        .str.join(' > ')              # junta de volta em string com " > "
+    )
 
 
 
@@ -197,6 +206,8 @@ async def calculate(dados: CalculateRequest):
         raise HTTPException(status_code=400, detail="Histórico Vazio. Insira alguma cadeira para continuar")
 
     temporalidade = calculate_temporality(semestre_ingresso)
+    print(semestre_ingresso)
+    print(temporalidade)
 
     if temporalidade <= 0:
         raise HTTPException(status_code=400, detail=f"Semestre de ingresso inserido inválido. Insira um semestre anterior ou igual ao atual: {ANO_ATUAL}/{BARRA_ATUAL}")
@@ -285,6 +296,13 @@ async def calculate(dados: CalculateRequest):
 
 
     return_value["historico"] = history_table_separated
+
+
+    # Maiores Caminhos
+    df_paths = pd.read_csv(os.path.join(file_path, "semesters_remaining_by_student_comparison_from_novo_historico_flexivel.csv"))
+    return_value["caminho_antigo"] = traduzir_path(df_paths['old_path'], disciplines).loc[0]
+    return_value["caminho_novo"] = traduzir_path(df_paths['new_path'], disciplines).loc[0]
+
 
     # TODO: editar diagrama
 

@@ -14,6 +14,7 @@ export interface SummarizedMetrics {
     obrigatorios_novos: number[];
     total_antigos: number[];
     total_novos: number[];
+
 }
 
 export interface LinhaHistorico {
@@ -30,6 +31,8 @@ export interface FrontData {
   historico: LinhaHistorico[];
   images: OverViewImages;
   summarized_metrics: SummarizedMetrics;
+  caminho_antigo: string;
+  caminho_novo: string;
 }
 
 

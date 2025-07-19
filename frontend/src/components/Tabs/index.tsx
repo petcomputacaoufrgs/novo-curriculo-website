@@ -3,12 +3,14 @@ import { AbaContainer, Aba, Conteudo } from './styled'
 import { FrontData } from '../../types'
 import Overview from '../Overview';
 import { DropdownInput } from '../DropDownInput';
+import DiagramaComResumo from '../DiagramaComResumo';
 
 interface ITabs {
   frontData?: FrontData;
+  blobUrl: string | null;
 }
 
-const Tabs: React.FC<ITabs> = ({frontData}: ITabs) => {
+const Tabs: React.FC<ITabs> = ({frontData, blobUrl}: ITabs) => {
   const abas = ['Overview', 'Diagramas', 'Histórico Novo', 'Regras de Transição'] as const;
   type Aba = typeof abas[number];
 
@@ -17,18 +19,21 @@ const Tabs: React.FC<ITabs> = ({frontData}: ITabs) => {
   const [windowSize, setWindowSize] = useState(window.innerWidth);
 
 
+useEffect(() => {
+  let timeout: ReturnType<typeof setTimeout>;
 
-  useEffect(() => {
-      const handleResize = () => {
-        setWindowSize(window.innerWidth);
-      };
+  const handleResize = () => {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => {
+      setWindowSize(window.innerWidth);
+    }, 300);
+  };
+
+  window.addEventListener("resize", handleResize);
+  return () => window.removeEventListener("resize", handleResize);
+}, []);
+
   
-      window.addEventListener("resize", handleResize);
-      return () => window.removeEventListener("resize", handleResize);
-    }, []);
-
-
-
   return (
     <div style={{ margin: '5%', width: 'auto', padding: '10px', maxHeight: '800px', display: "flex", flexDirection: "column" }}>
 
@@ -56,7 +61,9 @@ const Tabs: React.FC<ITabs> = ({frontData}: ITabs) => {
 
       <Conteudo>
         {abaAtiva === 'Overview' && frontData && <Overview images={frontData.images} metrics={frontData.summarized_metrics}/>}
-        {abaAtiva === 'Diagramas' && <div>Conteúdo da aba "Diagramas"</div>}
+        
+        {abaAtiva === 'Diagramas' && <DiagramaComResumo blobUrl={blobUrl} windowSize={windowSize} frontData={frontData} />}
+        
         {abaAtiva === 'Histórico Novo' && <div>Conteúdo da aba "Histórico Novo"</div>}
         {abaAtiva === 'Regras de Transição' && <div>Conteúdo da aba "Regras de Transição"</div>}
       </Conteudo>
