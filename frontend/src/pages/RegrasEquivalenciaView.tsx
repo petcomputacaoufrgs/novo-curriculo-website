@@ -8,10 +8,16 @@ import RegrasEquivalencia from "../components/RegrasDeEquivalencia"
 
 const RegrasEquivalenciaView = () => {
 
+  const links = [
+    {link: "#", label: "Tutorial", target: "_self"},
+    {link: "/home", label: "Conversor CIC", target: "_self"},
+    {link: "https://codeberg.org/hbecker/ClassHistoryConverter", label: "Conversor de Histórico (Repositório)", target: "_blank"}
+  ]
+
 
   return (
     <>
-      <Navbar />
+      <Navbar links={links}/>
       
       <About 
         title="Regras de Equivalência" 

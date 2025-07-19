@@ -5,11 +5,12 @@ import {isAxiosError} from "axios";
 
 import { FrontData } from "../../types";
 import Tabs from "../Tabs";
+import { DropdownInput } from "../DropDownInput";
+
 
 const UploadForm = () => {
   const [file, setFile] = useState<File | null>(null);
   const [message, setMessage] = useState("");
-  const [charset, setCharset] = useState("");
 
   const [state, setState] = useState<string[][]>([]);
 
@@ -19,6 +20,9 @@ const UploadForm = () => {
 
 
   const [windowSize, setWindowSize] = useState(window.innerWidth);
+
+
+  const [semester, setSemester] = useState("Semestre");
 
   const getWhichGraphShow = () => {
     if(window.innerWidth >= 1500)
@@ -95,7 +99,8 @@ const UploadForm = () => {
       console.log(response.data)
 
       setState(response.data.dados);
-
+      setSemester(response.data.semestre_ingresso);
+      
       setMessage("");
 
     } catch (error) {
@@ -130,13 +135,31 @@ const UploadForm = () => {
     }
   }
 
+
+  const min_year = 1990;
+  const current_year = 2026;
+  const current_semester: number = 1;
+
+
+  let options = [];
+
+  for(var i = min_year; i < current_year; i++){
+    options.unshift(`${i}/1`);
+    options.unshift(`${i}/2`);
+  }
+
+  options.unshift(`${current_year}/1`);
+
+  if(current_semester == 2)
+    options.unshift(`${current_year}/2`);
+
+
   return (
     <div>
       <input type="file" accept=".html" onChange={handleFileChange} />
       <button onClick={handleUpload}>Enviar</button>
       <button onClick={calculate}>Calcular</button>
       <p>{message}</p>
-      <p>{charset}</p>
 
       {/* Segue uma gambiarra das brabas aqui. Pelo menos é estável e funciona */}
       {show == 1 && blobUrl && <iframe style={{width: "1500px", height: "60vh"}} id="meuIframe" src={blobUrl}></iframe>}
@@ -145,6 +168,11 @@ const UploadForm = () => {
       {show == 4 && blobUrl && <iframe style={{width: "300px", height: "60vh"}} id="meuIframe" src={blobUrl}></iframe>}
         
       {frontData && <Tabs frontData={frontData}></Tabs>}
+
+      <div style={{display: "flex"}}>
+        <p>Selecione o semestre de conclusão da sua primeira cadeira</p>
+        <DropdownInput value={semester} onSelect={(value: string) => setSemester(value)} options={options}/>
+      </div>
 
     </div >
   );

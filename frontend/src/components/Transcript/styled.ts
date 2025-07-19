@@ -1,6 +1,5 @@
 import styled from 'styled-components'
 export const OuterTranscriptBox = styled.div`
-  margin: 5%;
   border-radius: 15px;
   background-color: rgba(122, 142, 167, 1);
   padding: 10px;
