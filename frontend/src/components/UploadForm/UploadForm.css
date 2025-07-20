@@ -28,11 +28,13 @@
 .convert-button:hover{
     transform: scale(1.05);
     transition: all 0.3s ease;
+    background-color: rgb(21, 28, 46);
 }
 
 .load-history:hover{
     transform: scale(1.05);
     transition: all 0.3s ease;
+    background-color: rgb(21, 28, 46);
 }
 
 .load-history:active{

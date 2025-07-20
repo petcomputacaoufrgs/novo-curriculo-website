@@ -12,8 +12,10 @@ interface Props {
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: 85%;
   align-items: flex-start;
+  padding: 30px 0 30px 0;
+  gap: 16px;
 `;
 
 const IframeWrapper = styled.div`
@@ -23,7 +25,7 @@ const IframeWrapper = styled.div`
 
 const StyledIframe = styled.iframe`
   width: 100%;
-  height: 42vw;
+  height: 38vw;
   border-radius: 15px;
 `;
 
@@ -31,7 +33,7 @@ const TextoIntro = styled.p`
   margin-top: 1rem;
   margin-bottom: 0.5rem;
   font-weight: bold;
-  font-size: 1.1rem;
+  font-size: 18px;
   text-align: left;
 `;
 
@@ -58,7 +60,7 @@ const DiagramaComResumo: React.FC<Props> = ({ blobUrl, windowSize, frontData }) 
       </IframeWrapper>
 
       {frontData && (
-        <>
+        <div>
           <TextoIntro>
             Caminho mais longo a partir dos pré-requisitos (mínimo de semestres para concluir todas as obrigatórias assumindo que tu sempre faça todas as possíveis):
           </TextoIntro>
@@ -70,7 +72,7 @@ const DiagramaComResumo: React.FC<Props> = ({ blobUrl, windowSize, frontData }) 
               Currículo Novo (tamanho {frontData.caminho_novo.split(">").length}): {frontData.caminho_novo}
             </Topico>
           </Lista>
-        </>
+        </div>
       )}
     </Container>
   );

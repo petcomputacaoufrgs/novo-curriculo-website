@@ -1,72 +1,74 @@
 import { useEffect, useRef, useState } from "react";
 import api from "../../api";
 
-import { FrontData } from "../../types";
-import Tabs from "../Tabs";
 import './UploadForm.css'
 import uploadIcon from '../../assets/upload_icon.png'
+import { isAxiosError } from "axios";
 
 type LoadbProps = {
-    setFile: (file: File) => void;
+    setState: (state: string[][]) => void;
+    setCurso: (curso: string) => void;
+    setSemester: (semester: string) => void;
 };
 
 
-const Loadb = ({ setFile }: LoadbProps) =>{
-  const [message, setMessage] = useState("");
-  const [charset, setCharset] = useState("");
-
-  const [state, setState] = useState<string[][]>([]);
-
-  const [frontData, setFrontData] = useState<null | FrontData>(null);
-
-  const [blobUrl, setBlobUrl] = useState("");
+const Loadb = ({ setState, setCurso, setSemester }: LoadbProps) =>{
 
 
-  const [windowSize, setWindowSize] = useState(window.innerWidth);
+  const [message, setMessage] = useState<string>("");
+
+    const handleError = (e: unknown) => {
+    if (isAxiosError(e)) {
+
+      if (e.response) {
+        // erro com resposta do backend
+        const detail = e.response.data.detail;
+        setMessage(`Erro: ${detail}`);
+      } 
+      
+      else {
+        setMessage("Erro: Não foi possível conectar ao servidor.");
+      }
+    } 
+    
+    else {
+      setMessage("Erro inesperado.");
+    }
+
+}
 
 
-
-  const getWhichGraphShow = () => {
-    if(window.innerWidth >= 1500)
-      return 1;
-    if(window.innerWidth >= 1000)
-      return 2;
-    if(window.innerWidth >= 500)
-      return 3;
-    if(window.innerWidth >= 300)
-      return 4;
-  }
-  const [show, setShow] = useState(getWhichGraphShow())
-
-
-    useEffect(() => {
-      const handleResize = () => {
-        setWindowSize(window.innerWidth);
-      };
-  
-      window.addEventListener("resize", handleResize);
-      return () => window.removeEventListener("resize", handleResize);
-    }, []);
-
-      useEffect(() => {
-        setShow(getWhichGraphShow());
-        return () => {};
-      }, [windowSize]);
-
-
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
 
     const files = event.target.files;
+
     if (files && files.length > 0) {
-      setFile(files[0]);
-      setMessage("Arquivo selecionado com sucesso!");
+      const formData = new FormData();
+
+    formData.append("file", files[0]);  // Nome do campo deve ser "file", igual no backend
+
+    try {
+
+      const response = await api.post("/upload/", formData);
+
+      console.log(response.data)
+
+      setState(response.data.dados);
+      setSemester(response.data.semestre_ingresso);
+      setCurso(response.data.curso);
+
+      setMessage("");
+
+    } catch (error) {
+      handleError(error);
+    }
+      
     }
     else{
         setMessage("Nenhum arquivo selecionado!")
     }
   };
 
-  console.log(blobUrl);
   return (
     <div className = 'center-button'>
       <label className = "load-history">

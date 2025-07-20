@@ -11,6 +11,7 @@ import Loadb from '../components/UploadForm/loadb.tsx'
 import Convertb from '../components/UploadForm/convertb.tsx'
 
 import './App.css'
+import { FrontData } from '../types.ts'
 
 const HomePage = () => {
   const [isDark, setIsDark] = useState(false)
@@ -28,7 +29,12 @@ const HomePage = () => {
 
 
   const [semester, setSemester] = useState("Semestre");
-  
+  const [curso, setCurso] = useState("CIC");
+  const [state, setState] = useState<string[][]>([]);
+  const [frontData, setFrontData] = useState<FrontData | undefined>();
+  const [url, setBlobUrl] = useState<string | undefined>();
+
+
   const min_year = 1990;
   const current_year = 2026;
   const current_semester: number = 1;
@@ -54,7 +60,6 @@ const HomePage = () => {
     {link: "https://codeberg.org/hbecker/ClassHistoryConverter", label: "Conversor de Histórico (Repositório)", target: "_blank"}
   ]
 
-  const [file, setFile] = useState<File | null>(null)
 
   return (
     <>
@@ -64,11 +69,17 @@ const HomePage = () => {
           title="Bacharelado em Ciência da Computação" 
           text="O currículo da CIC está para ser reformulado, então o grupo PET Computação fez um esforço conjunto com o GT da troca de currículo e 
                 especialmente junto com o Professor Henrique Becker (responsável pelo código em Julia que faz a conversão) de fazer um site onde seja rápido e fácil ver as mudanças de transição."/>
-        <Loadb setFile = {setFile}/>
+        
+        <Loadb setCurso={setCurso} setSemester={setSemester} setState={setState}/>
+        
         <Transcript semester={semester} onSelectSemester={(value: string) => setSemester(value)} optionsToSemesterButton={options}/>
-          <Convertb file = {file} />
+        
+        <Convertb curso={curso} semester={semester} state={state} setFrontData={setFrontData} setBlobUrl={setBlobUrl} />
+        
         <Divider />
-        <Tabs />
+        
+        {frontData && url &&<Tabs frontData={frontData} blobUrl={url}/>}
+        
         <Footer />
       </ThemeProvider>
 

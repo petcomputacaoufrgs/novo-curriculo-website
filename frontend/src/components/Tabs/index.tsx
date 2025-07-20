@@ -6,8 +6,8 @@ import { DropdownInput } from '../DropDownInput';
 import DiagramaComResumo from '../DiagramaComResumo';
 
 interface ITabs {
-  frontData?: FrontData;
-  blobUrl?: string;
+  frontData: FrontData;
+  blobUrl: string;
 }
 
 const Tabs: React.FC<ITabs> = ({frontData, blobUrl}: ITabs) => {
@@ -59,9 +59,9 @@ useEffect(() => {
       }
 
       <Conteudo>
-        {abaAtiva === 'Overview' && frontData && <Overview images={frontData.images} metrics={frontData.summarized_metrics}/>}
+        {abaAtiva === 'Overview' && <Overview images={frontData.images} metrics={frontData.summarized_metrics}/>}
         
-        {abaAtiva === 'Diagramas' && blobUrl && <DiagramaComResumo blobUrl={blobUrl} windowSize={windowSize} frontData={frontData} />}
+        {abaAtiva === 'Diagramas' && <DiagramaComResumo blobUrl={blobUrl} windowSize={windowSize} frontData={frontData} />}
         
         {abaAtiva === 'Histórico Novo' && <div>Conteúdo da aba "Histórico Novo"</div>}
       </Conteudo>
