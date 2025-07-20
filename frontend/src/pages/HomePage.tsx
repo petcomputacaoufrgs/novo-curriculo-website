@@ -8,8 +8,8 @@ import Tabs from "../components/Tabs"
 import { ThemeProvider } from 'styled-components'
 import { lightTheme, darkTheme } from '../themes'
 import UploadForm2 from '../components/UploadForm/index2.tsx'
-import LoadButton from '../components/UploadForm/load.tsx'
-import ConvertButton from '../components/UploadForm/convert.tsx'
+import Loadb from '../components/UploadForm/loadb.tsx'
+import Convertb from '../components/UploadForm/convertb.tsx'
 
 import './App.css'
 
@@ -26,6 +26,8 @@ const HomePage = () => {
     return () => media.removeEventListener('change', listener)
   }, [])
 
+  const [file, setFile] = useState<File | null>(null)
+
   return (
     <>
       <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
@@ -35,8 +37,9 @@ const HomePage = () => {
           text="O currículo da CIC está para ser reformulado, então o grupo PET Computação fez um esforço conjunto com o GT da troca de currículo e 
                 especialmente junto com o Professor Henrique Becker (responsável pelo código em Julia que faz a conversão) de fazer um site onde seja rápido e fácil ver as mudanças de transição."/>
 
-        <UploadForm2 />
+      <Loadb setFile = {setFile}/>
         <Transcript />
+      <Convertb file = {file} />
         <Divider />
         <Tabs />
         <Footer />

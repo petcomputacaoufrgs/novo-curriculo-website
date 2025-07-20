@@ -5,8 +5,13 @@ import { FrontData } from "../../types";
 import Tabs from "../Tabs";
 import './UploadForm.css'
 
-const ConvertButton = () => {
-  const [file, setFile] = useState<File | null>(null);
+type ConvertbProps = {
+  file: File | null;
+};
+
+
+function Convertb(props: ConvertbProps){
+
   const [message, setMessage] = useState("");
   const [charset, setCharset] = useState("");
 
@@ -18,6 +23,8 @@ const ConvertButton = () => {
 
 
   const [windowSize, setWindowSize] = useState(window.innerWidth);
+
+  const file = props.file;
 
 
   const getWhichGraphShow = () => {
@@ -47,7 +54,7 @@ const ConvertButton = () => {
         return () => {};
       }, [windowSize]);
 
-  const handleUpload = async () => {
+        const handleUpload = async () => {
     if (!file) {
       setMessage("Selecione um arquivo primeiro!");
       return;
@@ -104,16 +111,25 @@ const ConvertButton = () => {
     await calculate();
   };
 
-  console.log(blobUrl);
 
-  return (
+  return(
     <div>
         <div className = "center-converter">
             <button className = "convert-button" onClick={handleConvert}>Converter</button>
         </div>
         <p>{message}</p>
-    </div>  
-  );
-};
+        <p>{charset}</p>
 
-export default ConvertButton;
+      {/* Segue uma gambiarra das brabas aqui. Pelo menos é estável e funciona */}
+      {show == 1 && <iframe style={{width: "1500px", height: "60vh"}} id="meuIframe" src={blobUrl}></iframe>}
+      {show == 2 && <iframe style={{width: "1000px", height: "60vh"}} id="meuIframe" src={blobUrl}></iframe>}
+      {show == 3 && <iframe style={{width: "600px", height: "60vh"}} id="meuIframe" src={blobUrl}></iframe>}
+      {show == 4 && <iframe style={{width: "300px", height: "60vh"}} id="meuIframe" src={blobUrl}></iframe>}
+        
+      {frontData && <Tabs frontData={frontData}></Tabs>}
+    </div>  
+  )
+
+}
+
+export default Convertb;

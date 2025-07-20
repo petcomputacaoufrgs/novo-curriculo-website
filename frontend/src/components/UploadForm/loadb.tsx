@@ -6,8 +6,12 @@ import Tabs from "../Tabs";
 import './UploadForm.css'
 import uploadIcon from '../../assets/upload_icon.png'
 
-const LoadButton = () => {
-  const [file, setFile] = useState<File | null>(null);
+type LoadbProps = {
+    setFile: (file: File) => void;
+};
+
+
+const Loadb = ({ setFile }: LoadbProps) =>{
   const [message, setMessage] = useState("");
   const [charset, setCharset] = useState("");
 
@@ -19,6 +23,7 @@ const LoadButton = () => {
 
 
   const [windowSize, setWindowSize] = useState(window.innerWidth);
+
 
 
   const getWhichGraphShow = () => {
@@ -62,7 +67,6 @@ const LoadButton = () => {
   };
 
   console.log(blobUrl);
-
   return (
     <div className = 'center-button'>
       <label className = "load-history">
@@ -73,6 +77,6 @@ const LoadButton = () => {
       <p>{message}</p>
     </div >
   );
-};
+}
 
-export default LoadButton;
+export default Loadb;
