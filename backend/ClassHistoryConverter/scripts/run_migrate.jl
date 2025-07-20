@@ -39,8 +39,8 @@
 
 # Code for automatically installing required packages.
 import Pkg
-Pkg.activate(@__DIR__)
-Pkg.instantiate()
+Pkg.activate(joinpath(@__DIR__, ".."))
+#Pkg.instantiate()
 
 import ClassHistoryConverter
 

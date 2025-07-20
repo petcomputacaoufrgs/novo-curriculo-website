@@ -16,10 +16,10 @@ def LeHtml(conteudo_html):
 
     parsed_html = BeautifulSoup(conteudo_html, 'html.parser')
     print("Arquivo HTML lido com sucesso.")
-    semestres, nomeDisciplinas, codigos, semestre_ingresso = extraiDados(parsed_html)
+    semestres, nomeDisciplinas, codigos, semestre_ingresso, curso_nome = extraiDados(parsed_html)
 
     
-    dados = {"dados": [[semestres[i], nomeDisciplinas[i], codigos[i]] for i in range(len(semestres)) if codigos[i] != "Not Found"], "semestre_ingresso": semestre_ingresso}
+    dados = {"dados": [[semestres[i], nomeDisciplinas[i], codigos[i]] for i in range(len(semestres)) if codigos[i] != "Not Found"], "semestre_ingresso": semestre_ingresso, "curso": curso_nome}
 
     return dados
 
@@ -53,7 +53,21 @@ def calculaSemestreIngresso(semestres: list[str]):
     return min(semestres, key=parse)
 
 def leHistoricoCurso(parsed_html):
-    # Encontra a tabela com o histórico do aluno.
+
+    # === 1. Recupera o nome do curso ===
+    div_moldura = parsed_html.select_one('div.moldura')
+    curso_nome = None
+    if div_moldura:
+        texto_moldura = div_moldura.get_text(separator="\n").upper()
+        if "CIÊNCIA DA COMPUTAÇÃO" in texto_moldura:
+            curso_nome = "CIC"
+        elif "ENGENHARIA DE COMPUTAÇÃO" in texto_moldura:
+            curso_nome = "ECP"
+        else:
+            print("Curso não identificado.")
+
+
+    # === 2. Encontra a tabela com o histórico do aluno. ===
     tabela = parsed_html.select_one('fieldset.moldura > table.modelo1')
     
     semestres = []
@@ -80,10 +94,25 @@ def leHistoricoCurso(parsed_html):
 
     semestre_ingresso = calculaSemestreIngresso(semestres)
 
-    return semestres, nomeDisciplinas, codigos, semestre_ingresso
+    return semestres, nomeDisciplinas, codigos, semestre_ingresso, curso_nome
 
 def leHistoricoEscolar(parsed_html):
-    # Encontra a tabela com o histórico do aluno.
+
+    # === 1. Recupera o nome do curso ===
+    div_moldura = parsed_html.select_one('div.moldura')
+
+    curso_nome = None
+    if div_moldura:
+        texto_moldura = div_moldura.get_text(separator="\n").upper()
+        if "CIÊNCIA DA COMPUTAÇÃO" in texto_moldura:
+            curso_nome = "CIC"
+        elif "ENGENHARIA DE COMPUTAÇÃO" in texto_moldura:
+            curso_nome = "ECP"
+        else:
+            print("Curso não identificado.")
+
+    
+    # === 2. Encontra a tabela com o histórico do aluno. ===
     tabela = parsed_html.select_one('fieldset.moldura > table.modelo1')
     
     semestres = []
@@ -104,16 +133,18 @@ def leHistoricoEscolar(parsed_html):
     else:
         print("Tabela do histórico não encontrada.")
 
-    codDisciplinas = getCodCadeiras(nomeDisciplinas)
+    codDisciplinas = getCodCadeiras(nomeDisciplinas, curso_nome)
 
     semestre_ingresso = calculaSemestreIngresso(semestres)
 
-    return semestres, nomeDisciplinas, codDisciplinas, semestre_ingresso
+    return semestres, nomeDisciplinas, codDisciplinas, semestre_ingresso, curso_nome
 
-def getCodCadeiras(nomeDisciplinas):
+def getCodCadeiras(nomeDisciplinas, curso_nome):
     # Carrega CSV com nome e códigos de disciplinas
-    pathArqCsv = os.path.join(os.path.dirname(__file__), 'disciplinas.csv')
+    pathArqCsv = os.path.join(os.path.dirname(__file__), 'ClassHistoryConverter', 'scripts', 'INF_UFRGS_DATA', curso_nome, 'disciplinas.csv')
+
     df = pd.read_csv(pathArqCsv, encoding="utf-8")
+
     if df.empty:
         print("Arquivo disciplinas.csv não encontrado.")
         return

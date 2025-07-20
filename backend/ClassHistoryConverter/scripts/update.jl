@@ -18,7 +18,7 @@
 #     a new mandatory class) gets a new optional code in the new curriculum.
 
 import Pkg
-Pkg.activate(@__DIR__)
+Pkg.activate(joinpath(@__DIR__, ".."))
 Pkg.instantiate() # IMPORTANT: if packages are not installed uncomment this
 
 import ClassHistoryConverter
@@ -168,31 +168,33 @@ function count_temps(old_history)
 end
 
 function main(ARGS = ARGS)
-	CLASSES_CSV        = joinpath(@__DIR__, "INF_UFRGS_DATA/disciplinas.csv")
-	FLEXIBLE_RULES_CSV = joinpath(@__DIR__, "INF_UFRGS_DATA/cenario_flexivel.csv")
-	ORTHODOX_RULES_CSV = joinpath(@__DIR__, "INF_UFRGS_DATA/cenario_ortodoxo.csv")
-	MIN_CRED_OPT_CSV   = joinpath(@__DIR__, "INF_UFRGS_DATA/minimo_eletivo.csv")
 
-	OUTPUT_DIR = "outputTemp"
-
-	if !(length(ARGS) ∈ (1, 5, 6))
+	if !(length(ARGS) ∈ (2, 6, 7))
 		println("Usage: julia $(basename(@__FILE__)) classes.csv flexible_rules.csv orthodox_rules.csv history.csv [minimo_eletivo.csv]")
 		println("IMPORTANT: if executed as ./$(basename(@__FILE__)) the path to the script and each of its arguments must not have spaces.")
 		exit()
 	end
 
 	OUTPUT_DIR = ARGS[1]
+	INPUT_DIR = ARGS[2]
 
 	HISTORY_CSV        = joinpath(OUTPUT_DIR, "historico.csv")
 
-	if length(ARGS) >= 5
-		CLASSES_CSV = ARGS[2]
-		FLEXIBLE_RULES_CSV = ARGS[3]
-		ORTHODOX_RULES_CSV = ARGS[4]
-		HISTORY_CSV = ARGS[5]
-	end
+
+
+	CLASSES_CSV        = joinpath(@__DIR__, "INF_UFRGS_DATA", INPUT_DIR, "disciplinas.csv")
+	FLEXIBLE_RULES_CSV = joinpath(@__DIR__, "INF_UFRGS_DATA", INPUT_DIR, "cenario_flexivel.csv")
+	ORTHODOX_RULES_CSV = joinpath(@__DIR__, "INF_UFRGS_DATA", INPUT_DIR, "cenario_ortodoxo.csv")
+	MIN_CRED_OPT_CSV   = joinpath(@__DIR__, "INF_UFRGS_DATA", INPUT_DIR, "minimo_eletivo.csv")
+
 	if length(ARGS) >= 6
-		MIN_CRED_OPT_CSV = ARGS[6]
+		CLASSES_CSV = ARGS[3]
+		FLEXIBLE_RULES_CSV = ARGS[4]
+		ORTHODOX_RULES_CSV = ARGS[5]
+		HISTORY_CSV = ARGS[6]
+	end
+	if length(ARGS) >= 7
+		MIN_CRED_OPT_CSV = ARGS[7]
 	end
 
 

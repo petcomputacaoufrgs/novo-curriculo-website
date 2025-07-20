@@ -46,6 +46,7 @@ const HomePage = () => {
 
 
   const links = [
+    {link: "https://www.inf.ufrgs.br/~eslgastal/gt-cic/novo-curriculo-cic-consolidado.html", label: "Informações Oficiais (CIC)", target: "_blank"},
     {link: "#", label: "Tutorial", target: "_self"},
     {link: "/regras", label: "Regras de Equivalência", target: "_self"},
     {link: "https://codeberg.org/hbecker/ClassHistoryConverter", label: "Conversor de Histórico (Repositório)", target: "_blank"}

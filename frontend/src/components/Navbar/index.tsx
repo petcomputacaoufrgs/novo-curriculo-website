@@ -47,7 +47,7 @@ const Navbar = ({links} : INavBar) => {
           </a>
         </Logos>
 
-        {windowSize > 500 ? (
+        {windowSize > 640 ? (
           <MenuList>
             {links.map((link) => (
               <MenuItem key={link.label}>

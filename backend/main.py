@@ -151,7 +151,7 @@ def plot_function(summarised_metrics, remaining_index, total_credits, title):
 
 @app.get(path="/api/regrasEquivalencia")
 async def get_regras_equivalencia():
-    regras = pd.read_csv("ClassHistoryConverter/scripts/INF_UFRGS_DATA/equivalencias_completas_final.csv")
+    regras = pd.read_csv(f"ClassHistoryConverter/scripts/INF_UFRGS_DATA/CIC/equivalencias_completas_final.csv")
 
     regras = regras.sort_values(by=["nome_fez"])
 
@@ -187,6 +187,7 @@ def traduzir_path(path_col: pd.Series, df_nomes: pd.DataFrame) -> pd.Series:
 class CalculateRequest(BaseModel):
     tabela: List[List[str]]
     semestre_ingresso: str
+    curso: str
 
 @app.post(path="/calculate/")
 async def calculate(dados: CalculateRequest):
@@ -198,7 +199,10 @@ async def calculate(dados: CalculateRequest):
 
     tabela = dados.tabela
     semestre_ingresso = dados.semestre_ingresso
+    curso = dados.curso
 
+    if(curso != "CIC" and curso != "ECP"):
+        raise HTTPException(status_code=400, detail=f"Curso deve ser Ciência da Computação ou Engenharia da Computação. Curso inserido: {curso}")
 
 
     # Testa se a tabela está vazia. Se estiver, encerra
@@ -229,20 +233,28 @@ async def calculate(dados: CalculateRequest):
     # Executa os scripts
     try:
         result = subprocess.run(
-        ["ClassHistoryConverter/scripts/update.sh", file_path], capture_output=True, text=True, check=True)
+        ["ClassHistoryConverter/scripts/update.sh", file_path, curso], capture_output=True, text=True, check=True)
     except subprocess.CalledProcessError as e:
         print("STDOUT:", e.stdout)
         print("STDERR:", e.stderr)
         raise HTTPException(status_code=500, detail=f"Erro no script: {e.stderr}")
 
+
     # Carrega os dados resumidos gerados pelo script
-    summarised_metrics = pd.read_csv(os.path.join(file_path, "summarised_metrics_from_novo_historico_ortodoxo.csv"))
+    summarised_metrics = pd.read_csv(os.path.join(file_path, "summarised_metrics_from_novo_historico_flexivel.csv"))
 
     # Define os totais de créditos exigidos para o currículo novo e antigo
-    old_obligatory_credit_demand = 152
-    old_elective_credit_demand = 24
-    new_obligatory_credit_demand = 166
-    new_elective_credit_demand = 20
+
+    if(curso == "CIC"):
+        old_obligatory_credit_demand = 152
+        old_elective_credit_demand = 24
+        new_obligatory_credit_demand = 166
+        new_elective_credit_demand = 20
+    elif(curso == "ECP"):
+        old_obligatory_credit_demand = 158
+        old_elective_credit_demand = 36
+        new_obligatory_credit_demand = 148
+        new_elective_credit_demand = 36
 
 
     # Lista de imagens dos gráficos
@@ -270,7 +282,7 @@ async def calculate(dados: CalculateRequest):
 
 
 
-    disciplines = pd.read_csv("disciplinas.csv")
+    disciplines = pd.read_csv(f"ClassHistoryConverter/scripts/INF_UFRGS_DATA/{curso}/disciplinas.csv")
 
     # Coloca informações das disciplinas nas tabelas de novo histórico e nova demanda (merge no campo codigo)
     new_history = new_history.merge(disciplines[['codigo', 'etapa', 'nome', 'creditos']], on="codigo", how="left")
@@ -306,11 +318,14 @@ async def calculate(dados: CalculateRequest):
 
     # TODO: editar diagrama
 
-    HTML_FILE_PATH = "DiagramaFinalBrabuleta.html"
+    HTML_FILE_PATH = f"ClassHistoryConverter/scripts/INF_UFRGS_DATA/{curso}/Diagrama.html"
     
     obligatoryClasses = history_table[history_table["etapa"] != 0]
     alreadyDoneClasses = obligatoryClasses[obligatoryClasses["qt_students_needing_it"] == 0]["nome"]
 
+
+    print(history_table.head())
+    print(alreadyDoneClasses)
 
     # Remove duplicatas (porque se uma mesma cadeira é obtida por mais de 1 regra diferente, ela vai aparecer múltiplas vezes)    
     alreadyDoneClasses = alreadyDoneClasses.drop_duplicates()
@@ -318,10 +333,11 @@ async def calculate(dados: CalculateRequest):
     # Adiciona 130 créditos obrigatórios e 166 créditos obrigatórios à lista se a pessoa já os fez
     numAlreadyDoneCredits = return_value["summarized_metrics"]["obrigatorios_novos"][1]
 
-    if numAlreadyDoneCredits >= 130:
-        alreadyDoneClasses = pd.concat([alreadyDoneClasses, pd.Series(["130 Créditos Obrigatórios"])])
-    if numAlreadyDoneCredits >= 166:
-        alreadyDoneClasses = pd.concat([alreadyDoneClasses, pd.Series(["166 Créditos Obrigatórios"])])
+    if curso == "CIC":
+        if numAlreadyDoneCredits >= 130:
+            alreadyDoneClasses = pd.concat([alreadyDoneClasses, pd.Series(["130 Créditos Obrigatórios"])])
+        if numAlreadyDoneCredits >= 166:
+            alreadyDoneClasses = pd.concat([alreadyDoneClasses, pd.Series(["166 Créditos Obrigatórios"])])
 
     
     try:
@@ -331,18 +347,13 @@ async def calculate(dados: CalculateRequest):
                 
         # Modificar o conteúdo do HTML
         for disciplina in alreadyDoneClasses:
+            print(disciplina)
             nome_escapado = re.escape(disciplina)
             teste = re.findall(rf"{nome_escapado}(?=[\\&]).*?style=.*?fillColor=#FFFFFA", html_texto)
             
             if len(teste) > 0:
                 substituido = re.sub(r"fillColor=#\w{6}", "fillColor=red", teste[0])
                 html_texto = html_texto.replace(teste[0], substituido)
-                
-                
-
-    
-        with open("HTML_MODIFICADO.html", "w") as f:
-            f.write(html_texto)    
 
         # Retornar o HTML modificado como resposta
         return_value["html"] = html_texto

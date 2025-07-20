@@ -18,24 +18,10 @@ const UploadForm = () => {
 
   const [blobUrl, setBlobUrl] = useState<string | null>(null);
 
-
-  const [windowSize, setWindowSize] = useState(window.innerWidth);
+  const [curso, setCurso] = useState("CIC");
 
 
   const [semester, setSemester] = useState("Semestre");
-
-  const getWhichGraphShow = () => {
-    if(window.innerWidth >= 1500)
-      return 1;
-    if(window.innerWidth >= 1000)
-      return 2;
-    if(window.innerWidth >= 500)
-      return 3;
-    if(window.innerWidth >= 300)
-      return 4;
-    else
-      return -1;
-  }
 
 
   const handleError = (e: unknown) => {
@@ -57,23 +43,6 @@ const UploadForm = () => {
     }
 
 }
-
-  const [show, setShow] = useState<number>(getWhichGraphShow())
-
-
-    useEffect(() => {
-      const handleResize = () => {
-        setWindowSize(window.innerWidth);
-      };
-  
-      window.addEventListener("resize", handleResize);
-      return () => window.removeEventListener("resize", handleResize);
-    }, []);
-
-      useEffect(() => {
-        setShow(getWhichGraphShow());
-        return () => {};
-      }, [windowSize]);
 
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -102,7 +71,8 @@ const UploadForm = () => {
 
       setState(response.data.dados);
       setSemester(response.data.semestre_ingresso);
-      
+      setCurso(response.data.curso);
+
       setMessage("");
 
     } catch (error) {
@@ -112,7 +82,7 @@ const UploadForm = () => {
 
   const calculate = async () => {
     try {
-      const response = await api.post("/calculate/", { tabela: state, semestre_ingresso: semester });
+      const response = await api.post("/calculate/", { tabela: state, semestre_ingresso: semester, curso: curso });
       
       setFrontData(response.data);
 
@@ -163,7 +133,7 @@ const UploadForm = () => {
       <button onClick={calculate}>Calcular</button>
       <p>{message}</p>
         
-      {frontData && <Tabs frontData={frontData} blobUrl={blobUrl}></Tabs>}
+      {frontData && blobUrl && <Tabs frontData={frontData} blobUrl={blobUrl}></Tabs>}
 
       <div style={{display: "flex"}}>
         <p>Selecione o semestre de conclusão da sua primeira cadeira</p>

@@ -7,11 +7,11 @@ import DiagramaComResumo from '../DiagramaComResumo';
 
 interface ITabs {
   frontData?: FrontData;
-  blobUrl: string | null;
+  blobUrl?: string;
 }
 
 const Tabs: React.FC<ITabs> = ({frontData, blobUrl}: ITabs) => {
-  const abas = ['Overview', 'Diagramas', 'Histórico Novo', 'Regras de Transição'] as const;
+  const abas = ['Overview', 'Diagramas', 'Histórico Novo'] as const;
   type Aba = typeof abas[number];
 
 
@@ -43,7 +43,6 @@ useEffect(() => {
         <Aba $ativo={abaAtiva === 'Overview'} onClick={() => setAbaAtiva('Overview')}>Overview</Aba>
         <Aba $ativo={abaAtiva === 'Diagramas'} onClick={() => setAbaAtiva('Diagramas')}>Diagramas</Aba>
         <Aba $ativo={abaAtiva === 'Histórico Novo'} onClick={() => setAbaAtiva('Histórico Novo')}>Histórico Novo</Aba>
-        <Aba $ativo={abaAtiva === 'Regras de Transição'} onClick={() => setAbaAtiva('Regras de Transição')}>Regras de Transição</Aba>
       </AbaContainer>
 
       :
@@ -62,10 +61,9 @@ useEffect(() => {
       <Conteudo>
         {abaAtiva === 'Overview' && frontData && <Overview images={frontData.images} metrics={frontData.summarized_metrics}/>}
         
-        {abaAtiva === 'Diagramas' && <DiagramaComResumo blobUrl={blobUrl} windowSize={windowSize} frontData={frontData} />}
+        {abaAtiva === 'Diagramas' && blobUrl && <DiagramaComResumo blobUrl={blobUrl} windowSize={windowSize} frontData={frontData} />}
         
         {abaAtiva === 'Histórico Novo' && <div>Conteúdo da aba "Histórico Novo"</div>}
-        {abaAtiva === 'Regras de Transição' && <div>Conteúdo da aba "Regras de Transição"</div>}
       </Conteudo>
     </div>
 
