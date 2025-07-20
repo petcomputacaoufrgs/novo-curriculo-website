@@ -72,7 +72,12 @@ const HomePage = () => {
         
         <Loadb setCurso={setCurso} setSemester={setSemester} setState={setState}/>
         
-        <Transcript semester={semester} onSelectSemester={(value: string) => setSemester(value)} optionsToSemesterButton={options}/>
+        <Transcript 
+          semester={semester} 
+          onSelectSemester={(value: string) => setSemester(value)} 
+          curso={curso} 
+          onSelectCurso={(value: string) => setCurso(value)} 
+          optionsToSemesterButton={options}/>
         
         <Convertb curso={curso} semester={semester} state={state} setFrontData={setFrontData} setBlobUrl={setBlobUrl} />
         

@@ -210,8 +210,6 @@ async def calculate(dados: CalculateRequest):
         raise HTTPException(status_code=400, detail="Histórico Vazio. Insira alguma cadeira para continuar")
 
     temporalidade = calculate_temporality(semestre_ingresso)
-    print(semestre_ingresso)
-    print(temporalidade)
 
     if temporalidade <= 0:
         raise HTTPException(status_code=400, detail=f"Semestre de ingresso inserido inválido. Insira um semestre anterior ou igual ao atual: {ANO_ATUAL}/{BARRA_ATUAL}")
@@ -286,6 +284,9 @@ async def calculate(dados: CalculateRequest):
 
     # Coloca informações das disciplinas nas tabelas de novo histórico e nova demanda (merge no campo codigo)
     new_history = new_history.merge(disciplines[['codigo', 'etapa', 'nome', 'creditos']], on="codigo", how="left")
+
+    new_history = new_history.fillna(0)
+
     new_demand = new_demand.merge(disciplines[['codigo', 'creditos']], on="codigo", how="left")
 
     # Cria coluna vazia para regra associada a cada disciplina pendente
@@ -323,10 +324,6 @@ async def calculate(dados: CalculateRequest):
     obligatoryClasses = history_table[history_table["etapa"] != 0]
     alreadyDoneClasses = obligatoryClasses[obligatoryClasses["qt_students_needing_it"] == 0]["nome"]
 
-
-    print(history_table.head())
-    print(alreadyDoneClasses)
-
     # Remove duplicatas (porque se uma mesma cadeira é obtida por mais de 1 regra diferente, ela vai aparecer múltiplas vezes)    
     alreadyDoneClasses = alreadyDoneClasses.drop_duplicates()
 
@@ -347,7 +344,6 @@ async def calculate(dados: CalculateRequest):
                 
         # Modificar o conteúdo do HTML
         for disciplina in alreadyDoneClasses:
-            print(disciplina)
             nome_escapado = re.escape(disciplina)
             teste = re.findall(rf"{nome_escapado}(?=[\\&]).*?style=.*?fillColor=#FFFFFA", html_texto)
             
@@ -380,9 +376,3 @@ def generate_plot():
     plt.savefig(buf, format="png")
     buf.seek(0)
     return base64.b64encode(buf.read()).decode('utf-8')
-
-    
-    
-
-
-

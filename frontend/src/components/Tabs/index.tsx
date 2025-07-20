@@ -35,7 +35,7 @@ useEffect(() => {
 
   
   return (
-    <div style={{ margin: '5%', width: 'auto', padding: '10px', maxHeight: '800px', display: "flex", flexDirection: "column" }}>
+    <div style={{ margin: '5%', width: 'auto', padding: '10px', display: "flex", flexDirection: "column" }}>
 
       {windowSize > 730?
 

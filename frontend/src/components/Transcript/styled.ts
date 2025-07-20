@@ -21,3 +21,16 @@ export const InnerTranscriptBox = styled.div`
   color: ${({ theme }) => theme.text};
   transition: background-color 0.3s ease, color 0.3s ease;
 `
+
+
+export const InputsBox = styled.div`
+  display: flex;
+  width: 100%;
+  gap: 18px;
+  align-items: center;
+
+  @media(max-width: 470px){
+    flex-direction: column;
+  }
+`
+
