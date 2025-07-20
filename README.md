@@ -4,7 +4,7 @@
 
 #### Ferramentas utilizada: FastAPI + React
 
-#### Autor(es): [[Nomezinho](https://github.com/username-do-nomezinho)], [[Nomezinho](https://github.com/username-do-nomezinho)]
+#### Autores: [eduardapmichels](https://github.com/eduardapmichels), [edufsi](https://github.com/edufsi), [GuiDavillaP](https://github.com/GuiDavilaP), [Joao-Scheffel-Koller](https://github.com/Joao-Scheffel-Koller), [Kenjikuta-br](https://github.com/Kenjikuta-br)
 
 ## Sobre o Projeto
 
