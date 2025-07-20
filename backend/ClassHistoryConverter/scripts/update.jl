@@ -204,7 +204,9 @@ function main(ARGS = ARGS)
 	)
 
 	flexible_rules = Migrate.read_rules_csv(FLEXIBLE_RULES_CSV)
-	orthodox_rules = Migrate.read_rules_csv(ORTHODOX_RULES_CSV)
+
+	# Cálculos com cenário ortodoxo retirados
+	#orthodox_rules = Migrate.read_rules_csv(ORTHODOX_RULES_CSV)
 	old_history    = Migrate.read_history_csv(HISTORY_CSV)
 
 	count_temps(old_history)
@@ -212,25 +214,33 @@ function main(ARGS = ARGS)
 	regras_com_disciplina_inexistente(
 		flexible_rules, old_classes, new_classes
 	)
-	regras_com_disciplina_inexistente(
+	
+	#= regras_com_disciplina_inexistente(
 		orthodox_rules, old_classes, new_classes
-	)
+	) =#
+
 	regras_trocando_carater(
 		flexible_rules, old_classes, new_classes
 	)
-	regras_trocando_carater(
+	
+	#= regras_trocando_carater(
 		orthodox_rules, old_classes, new_classes
-	)
+	) =#
 
 	new_flexible_history = Migrate.migrate(
 		old_classes, flexible_rules, old_history
 	)
-	students_with_projint_double_credit(new_flexible_history)
+	
+	#students_with_projint_double_credit(new_flexible_history)
 	#fix_projint_double_credit!(new_flexible_history)
-	new_orthodox_history = Migrate.migrate(
+
+
+
+	#=new_orthodox_history = Migrate.migrate(
 		old_classes, orthodox_rules, old_history
-	)
-	students_with_projint_double_credit(new_orthodox_history)
+	) =#
+
+ 	# students_with_projint_double_credit(new_orthodox_history)
 	#fix_projint_double_credit!(new_orthodox_history)
 
 
@@ -245,7 +255,7 @@ function main(ARGS = ARGS)
 
 
 	CSV.write(joinpath(OUTPUT_DIR, "$flexible_suffix.csv"), new_flexible_history)
-	CSV.write(joinpath(OUTPUT_DIR, "$orthodox_suffix.csv"), new_orthodox_history)
+	#CSV.write(joinpath(OUTPUT_DIR, "$orthodox_suffix.csv"), new_orthodox_history)
 
 	normalized_old_history = MetricsCalculator.normalize_history!(
 		deepcopy(old_history), false
@@ -253,29 +263,35 @@ function main(ARGS = ARGS)
 	new_flexible_history_with_rules = MetricsCalculator.normalize_history!(
 		deepcopy(new_flexible_history), true
 	)
-	new_orthodox_history_with_rules = MetricsCalculator.normalize_history!(
+
+	
+	#= new_orthodox_history_with_rules = MetricsCalculator.normalize_history!(
 		deepcopy(new_orthodox_history), true
-	)
+	) =#
+
 	new_flexible_history_no_rules = MetricsCalculator.normalize_history!(
 		deepcopy(new_flexible_history), false
 	)
-	new_orthodox_history_no_rules = MetricsCalculator.normalize_history!(
+	
+	#= new_orthodox_history_no_rules = MetricsCalculator.normalize_history!(
 		deepcopy(new_orthodox_history), false
-	)
+	) =#
 
 	min_cred_opt = MetricsCalculator.read_min_cred_opt(MIN_CRED_OPT_CSV)
+	
 	MetricsCalculator.calculate_all_metrics(
 		OUTPUT_DIR,
 		flexible_suffix, old_classes, normalized_old_history,
 		new_classes, new_flexible_history_no_rules,
 		new_flexible_history_with_rules, min_cred_opt
 	)
-	MetricsCalculator.calculate_all_metrics(
+	
+	#= MetricsCalculator.calculate_all_metrics(
 		OUTPUT_DIR,
 		orthodox_suffix, old_classes, normalized_old_history,
 		new_classes, new_orthodox_history_no_rules,
 		new_orthodox_history_with_rules, min_cred_opt
-	)
+	) =#
 end
 
 main()
