@@ -18,8 +18,14 @@ def LeHtml(conteudo_html):
     print("Arquivo HTML lido com sucesso.")
     semestres, nomeDisciplinas, codigos, semestre_ingresso, curso_nome = extraiDados(parsed_html)
 
+    disciplinas = pd.read_csv(f'ClassHistoryConverter/scripts/INF_UFRGS_DATA/{curso_nome}/disciplinas.csv')
+
+    mapa = disciplinas.set_index('codigo')['etapa'].to_dict()
     
-    dados = {"dados": [[semestres[i], nomeDisciplinas[i], codigos[i]] for i in range(len(semestres)) if codigos[i] != "Not Found"], "semestre_ingresso": semestre_ingresso, "curso": curso_nome}
+    # Associa etapas mantendo a ordem da lista original
+    lista_etapas = [mapa.get(cod, None) for cod in codigos]
+    
+    dados = {"dados": [[semestres[i], nomeDisciplinas[i], codigos[i], lista_etapas[i]] for i in range(len(semestres)) if codigos[i] != "Not Found"], "semestre_ingresso": semestre_ingresso, "curso": curso_nome}
 
     return dados
 

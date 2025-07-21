@@ -9,8 +9,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<UploadPage />} />
-        <Route path="/home" element={<HomePage />}></Route>
+        <Route path="/" element={<HomePage />}></Route>
         <Route path="/regras" element={<RegrasEquivalenciaView />}></Route>
       </Routes>
     </Router>
