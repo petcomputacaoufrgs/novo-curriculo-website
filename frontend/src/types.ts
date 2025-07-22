@@ -28,6 +28,7 @@ export interface LinhaHistorico {
 
 export interface FrontData {
   html: string;
+  html_old_diagram: string;
   historico: LinhaHistorico[];
   images: OverViewImages;
   summarized_metrics: SummarizedMetrics;

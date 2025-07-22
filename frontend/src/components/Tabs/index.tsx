@@ -7,10 +7,11 @@ import DiagramaComResumo from '../DiagramaComResumo';
 
 interface ITabs {
   frontData: FrontData;
-  blobUrl: string;
+  oldUrl: string;
+  newUrl: string;
 }
 
-const Tabs: React.FC<ITabs> = ({frontData, blobUrl}: ITabs) => {
+const Tabs: React.FC<ITabs> = ({frontData, oldUrl, newUrl}: ITabs) => {
   const abas = ['Overview', 'Diagramas', 'Histórico Novo'] as const;
   type Aba = typeof abas[number];
 
@@ -61,7 +62,7 @@ useEffect(() => {
       <Conteudo>
         {abaAtiva === 'Overview' && <Overview images={frontData.images} metrics={frontData.summarized_metrics}/>}
         
-        {abaAtiva === 'Diagramas' && <DiagramaComResumo blobUrl={blobUrl} windowSize={windowSize} frontData={frontData} />}
+        {abaAtiva === 'Diagramas' && <DiagramaComResumo oldUrl={oldUrl} newUrl={newUrl} windowSize={windowSize} frontData={frontData} />}
         
         {abaAtiva === 'Histórico Novo' && <div>Conteúdo da aba "Histórico Novo"</div>}
       </Conteudo>

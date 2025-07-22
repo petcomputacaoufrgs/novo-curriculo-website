@@ -3,21 +3,43 @@ import api from "../../api";
 
 import { FrontData } from "../../types";
 import './UploadForm.css'
+import { isAxiosError } from "axios";
 
 type ConvertbProps = {
   state: string[][];
   semester: string;
   curso: string;
   setFrontData: (frontData: FrontData) => void;
-  setBlobUrl: (url: string) => void;
+  setOldBlobUrl: (url: string) => void;
+  setNewBlobUrl: (url: string) => void;
 };
 
 
-function Convertb({state, semester, curso, setFrontData, setBlobUrl}: ConvertbProps){
+function Convertb({state, semester, curso, setFrontData, setOldBlobUrl, setNewBlobUrl}: ConvertbProps){
 
   const [message, setMessage] = useState("");
-  const [charset, setCharset] = useState("");
 
+      const handleError = (e: unknown) => {
+      if (isAxiosError(e)) {
+  
+        if (e.response) {
+          // erro com resposta do backend
+          const detail = e.response.data.detail;
+          setMessage(`Erro: ${detail}`);
+        } 
+        
+        else {
+          setMessage("Erro: Não foi possível conectar ao servidor.");
+        }
+      } 
+      
+      else {
+        setMessage("Erro inesperado.");
+      }
+  
+  }
+
+  
 
 
   const calculate = async () => {
@@ -29,20 +51,20 @@ function Convertb({state, semester, curso, setFrontData, setBlobUrl}: ConvertbPr
       console.log(response.data);
 
       // Criar um Blob e carregar no iframe
-      const blob = new Blob([response.data["html"]], { type: "text/html" });
-      const urlBlob = URL.createObjectURL(blob);
+      const oldBlob = new Blob([response.data["html_old_diagram"]], { type: "text/html" });
+      const oldUrlBlob = URL.createObjectURL(oldBlob);
 
-      const iframe = document.getElementById("meuIframe");
-            if (iframe) {
-                (iframe as HTMLIFrameElement).src = urlBlob;
-            }
+      const newBlob = new Blob([response.data["html"]], { type: "text/html" });
+      const newUrlBlob = URL.createObjectURL(newBlob);
 
-      setBlobUrl(urlBlob);
+      setOldBlobUrl(oldUrlBlob);
+      setNewBlobUrl(newUrlBlob);
+
+      setMessage("");
 
 
     } catch (error) {
-      setMessage("Erro no cálculo");
-      setCharset("");
+      handleError(error);
     }
   }
 
@@ -52,7 +74,6 @@ function Convertb({state, semester, curso, setFrontData, setBlobUrl}: ConvertbPr
             <button className = "convert-button" onClick={calculate}>Converter</button>
         </div>
         <p>{message}</p>
-        <p>{charset}</p>
 
     </div>  
   )

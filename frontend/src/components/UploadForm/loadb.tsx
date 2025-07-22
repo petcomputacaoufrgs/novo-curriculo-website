@@ -9,10 +9,11 @@ type LoadbProps = {
     setState: (state: string[][]) => void;
     setCurso: (curso: string) => void;
     setSemester: (semester: string) => void;
+    setEtapas: (etapas: number[]) => void;
 };
 
 
-const Loadb = ({ setState, setCurso, setSemester }: LoadbProps) =>{
+const Loadb = ({ setState, setCurso, setSemester, setEtapas }: LoadbProps) =>{
 
 
   const [message, setMessage] = useState<string>("");
@@ -56,7 +57,8 @@ const Loadb = ({ setState, setCurso, setSemester }: LoadbProps) =>{
       setState(response.data.dados);
       setSemester(response.data.semestre_ingresso);
       setCurso(response.data.curso);
-
+      setEtapas(response.data.etapas);
+      
       setMessage("");
 
     } catch (error) {

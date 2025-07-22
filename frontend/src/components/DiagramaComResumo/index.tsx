@@ -1,60 +1,47 @@
 // DiagramaComResumo.tsx
-import React from 'react';
-import styled from 'styled-components';
+import React, { useState } from 'react';
 import { FrontData } from '../../types';
+import { Container, IframeWrapper, Lista, StyledIframe, TextoIntro, ToggleButton, ToggleWrapper, Topico } from './styled';
 
 interface Props {
-  blobUrl: string | null;
+  newUrl: string | null;
+  oldUrl: string | null;
   windowSize: number;
   frontData?: FrontData;
 }
 
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 85%;
-  align-items: flex-start;
-  padding: 30px 0 30px 0;
-  gap: 16px;
-`;
+const path_length = (path: string) => {
+  if(path === "")
+    return 0;
 
-const IframeWrapper = styled.div`
-  width: 100%;
-  border-radius: 15px;
-`;
+  return path.split(">").length
+}
 
-const StyledIframe = styled.iframe`
-  width: 100%;
-  height: 38vw;
-  border-radius: 15px;
-`;
+const DiagramaComResumo: React.FC<Props> = ({ oldUrl, newUrl, windowSize, frontData }) => {
+  const [mode, setMode] = useState<"antigo" | "novo">("novo");
 
-const TextoIntro = styled.p`
-  margin-top: 1rem;
-  margin-bottom: 0.5rem;
-  font-weight: bold;
-  font-size: 18px;
-  text-align: left;
-`;
+  const urlSelecionada = mode === "antigo" ? oldUrl : newUrl;
 
-const Topico = styled.li`
-  margin-left: 1.25rem;
-  text-align: left;
-`;
-
-const Lista = styled.ul`
-  padding-left: 1rem;
-`;
-
-const DiagramaComResumo: React.FC<Props> = ({ blobUrl, windowSize, frontData }) => {
   return (
     <Container>
+
+      <ToggleWrapper>
+        <ToggleButton $active={mode === "antigo"} onClick={() => setMode("antigo")}>
+          Antigo
+        </ToggleButton>
+        <ToggleButton $active={mode === "novo"} onClick={() => setMode("novo")}>
+          Novo
+        </ToggleButton>
+      </ToggleWrapper>
+
+
+
       <IframeWrapper>
-        {blobUrl && (
+        {urlSelecionada && (
           <StyledIframe
             key={windowSize}
             id="meuIframe"
-            src={blobUrl}
+            src={urlSelecionada}
           />
         )}
       </IframeWrapper>
@@ -66,10 +53,10 @@ const DiagramaComResumo: React.FC<Props> = ({ blobUrl, windowSize, frontData }) 
           </TextoIntro>
           <Lista>
             <Topico>
-              Currículo Antigo (tamanho {frontData.caminho_antigo.split(">").length}): {frontData.caminho_antigo}
+              Currículo Antigo (tamanho {path_length(frontData.caminho_antigo)}): {frontData.caminho_antigo}
             </Topico>
             <Topico>
-              Currículo Novo (tamanho {frontData.caminho_novo.split(">").length}): {frontData.caminho_novo}
+              Currículo Novo (tamanho {path_length(frontData.caminho_novo)}): {frontData.caminho_novo}
             </Topico>
           </Lista>
         </div>

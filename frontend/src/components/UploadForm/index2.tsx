@@ -131,7 +131,7 @@ const UploadForm2 = () => {
       {show == 3 && <iframe style={{width: "600px", height: "60vh"}} id="meuIframe" src={blobUrl}></iframe>}
       {show == 4 && <iframe style={{width: "300px", height: "60vh"}} id="meuIframe" src={blobUrl}></iframe>}
         
-      {frontData && <Tabs frontData={frontData}></Tabs>}
+      {/* frontData && <Tabs frontData={frontData} blobUrl=""></Tabs> */}
 
     </div >
   );

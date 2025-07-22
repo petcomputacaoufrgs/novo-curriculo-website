@@ -23,13 +23,13 @@ export const ToggleButton = styled.button<{ $active: boolean }>`
   padding: 8px 16px;
   border: none;
   border-radius: 8px;
-  background-color: ${({ $active }) => ($active ? "#553525" : "#ccc")};
-  color: white;
+  background-color: ${({ $active }) => ($active ? "#007bff" : "#ddd")};
+  color: ${({ $active }) => ($active ? "white" : "#333333")};;
   cursor: pointer;
   font-weight: bold;
 
   &:hover {
-    background-color: #8b6a50;
+    background-color: ${({ $active }) => ($active ? "#007bff" : "#ccc")};
   }
 `;
 

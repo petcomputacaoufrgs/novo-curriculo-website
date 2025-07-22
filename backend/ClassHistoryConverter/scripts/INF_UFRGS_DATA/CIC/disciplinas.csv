@@ -13,7 +13,7 @@ novo,Obrigatória,2,Calc2,Cálculo e Geometria Analítica II - A,90,6,Calc1
 novo,Obrigatória,3,TeoComp1,Teoria da Computação I - Linguagens Formais e Autômatos,60,4,Logica; MatDisc
 novo,Obrigatória,3,CD,Circuitos Digitais,90,6,Arq
 novo,Obrigatória,3,PAA1,Projeto e Análise de Algoritmos I,60,4,ED; MatDisc; Calc1
-novo,Obrigatória,3,TCP,Desenvolvimento de Software de Qualidade (ex-TCP),60,4,ED
+novo,Obrigatória,3,TCP,Desenvolvimento de Software de Qualidade,60,4,ED
 novo,Obrigatória,3,BD,Fundamentos de Bancos de Dados,60,4,ED
 novo,Obrigatória,4,TeoComp2,Teoria da Computação II - Computabilidade e Complexidade,60,4,TeoComp1
 novo,Obrigatória,4,PAA2,Projeto e Análise de Algoritmos II,60,4,PAA1

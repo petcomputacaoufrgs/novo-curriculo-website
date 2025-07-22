@@ -31,8 +31,11 @@ const HomePage = () => {
   const [semester, setSemester] = useState("Semestre");
   const [curso, setCurso] = useState("CIC");
   const [state, setState] = useState<string[][]>([]);
+  const [etapas, setEtapas] = useState<number[]>([]);
+
   const [frontData, setFrontData] = useState<FrontData | undefined>();
-  const [url, setBlobUrl] = useState<string | undefined>();
+  const [oldUrl, setOldBlobUrl] = useState<string | undefined>();
+  const [newUrl, setNewBlobUrl] = useState<string | undefined>();
 
 
   const min_year = 1990;
@@ -70,7 +73,7 @@ const HomePage = () => {
           text="O currículo da CIC está para ser reformulado, então o grupo PET Computação fez um esforço conjunto com o GT da troca de currículo e 
                 especialmente junto com o Professor Henrique Becker (responsável pelo código em Julia que faz a conversão) de fazer um site onde seja rápido e fácil ver as mudanças de transição."/>
         
-        <Loadb setCurso={setCurso} setSemester={setSemester} setState={setState}/>
+        <Loadb setCurso={setCurso} setSemester={setSemester} setState={setState} setEtapas={setEtapas}/>
         
         <Transcript 
           semester={semester} 
@@ -79,11 +82,11 @@ const HomePage = () => {
           onSelectCurso={(value: string) => setCurso(value)} 
           optionsToSemesterButton={options}/>
         
-        <Convertb curso={curso} semester={semester} state={state} setFrontData={setFrontData} setBlobUrl={setBlobUrl} />
+        <Convertb curso={curso} semester={semester} state={state} setFrontData={setFrontData} setNewBlobUrl={setNewBlobUrl} setOldBlobUrl={setOldBlobUrl} />
         
         <Divider />
         
-        {frontData && url &&<Tabs frontData={frontData} blobUrl={url}/>}
+        {frontData && oldUrl && newUrl &&<Tabs frontData={frontData} oldUrl={oldUrl} newUrl={newUrl}/>}
         
         <Footer />
       </ThemeProvider>

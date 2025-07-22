@@ -211,6 +211,7 @@ async def calculate(dados: CalculateRequest):
 
     temporalidade = calculate_temporality(semestre_ingresso)
 
+
     if temporalidade <= 0:
         raise HTTPException(status_code=400, detail=f"Semestre de ingresso inserido inválido. Insira um semestre anterior ou igual ao atual: {ANO_ATUAL}/{BARRA_ATUAL}")
 
@@ -282,6 +283,12 @@ async def calculate(dados: CalculateRequest):
 
     disciplines = pd.read_csv(f"ClassHistoryConverter/scripts/INF_UFRGS_DATA/{curso}/disciplinas.csv")
 
+    new_elective_disciplines = disciplines[(disciplines['carater'] == "Eletiva") & (disciplines['cv'] == "novo")]
+    new_elective_disciplines_not_done = new_elective_disciplines[~new_elective_disciplines['codigo'].isin(new_history['codigo'])]
+    new_elective_disciplines_not_done["qt_students_needing_it"] = 1
+
+
+
     # Coloca informações das disciplinas nas tabelas de novo histórico e nova demanda (merge no campo codigo)
     new_history = new_history.merge(disciplines[['codigo', 'etapa', 'nome', 'creditos']], on="codigo", how="left")
 
@@ -289,9 +296,11 @@ async def calculate(dados: CalculateRequest):
 
     new_demand = new_demand.merge(disciplines[['codigo', 'creditos']], on="codigo", how="left")
 
+    new_elective_disciplines_not_done['etapa'] = new_elective_disciplines_not_done['etapa'].fillna(0)
+    new_demand = pd.concat([new_demand[['etapa', 'codigo', 'nome', 'qt_students_needing_it', 'creditos']], new_elective_disciplines_not_done[['etapa', 'codigo', 'nome', 'qt_students_needing_it', 'creditos']]])
     # Cria coluna vazia para regra associada a cada disciplina pendente
     new_demand['rule_name'] = None
-
+    
     # Junta o histórico (cadeiras liberadas) e a demanda (cadeiras pendentes) em uma única tabela
     history_table = pd.concat([new_demand, new_history], ignore_index=True)
     history_table["qt_students_needing_it"] = history_table["qt_students_needing_it"].fillna(0)
@@ -313,6 +322,10 @@ async def calculate(dados: CalculateRequest):
 
     # Maiores Caminhos
     df_paths = pd.read_csv(os.path.join(file_path, "semesters_remaining_by_student_comparison_from_novo_historico_flexivel.csv"))
+
+    df_paths["new_path"] = df_paths["new_path"].fillna("")
+    df_paths["old_path"] = df_paths["old_path"].fillna("")
+   
     return_value["caminho_antigo"] = traduzir_path(df_paths['old_path'], disciplines).loc[0]
     return_value["caminho_novo"] = traduzir_path(df_paths['new_path'], disciplines).loc[0]
 
@@ -320,21 +333,24 @@ async def calculate(dados: CalculateRequest):
     # TODO: editar diagrama
 
     HTML_FILE_PATH = f"ClassHistoryConverter/scripts/INF_UFRGS_DATA/{curso}/Diagrama.html"
-    
+    HTML_FILE_PATH_OLD_DIAGRAM = f"ClassHistoryConverter/scripts/INF_UFRGS_DATA/{curso}/DiagramaAntigo.html"
+
     obligatoryClasses = history_table[history_table["etapa"] != 0]
     alreadyDoneClasses = obligatoryClasses[obligatoryClasses["qt_students_needing_it"] == 0]["nome"]
 
     # Remove duplicatas (porque se uma mesma cadeira é obtida por mais de 1 regra diferente, ela vai aparecer múltiplas vezes)    
     alreadyDoneClasses = alreadyDoneClasses.drop_duplicates()
 
-    # Adiciona 130 créditos obrigatórios e 166 créditos obrigatórios à lista se a pessoa já os fez
-    numAlreadyDoneCredits = return_value["summarized_metrics"]["obrigatorios_novos"][1]
+    # Adiciona 130 créditos obrigatórios à lista de "cadeiras" feitas no novo currículo se a pessoa já os fez
+    numAlreadyDoneNewCredits = return_value["summarized_metrics"]["obrigatorios_novos"][1]
+
+    numAlreadyDoneOldCredits = return_value["summarized_metrics"]["obrigatorios_antigos"][1]
 
     if curso == "CIC":
-        if numAlreadyDoneCredits >= 130:
+        if numAlreadyDoneNewCredits >= 130:
             alreadyDoneClasses = pd.concat([alreadyDoneClasses, pd.Series(["130 Créditos Obrigatórios"])])
-        if numAlreadyDoneCredits >= 166:
-            alreadyDoneClasses = pd.concat([alreadyDoneClasses, pd.Series(["166 Créditos Obrigatórios"])])
+        if numAlreadyDoneOldCredits >= 100:
+            tabela.append(["", "100 Créditos Obrigatórios", ""])
 
     
     try:
@@ -353,6 +369,27 @@ async def calculate(dados: CalculateRequest):
 
         # Retornar o HTML modificado como resposta
         return_value["html"] = html_texto
+
+        f.close()
+
+        # Ler o arquivo HTML
+        with open(HTML_FILE_PATH_OLD_DIAGRAM, "r") as file:
+            html_texto = file.read()
+                
+        # Modificar o conteúdo do HTML
+        for linha_historico_antigo in tabela:
+            nome_cadeira = linha_historico_antigo[1]
+            nome_escapado = re.escape(nome_cadeira)
+            teste = re.findall(rf"{nome_escapado}(?=[\\&]).*?style=.*?fillColor=#FFFFFA", html_texto)
+            
+            if len(teste) > 0:
+                substituido = re.sub(r"fillColor=#\w{6}", "fillColor=red", teste[0])
+                html_texto = html_texto.replace(teste[0], substituido)
+
+        # Retornar o HTML modificado como resposta
+        return_value["html_old_diagram"] = html_texto
+
+   
 
     except Exception as e:
         return {"erro": str(e)}
@@ -376,3 +413,9 @@ def generate_plot():
     plt.savefig(buf, format="png")
     buf.seek(0)
     return base64.b64encode(buf.read()).decode('utf-8')
+
+    
+    
+
+
+
