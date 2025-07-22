@@ -89,8 +89,6 @@ const HomePage = () => {
         {frontData && oldUrl && newUrl &&<Tabs frontData={frontData} oldUrl={oldUrl} newUrl={newUrl}/>}
         
         <Footer />
-      </ThemeProvider>
-
     </>
   )
 }

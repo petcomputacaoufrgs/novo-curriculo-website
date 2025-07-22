@@ -1,0 +1,10 @@
+name,value
+old_obligatory_credit_demand,0
+new_obligatory_credit_demand,0
+new_to_old_obligatory_demand_ratio,NaN
+old_optional_credit_demand,0
+new_optional_credit_demand,0
+new_to_old_optional_demand_ratio,NaN
+old_total_credit_demand,0
+new_total_credit_demand,0
+new_to_old_demand_ratio,NaN

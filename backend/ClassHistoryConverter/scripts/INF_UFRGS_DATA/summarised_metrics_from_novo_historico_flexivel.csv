@@ -1,0 +1,10 @@
+name,value
+old_obligatory_credit_demand,12
+new_obligatory_credit_demand,44
+new_to_old_obligatory_demand_ratio,3.6666666666666665
+old_optional_credit_demand,22
+new_optional_credit_demand,0
+new_to_old_optional_demand_ratio,0.0
+old_total_credit_demand,34
+new_total_credit_demand,44
+new_to_old_demand_ratio,1.2941176470588236

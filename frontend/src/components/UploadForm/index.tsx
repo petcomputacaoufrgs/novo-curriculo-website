@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import api from "../../api";
 
 import {isAxiosError} from "axios";
@@ -9,6 +9,7 @@ import { DropdownInput } from "../DropDownInput";
 
 
 const UploadForm = () => {
+  const [isCalculating, setIsCalculating] = useState(false);
   const [file, setFile] = useState<File | null>(null);
   const [message, setMessage] = useState("");
 
@@ -81,6 +82,7 @@ const UploadForm = () => {
   };
 
   const calculate = async () => {
+    setIsCalculating(true);
     try {
       const response = await api.post("/calculate/", { tabela: state, semestre_ingresso: semester, curso: curso });
       
@@ -128,6 +130,7 @@ const UploadForm = () => {
 
   return (
     <div>
+      {isCalculating && <Butterfly />}
       <input type="file" accept=".html" onChange={handleFileChange} />
       <button onClick={handleUpload}>Enviar</button>
       <button onClick={calculate}>Calcular</button>
