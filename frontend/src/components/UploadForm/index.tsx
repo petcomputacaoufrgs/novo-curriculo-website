@@ -3,8 +3,10 @@ import api from "../../api";
 
 import { FrontData } from "../../types";
 import Tabs from "../Tabs";
+import Butterfly from "../Butterfly";
 
 const UploadForm = () => {
+  const [isCalculating, setIsCalculating] = useState(false);
   const [file, setFile] = useState<File | null>(null);
   const [message, setMessage] = useState("");
   const [charset, setCharset] = useState("");
@@ -30,8 +32,6 @@ const UploadForm = () => {
     return 2;
   }
   const [show, setShow] = useState(getWhichGraphShow())
-
-
     useEffect(() => {
       const handleResize = () => {
         setWindowSize(window.innerWidth);
@@ -82,6 +82,7 @@ const UploadForm = () => {
   };
 
   const calculate = async () => {
+    setIsCalculating(true);
     try {
       const response = await api.post("/calculate/", state);
       
@@ -105,12 +106,16 @@ const UploadForm = () => {
       setMessage("Erro no cálculo");
       setCharset("");
     }
+    finally {
+      setIsCalculating(false); 
+    }
   }
 
   console.log(blobUrl);
 
   return (
     <div>
+      {isCalculating && <Butterfly />}
       <input type="file" accept=".html" onChange={handleFileChange} />
       <button onClick={handleUpload}>Enviar</button>
       <button onClick={calculate}>Calcular</button>
