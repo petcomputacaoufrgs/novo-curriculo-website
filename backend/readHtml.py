@@ -1,7 +1,6 @@
 from bs4 import BeautifulSoup   # Biblioteca para fazer parsing do html.
 import pandas as pd             # Biblioteca para manipulação de dados csv.
 import os
-import sys
 
 def LeHtml(conteudo_html):
     

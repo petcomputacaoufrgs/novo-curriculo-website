@@ -1,8 +1,7 @@
-import base64
-import io
 import re
+import shutil
 import subprocess
-from fastapi import FastAPI, File, HTTPException, UploadFile
+from fastapi import Depends, FastAPI, File, HTTPException, Request, UploadFile
 
 
 # Middleware do FastAPI para controlar as permissões de CORS (Cross-Origin Resource Sharing). Isso permite configurar DE QUAIS domínios ou portas o servidor pode receber requisições
@@ -11,37 +10,37 @@ from fastapi.middleware.cors import CORSMiddleware
 # Utilizado para manipulação dos diretórios
 import os 
 
-# Módulo para manipulação de arquivos. Aqui está sendo utilizado para copiar o arquivo recebido, salvando-o
-import shutil
-
-# Para processar o html
-from bs4 import BeautifulSoup
-
-
-from matplotlib import pyplot as plt
-from matplotlib.figure import Figure
-
-
 import time
-import hashlib
 
 from pydantic import BaseModel
 from typing import List
 
 from readHtml import LeHtml, criaHistoricoCSV
+from aux_functions import calculate_temporality, traduzir_path, plot_function, generate_unique_filename
 
 import pandas as pd
 
+from contextlib import asynccontextmanager
+
+ANO_ATUAL = 2026
+BARRA_ATUAL = 1
 
 
-def generate_unique_filename(filename):
-    timestamp = str(int(time.time()))  # Gera um timestamp único
-    hash_str = hashlib.md5(filename.encode()).hexdigest()  # Gera um hash do nome do arquivo
-    return f"{timestamp}_{hash_str}_{filename}"
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Carrega os arquivos uma única vez
+    app.state.dados = {
+        "disciplinas_CIC": pd.read_csv("ClassHistoryConverter/scripts/INF_UFRGS_DATA/CIC/disciplinas.csv"),
+        "disciplinas_ECP": pd.read_csv("ClassHistoryConverter/scripts/INF_UFRGS_DATA/ECP/disciplinas.csv"),
+    }
+    print("Arquivos carregados com sucesso!")
+    yield  # Aqui a aplicação é executada
+    # (opcional) Qualquer código após o yield será executado no shutdown
+    print("Encerrando a aplicação")
 
 
 
-app = FastAPI()
+app = FastAPI(lifespan=lifespan)
 
 
 # Define as origens de onde pode receber requisições
@@ -59,9 +58,45 @@ app.add_middleware(
 )
 
 
+def get_dados(request: Request):
+    return request.app.state.dados
+
+
+@app.get(path="/get_old_history")
+async def get_old_history(dados = Depends(get_dados)):
+
+    # Pega as disciplinas da CIC
+    cic_history : pd.DataFrame = dados["disciplinas_CIC"]
+
+    # Trata o histórico
+    cic_history = cic_history[cic_history['cv'] == 'velho'][["etapa", "codigo", "creditos", "nome"]]
+    cic_history["etapa"] = cic_history["etapa"].fillna(0).astype(int)
+    
+    # Tranforma o historico da CIC em uma lista de etapas, onde cada etapa contém listas com os dados de cada cadeira
+    cic_history = [
+        cic_history[cic_history['etapa'] == i].drop('etapa', axis=1).to_dict(orient="list")
+        for i in range(int(cic_history['etapa'].max()) + 1)
+    ]
+
+    # Pega o historico da ECP
+    ecp_history : pd.DataFrame = dados["disciplinas_ECP"]
+
+    # Trata o histórico
+    ecp_history = ecp_history[ecp_history['cv'] == 'velho'][["etapa", "codigo", "creditos", "nome"]]
+    ecp_history["etapa"] = ecp_history["etapa"].fillna(0).astype(int)
+
+    # Tranforma o historico da ECP em uma lista de etapas, onde cada etapa contém listas com os dados de cada cadeira
+    ecp_history = [
+        ecp_history[ecp_history['etapa'] == i].drop('etapa', axis=1).to_dict(orient="list")
+        for i in range(int(ecp_history['etapa'].max()) + 1)
+    ]
+
+    # Retorna os dois históricos em um dicionário, onde a chave é o nome do curso e o valor é a lista de etapas
+    return {"CIC": cic_history, "ECP": ecp_history}
+
+
 # a palavra-chave async nas funções de endpoint permite que a função seja executada de maneira assíncrona, sem bloquear outras requisições.
 # Essa é uma das vantagens da FastAPI, que já suporta programação assíncrona nativamente
-
 @app.post(path="/upload/")
 async def upload_html(file: UploadFile = File(...)):
     """Recebe um arquivo HTML e salva no servidor"""
@@ -77,77 +112,6 @@ async def upload_html(file: UploadFile = File(...)):
     return dados_extraidos
 
 
-def plot_function(summarised_metrics, remaining_index, total_credits, title):
-    """
-    Gera e salva um gráfico de pizza (donut) mostrando a proporção de créditos completados
-    em relação ao total necessário.
-
-    Parâmetros:
-    - summarised_metrics: DataFrame contendo os valores de créditos completos por categoria.
-    - remaining_index: índice no DataFrame para pegar o valor de créditos ainda necessários.
-    - total_credits: total de créditos que precisam ser cumpridos.
-    - title: título do gráfico.
-    - file_name: nome do arquivo em que o gráfico será salvo (formato .png).
-    """
-
-    # Extrai a quantidade de créditos completos e calcula os restantes
-    remaining_credits = summarised_metrics.value.iloc[remaining_index]
-    completed_credits = total_credits - remaining_credits 
-
-    # Cores do gráfico: azul claro (restantes), azul escuro (completos)
-    colors = ['#C6DCF1', '#202A44']
-
-    # Fatias e legendas do gráfico
-    slices = [remaining_credits, completed_credits]
-    legendas = [
-        f"Créditos restantes: {remaining_credits:.0f}",
-        f"Créditos obtidos: {completed_credits:.0f}"
-    ]
-
-    # Criação da figura
-    fig, ax = plt.subplots(figsize=(8, 6), dpi=100)
-    plt.style.use('fivethirtyeight')  # Estilo visual do gráfico
-
-    # Desenha o gráfico de pizza com buraco no meio (donut chart)
-    ax.pie(slices, shadow=True, wedgeprops=dict(width=0.3), startangle=0, colors=colors)
-
-    # Adiciona a legenda centralizada abaixo do gráfico
-    ax.legend(
-        legendas,
-        loc='upper center',
-        bbox_to_anchor=(0.5, -0.1),
-        frameon=False,
-        ncol=2,
-        fontsize=18
-    )
-
-    # Título do gráfico
-    ax.set_title(title)
-
-    # Ajusta o layout para evitar cortes
-    plt.tight_layout()
-
-    # Mostra a porcentagem de créditos obtidos no centro do gráfico
-    percent_credits_done = completed_credits / total_credits * 100
-
-    ax.text(0, 0, f"{percent_credits_done:.1f}%",
-            dict(size=30, ha='center', va='center'))
-
-    # Salva o gráfico em um buffer de memória
-    buf = io.BytesIO()
-
-    # Salva o gráfico como imagem
-    fig.savefig(buf, format='png')
-
-    buf.seek(0) 
-
-    # Converte a imagem para base64
-    img_base64 = base64.b64encode(buf.read()).decode('utf-8')
-
-    buf.close()  # Fecha o buffer de memória
-
-    return img_base64, [total_credits, completed_credits]
-
 
 @app.get(path="/api/regrasEquivalencia")
 async def get_regras_equivalencia():
@@ -159,42 +123,35 @@ async def get_regras_equivalencia():
 
 
 
-ANO_ATUAL = 2026
-BARRA_ATUAL = 1
-
-def calculate_temporality(semestre_ingresso: str):
-    ano_ingresso, barra_ingresso = semestre_ingresso.split("/")
-    
-
-    diff_anos = ANO_ATUAL - int(ano_ingresso)
-    diff_barra = BARRA_ATUAL - int(barra_ingresso)
-
-    return diff_anos * 2 + diff_barra + 1
-
-
-def traduzir_path(path_col: pd.Series, df_nomes: pd.DataFrame) -> pd.Series:
-    mapa = df_nomes.set_index('codigo')['nome'].to_dict()
-    
-    return (
-        path_col
-        .str.split('>')                # separa os códigos
-        .apply(lambda cods: [mapa.get(c, c) for c in cods])  # traduz cada código
-        .str.join(' > ')              # junta de volta em string com " > "
-    )
-
-
-
 class CalculateRequest(BaseModel):
     tabela: List[List[str]]
     semestre_ingresso: str
     curso: str
 
-@app.post(path="/calculate/")
-async def calculate(dados: CalculateRequest):
-    """
-    Recebe uma tabela de histórico via POST, processa os dados,
-    gera gráficos e retorna um histórico organizado por etapas.
+
+
     
+@app.post(path="/calculate/")
+async def calculate(dados: CalculateRequest, cached_disciplines=Depends(get_dados)):
+    """
+    Processa um histórico enviado via POST e retorna diversas análises e visualizações.
+
+    Este endpoint executa:
+    1. Validação do histórico e do curso
+    2. Geração de CSV do histórico baseado nos dados enviados (histórico do currículo antigo)
+    3. Execução de scripts externos que processam o histórico e geram os dados da conversão para o novo currículo
+    4. Geração de gráficos de progresso em créditos (gráficos de donut)
+    5. Construção de um histórico no novo currículo organizado por etapas
+    6. Tradução dos maiores caminhos para completar todas as disciplinas obrigatórias (no currículo antigo e no novo)
+    7. Edição de arquivos HTML dos diagramas de disciplinas obrigatórias para destacar o que já foi cursado
+
+    Retorna um dicionário com:
+    - Gráficos donut do progresso em créditos em base64
+    - Métricas sobre o progresso em créditos resumidas
+    - Histórico no novo currículo estruturado por etapa
+    - Maiores caminhos no currículo (antigo e novo)
+    - HTMLs dos diagramas (antigo e novo)
+
     """
 
     tabela = dados.tabela
@@ -228,7 +185,6 @@ async def calculate(dados: CalculateRequest):
     except:
         raise HTTPException(status_code=400, detail="Erro ao criar o histórico.") 
 
-
     # Executa os scripts
     try:
         result = subprocess.run(
@@ -239,11 +195,58 @@ async def calculate(dados: CalculateRequest):
         raise HTTPException(status_code=500, detail=f"Erro no script: {e.stderr}")
 
 
-    # Carrega os dados resumidos gerados pelo script
+    # Inicializa o dicionário de retorno
+    return_value = {}
+
+    # Carrega os dados gerados pelos scripts
     summarised_metrics = pd.read_csv(os.path.join(file_path, "summarised_metrics_from_novo_historico_flexivel.csv"))
+    new_history = pd.read_csv(os.path.join(file_path,"novo_historico_flexivel.csv")).drop('cartao', axis=1)
+    new_demand = pd.read_csv(os.path.join(file_path,"new_class_demand_from_novo_historico_flexivel.csv"))
+    disciplines = cached_disciplines["disciplinas_" + curso]
+
+    HTML_PATH_NEW_DIAGRAM = f"ClassHistoryConverter/scripts/INF_UFRGS_DATA/{curso}/Diagrama.html"
+    HTML_PATH_OLD_DIAGRAM = f"ClassHistoryConverter/scripts/INF_UFRGS_DATA/{curso}/DiagramaAntigo.html"
+
+    # Processa esses dados e vai guardando eles no dicionário de retorno
+    gerar_graficos_creditos(curso, summarised_metrics, return_value)
+    gerar_maiores_caminhos(disciplines, file_path, return_value)
+    history_table = gerar_novo_historico(disciplines, new_history, new_demand)
+    marcar_disciplinas_feitas_em_html(HTML_PATH_NEW_DIAGRAM, HTML_PATH_OLD_DIAGRAM, history_table, tabela, curso, return_value)
+
+    # Organiza o novo histórico em uma lista de dicionários, separando por etapa
+    new_history_table_separated_by_semester = [
+            history_table[history_table['etapa'] == i].drop('etapa', axis=1).to_dict(orient="list")
+            for i in range(int(history_table['etapa'].max()) + 1)
+        ]
+    
+
+    return_value["historico"] = new_history_table_separated_by_semester
+
+    # Remove o diretório temporário
+    shutil.rmtree(file_path)
+
+    return return_value
+
+
+def gerar_graficos_creditos(curso, summarised_metrics, return_value):
+    """
+    Descrição:
+        Gera gráficos do tipo donut representando o progresso em créditos obrigatórios, eletivos e totais, tanto no currículo antigo quanto no novo. Os gráficos são convertidos para imagens base64 e adicionados ao dicionário return_value.
+
+    Parâmetros:
+
+        curso (str): Código do curso ("CIC" ou "ECP").
+        summarised_metrics (pd.DataFrame): Métricas resumidas contendo informações sobre os créditos.
+        return_value (dict): Dicionário onde os gráficos e métricas serão adicionados.
+
+    Modifica:
+
+        Adiciona imagens em base64 na chave return_value["images"].
+        Adiciona métricas numéricas em return_value["summarized_metrics"].
+
+    """
 
     # Define os totais de créditos exigidos para o currículo novo e antigo
-
     if(curso == "CIC"):
         old_obligatory_credit_demand = 152
         old_elective_credit_demand = 24
@@ -255,10 +258,7 @@ async def calculate(dados: CalculateRequest):
         new_obligatory_credit_demand = 148
         new_elective_credit_demand = 36
 
-
     # Lista de imagens dos gráficos
-    return_value = {}
-
     return_value["images"] = {}
     return_value["summarized_metrics"] = {}
 
@@ -272,22 +272,25 @@ async def calculate(dados: CalculateRequest):
 
 
 
+def gerar_novo_historico(disciplines, new_history, new_demand):
+    """
+    Constrói uma tabela contendo todas as disciplinas já cumpridas e pendentes, com informações completas sobre nome, etapa, créditos e regras de cumprimento.
 
-    # Carrega as tabelas necessárias para fazer o histórico novo (novo histórico, com as cadeiras já liberadas, e nova demanda de cadeiras, com as cadeiras pendentes, e o dicionário de disciplinas)
-    new_history = pd.read_csv(os.path.join(file_path,"novo_historico_flexivel.csv")).drop('cartao', axis=1)
+    Parâmetros:
+        - disciplines (pd.DataFrame): Base de dados com as disciplinas do novo currículo.
+        - new_history (pd.DataFrame): Disciplinas já liberadas no novo currículo.
+        - new_demand (pd.DataFrame): Disciplinas ainda pendentes.
 
-    new_demand = pd.read_csv(os.path.join(file_path,"new_class_demand_from_novo_historico_flexivel.csv"))
+    Retorno:
+        history_table (pd.DataFrame): Tabela unificada com disciplinas já cursadas e a demanda restante.
+    
+    """
+
     new_demand = new_demand[new_demand['qt_students_needing_it'] == 1]  # Filtra apenas as que ainda precisam ser feitas
-
-
-
-    disciplines = pd.read_csv(f"ClassHistoryConverter/scripts/INF_UFRGS_DATA/{curso}/disciplinas.csv")
 
     new_elective_disciplines = disciplines[(disciplines['carater'] == "Eletiva") & (disciplines['cv'] == "novo")]
     new_elective_disciplines_not_done = new_elective_disciplines[~new_elective_disciplines['codigo'].isin(new_history['codigo'])]
     new_elective_disciplines_not_done["qt_students_needing_it"] = 1
-
-
 
     # Coloca informações das disciplinas nas tabelas de novo histórico e nova demanda (merge no campo codigo)
     new_history = new_history.merge(disciplines[['codigo', 'etapa', 'nome', 'creditos']], on="codigo", how="left")
@@ -306,34 +309,55 @@ async def calculate(dados: CalculateRequest):
     history_table["qt_students_needing_it"] = history_table["qt_students_needing_it"].fillna(0)
     history_table["rule_name"] = history_table["rule_name"].fillna("")
 
-
-    # Organiza o histórico em uma lista de dicionários, separando por etapa
-    history_table_separated = [
-        history_table[history_table['etapa'] == i].to_dict()
-        for i in range(int(history_table['etapa'].max()) + 1)
-    ]
-
-    for line in history_table_separated:
-        line.pop('etapa', None)
+    return history_table
 
 
-    return_value["historico"] = history_table_separated
+
+def gerar_maiores_caminhos(disciplines, file_path, return_value):
+    """
+    Traduz os maiores caminhos curriculares (sequências de disciplinas obrigatórias restantes) nos currículos antigo e novo, usando nomes legíveis.
+
+    Parâmetros:
+        - disciplines (pd.DataFrame): DataFrame contendo a tabela de disciplinas com códigos e nomes.
+        - file_path (str): Caminho para o diretório onde os arquivos de caminho estão armazenados.
+        - return_value (dict): Dicionário que será modificado para incluir os caminhos traduzidos.
+
+    Modifica:
+
+        Adiciona return_value["caminho_antigo"]: string com a sequência de disciplinas obrigatórias restantes (antigo).
+        Adiciona return_value["caminho_novo"]: string com a sequência de disciplinas obrigatórias restantes (novo).
 
 
+    """
     # Maiores Caminhos
     df_paths = pd.read_csv(os.path.join(file_path, "semesters_remaining_by_student_comparison_from_novo_historico_flexivel.csv"))
 
     df_paths["new_path"] = df_paths["new_path"].fillna("")
     df_paths["old_path"] = df_paths["old_path"].fillna("")
-   
+
     return_value["caminho_antigo"] = traduzir_path(df_paths['old_path'], disciplines).loc[0]
     return_value["caminho_novo"] = traduzir_path(df_paths['new_path'], disciplines).loc[0]
 
 
-    # TODO: editar diagrama
 
-    HTML_FILE_PATH = f"ClassHistoryConverter/scripts/INF_UFRGS_DATA/{curso}/Diagrama.html"
-    HTML_FILE_PATH_OLD_DIAGRAM = f"ClassHistoryConverter/scripts/INF_UFRGS_DATA/{curso}/DiagramaAntigo.html"
+def marcar_disciplinas_feitas_em_html(html_path_new_diagram, html_path_old_diagram, history_table, tabela, curso, return_value):
+    """
+    Edita os arquivos HTML dos diagramas curriculares, destacando em vermelho as disciplinas que já foram concluídas.
+
+    Parâmetros:
+
+        - html_path_new_diagram (str): Caminho para o HTML do diagrama do novo currículo.
+        - html_path_old_diagram (str): Caminho para o HTML do diagrama do currículo antigo.
+        - history_table (pd.DataFrame): Tabela com disciplinas liberadas e pendentes (usada para identificar quais já foram feitas).
+        - tabela (list): Lista com o histórico original enviado pelo usuário, usada para marcar o HTML antigo.
+        - curso (str): Código do curso ("CIC" ou "ECP"), usado para lógica específica de créditos.
+        - return_value (dict): Dicionário onde os HTMLs modificados serão adicionados.
+
+    Modifica:
+        return_value["html"]: HTML do novo currículo com disciplinas feitas destacadas.
+        return_value["html_old_diagram"]: HTML do currículo antigo com disciplinas feitas destacadas.
+
+    """
 
     obligatoryClasses = history_table[history_table["etapa"] != 0]
     alreadyDoneClasses = obligatoryClasses[obligatoryClasses["qt_students_needing_it"] == 0]["nome"]
@@ -352,70 +376,39 @@ async def calculate(dados: CalculateRequest):
         if numAlreadyDoneOldCredits >= 100:
             tabela.append(["", "100 Créditos Obrigatórios", ""])
 
-    
-    try:
-        # Ler o arquivo HTML
-        with open(HTML_FILE_PATH, "r") as f:
-            html_texto = f.read()
-                
-        # Modificar o conteúdo do HTML
-        for disciplina in alreadyDoneClasses:
-            nome_escapado = re.escape(disciplina)
-            teste = re.findall(rf"{nome_escapado}(?=[\\&]).*?style=.*?fillColor=#FFFFFA", html_texto)
+
+    # Ler o arquivo HTML
+    with open(html_path_new_diagram, "r") as f:
+        html_texto = f.read()
             
-            if len(teste) > 0:
-                substituido = re.sub(r"fillColor=#\w{6}", "fillColor=red", teste[0])
-                html_texto = html_texto.replace(teste[0], substituido)
+    # Modificar o conteúdo do HTML
+    for disciplina in alreadyDoneClasses:
+        nome_escapado = re.escape(disciplina)
+        teste = re.findall(rf"{nome_escapado}(?=[\\&]).*?style=.*?fillColor=#FFFFFA", html_texto)
+        
+        if len(teste) > 0:
+            substituido = re.sub(r"fillColor=#\w{6}", "fillColor=red", teste[0])
+            html_texto = html_texto.replace(teste[0], substituido)
 
-        # Retornar o HTML modificado como resposta
-        return_value["html"] = html_texto
+    # Retornar o HTML modificado como resposta
+    return_value["html"] = html_texto
 
-        f.close()
+    f.close()
 
-        # Ler o arquivo HTML
-        with open(HTML_FILE_PATH_OLD_DIAGRAM, "r") as file:
-            html_texto = file.read()
-                
-        # Modificar o conteúdo do HTML
-        for linha_historico_antigo in tabela:
-            nome_cadeira = linha_historico_antigo[1]
-            nome_escapado = re.escape(nome_cadeira)
-            teste = re.findall(rf"{nome_escapado}(?=[\\&]).*?style=.*?fillColor=#FFFFFA", html_texto)
+    # Ler o arquivo HTML
+    with open(html_path_old_diagram, "r") as file:
+        html_texto = file.read()
             
-            if len(teste) > 0:
-                substituido = re.sub(r"fillColor=#\w{6}", "fillColor=red", teste[0])
-                html_texto = html_texto.replace(teste[0], substituido)
+    # Modificar o conteúdo do HTML
+    for linha_historico_antigo in tabela:
+        nome_cadeira = linha_historico_antigo[1]
+        print(nome_cadeira)
+        nome_escapado = re.escape(nome_cadeira)
+        teste = re.findall(rf"{nome_escapado}(?=[\\&]).*?style=.*?fillColor=#FFFFFA", html_texto)
+        
+        if len(teste) > 0:
+            substituido = re.sub(r"fillColor=#\w{6}", "fillColor=red", teste[0])
+            html_texto = html_texto.replace(teste[0], substituido)
 
-        # Retornar o HTML modificado como resposta
-        return_value["html_old_diagram"] = html_texto
-
-   
-
-    except Exception as e:
-        return {"erro": str(e)}
-    
-
-    # Remove o diretório temporário
-    #shutil.rmtree(file_path)
-
-    return return_value
-
-
-    
-
-
-
-# Gera um gráfico qualquer e converte sua imagem usando base64
-def generate_plot():
-    fig, ax = plt.subplots()
-    ax.plot([0, 1, 2], [0, 1, 4])
-    buf = io.BytesIO()
-    plt.savefig(buf, format="png")
-    buf.seek(0)
-    return base64.b64encode(buf.read()).decode('utf-8')
-
-    
-    
-
-
-
+    # Retornar o HTML modificado como resposta
+    return_value["html_old_diagram"] = html_texto

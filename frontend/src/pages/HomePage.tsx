@@ -12,9 +12,11 @@ import Convertb from '../components/UploadForm/convertb.tsx'
 
 import './App.css'
 import { FrontData } from '../types.ts'
+import api from '../api.ts'
 
 const HomePage = () => {
   const [isDark, setIsDark] = useState(false)
+  const [old_history, setOldHistory] = useState();
 
   useEffect(() => {
     const media = window.matchMedia('(prefers-color-scheme: dark)')
@@ -25,6 +27,21 @@ const HomePage = () => {
 
     return () => media.removeEventListener('change', listener)
   }, [])
+
+  useEffect(() => {
+    const fetchOldHistory = async () => {
+      try {
+        const response = await api.get("/get_old_history");
+        console.log(response.data);
+        setOldHistory(response.data);
+
+      } catch (error) {
+        console.error("Erro ao buscar dados:", error);
+      }
+    };
+
+    fetchOldHistory();
+  }, []);
 
 
 
@@ -63,6 +80,7 @@ const HomePage = () => {
     {link: "https://codeberg.org/hbecker/ClassHistoryConverter", label: "Conversor de Histórico (Repositório)", target: "_blank"}
   ]
 
+  
 
   return (
     <>
