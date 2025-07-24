@@ -1,5 +1,7 @@
 import { DropdownInput } from '../DropDownInput';
 import { OuterTranscriptBox, InnerTranscriptBox, InputsBox } from './styled';
+import NovoHistorico from '../NovoHistorico';
+import { FrontData } from '../../types';
 
 
 interface TranscriptProps {
@@ -8,9 +10,13 @@ interface TranscriptProps {
   curso: string;
   onSelectCurso: (value: string) => void;
   onSelectSemester: (value: string) => void;
+  old_history: {
+    CIC: FrontData['historico'];
+    ECP: FrontData['historico'];
+  };
 }
 
-const Transcript = ({optionsToSemesterButton, semester, onSelectSemester, curso, onSelectCurso} : TranscriptProps) => {
+const Transcript = ({optionsToSemesterButton, semester, onSelectSemester, curso, onSelectCurso, old_history} : TranscriptProps) => {
   return (
 
     <div style={{margin: "5%", display: "flex", flexDirection: "column", gap: "18px"}}>
@@ -27,7 +33,7 @@ const Transcript = ({optionsToSemesterButton, semester, onSelectSemester, curso,
 
     <OuterTranscriptBox>
       <InnerTranscriptBox>
-        Histórico escolar
+        <NovoHistorico novo_historico={old_history[curso === "CIC" ? 'CIC' : 'ECP']} isOld = {true} />
       </InnerTranscriptBox>
     </OuterTranscriptBox>
 

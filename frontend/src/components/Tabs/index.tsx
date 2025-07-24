@@ -4,6 +4,7 @@ import { FrontData } from '../../types'
 import Overview from '../Overview';
 import { DropdownInput } from '../DropDownInput';
 import DiagramaComResumo from '../DiagramaComResumo';
+import NovoHistorico from '../NovoHistorico';
 
 interface ITabs {
   frontData: FrontData;
@@ -64,7 +65,7 @@ useEffect(() => {
         
         {abaAtiva === 'Diagramas' && <DiagramaComResumo oldUrl={oldUrl} newUrl={newUrl} windowSize={windowSize} frontData={frontData} />}
         
-        {abaAtiva === 'Histórico Novo' && <div>Conteúdo da aba "Histórico Novo"</div>}
+        {abaAtiva === 'Histórico Novo' && <NovoHistorico novo_historico={frontData.historico} isOld={false} />}
       </Conteudo>
     </div>
 

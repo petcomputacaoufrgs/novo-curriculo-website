@@ -45,7 +45,8 @@ app = FastAPI(lifespan=lifespan)
 
 # Define as origens de onde pode receber requisições
 origins = [
-    "http://localhost:5173"
+    "http://localhost:5173",
+    "http://127.0.0.1:5173"
 ]
 
 
@@ -288,10 +289,6 @@ def gerar_novo_historico(disciplines, new_history, new_demand):
 
     new_demand = new_demand[new_demand['qt_students_needing_it'] == 1]  # Filtra apenas as que ainda precisam ser feitas
 
-    new_elective_disciplines = disciplines[(disciplines['carater'] == "Eletiva") & (disciplines['cv'] == "novo")]
-    new_elective_disciplines_not_done = new_elective_disciplines[~new_elective_disciplines['codigo'].isin(new_history['codigo'])]
-    new_elective_disciplines_not_done["qt_students_needing_it"] = 1
-
     # Coloca informações das disciplinas nas tabelas de novo histórico e nova demanda (merge no campo codigo)
     new_history = new_history.merge(disciplines[['codigo', 'etapa', 'nome', 'creditos']], on="codigo", how="left")
 
@@ -299,8 +296,6 @@ def gerar_novo_historico(disciplines, new_history, new_demand):
 
     new_demand = new_demand.merge(disciplines[['codigo', 'creditos']], on="codigo", how="left")
 
-    new_elective_disciplines_not_done['etapa'] = new_elective_disciplines_not_done['etapa'].fillna(0)
-    new_demand = pd.concat([new_demand[['etapa', 'codigo', 'nome', 'qt_students_needing_it', 'creditos']], new_elective_disciplines_not_done[['etapa', 'codigo', 'nome', 'qt_students_needing_it', 'creditos']]])
     # Cria coluna vazia para regra associada a cada disciplina pendente
     new_demand['rule_name'] = None
     

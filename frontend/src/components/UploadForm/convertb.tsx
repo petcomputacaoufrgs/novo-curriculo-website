@@ -14,7 +14,6 @@ type ConvertbProps = {
   setNewBlobUrl: (url: string) => void;
 };
 
-
 function Convertb({state, semester, curso, setFrontData, setOldBlobUrl, setNewBlobUrl}: ConvertbProps){
 
   const [message, setMessage] = useState("");

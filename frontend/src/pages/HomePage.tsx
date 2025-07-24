@@ -29,18 +29,30 @@ const HomePage = () => {
   }, [])
 
   useEffect(() => {
+    let isFinished = false;
+
     const fetchOldHistory = async () => {
       try {
         const response = await api.get("/get_old_history");
-        console.log(response.data);
-        setOldHistory(response.data);
+        
+        if (!isFinished) {
+          console.log(response.data);
+          setOldHistory(response.data);
+        }
 
       } catch (error) {
-        console.error("Erro ao buscar dados:", error);
+        if (!isFinished) {
+          console.error("Erro ao buscar dados:", error);
+        }
       }
     };
 
     fetchOldHistory();
+
+    // Cleanup function
+    return () => {
+      isFinished = true;
+    };
   }, []);
 
 
@@ -93,12 +105,16 @@ const HomePage = () => {
         
         <Loadb setCurso={setCurso} setSemester={setSemester} setState={setState} setEtapas={setEtapas}/>
         
-        <Transcript 
-          semester={semester} 
-          onSelectSemester={(value: string) => setSemester(value)} 
-          curso={curso} 
-          onSelectCurso={(value: string) => setCurso(value)} 
-          optionsToSemesterButton={options}/>
+        {old_history && (
+          <Transcript 
+            semester={semester} 
+            onSelectSemester={(value: string) => setSemester(value)} 
+            curso={curso} 
+            onSelectCurso={(value: string) => setCurso(value)} 
+            optionsToSemesterButton={options}
+            old_history={{CIC: old_history['CIC'], ECP: old_history['ECP']}}
+          />
+        )}
         
         <Convertb curso={curso} semester={semester} state={state} setFrontData={setFrontData} setNewBlobUrl={setNewBlobUrl} setOldBlobUrl={setOldBlobUrl} />
         

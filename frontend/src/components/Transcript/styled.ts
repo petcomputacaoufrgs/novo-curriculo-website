@@ -3,7 +3,6 @@ export const OuterTranscriptBox = styled.div`
   border-radius: 15px;
   background-color: rgba(122, 142, 167, 1);
   padding: 10px;
-  height: 400px;
   width: auto;
   box-sizing: border-box;
 `
