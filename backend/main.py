@@ -46,7 +46,8 @@ app = FastAPI(lifespan=lifespan)
 # Define as origens de onde pode receber requisições
 origins = [
     "http://localhost:5173",
-    "http://127.0.0.1:5173"
+    "http://frontend:5173",   # Nome do serviço docker
+    "http://localhost",
 ]
 
 

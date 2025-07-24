@@ -6,7 +6,7 @@
 
 import Pkg
 Pkg.activate(joinpath(@__DIR__, ".."))
-Pkg.instantiate() # IMPORTANT: if packages are not installed uncomment this
+#Pkg.instantiate() # IMPORTANT: if packages are not installed uncomment this
 
 import PackageCompiler
 

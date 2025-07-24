@@ -11,9 +11,9 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Baixa e instala Julia
-ENV JULIA_VERSION=1.10.4
+ENV JULIA_VERSION=1.11.3
 
-RUN wget https://julialang-s3.julialang.org/bin/linux/x64/1.10/julia-${JULIA_VERSION}-linux-x86_64.tar.gz \
+RUN wget https://julialang-s3.julialang.org/bin/linux/x64/1.11/julia-${JULIA_VERSION}-linux-x86_64.tar.gz \
     && tar -xvzf julia-${JULIA_VERSION}-linux-x86_64.tar.gz \
     && mv julia-${JULIA_VERSION} /opt/julia \
     && ln -s /opt/julia/bin/julia /usr/local/bin/julia \
@@ -29,15 +29,16 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . /app
 WORKDIR /app
 
-# Instala dependências Julia do projeto principal
-RUN julia --project=./ClassHistoryConverter -e 'using Pkg; Pkg.instantiate();'
+# Limpa o Manifest.toml se necessário
+RUN rm -f ClassHistoryConverter/Manifest.toml
 
-RUN julia --project=./ClassHistoryConverter -e 'using Pkg; Pkg.instantiate(); Pkg.add("Statistics")'
+# Instala dependências Julia do projeto principal
+RUN julia --project=./ClassHistoryConverter -e 'using Pkg; Pkg.instantiate()'
 
 # Instala o PackageCompiler e gera a sysimage
 RUN julia --project=./ClassHistoryConverter -e 'using Pkg; Pkg.add("PackageCompiler")'
 RUN chmod +x ClassHistoryConverter/scripts/create_sysimage.jl
-RUN julia --project=./ClassHistoryConverter ClassHistoryConverter/scripts/create_sysimage.jl
+RUN julia --startup-file=no --project=./ClassHistoryConverter ClassHistoryConverter/scripts/create_sysimage.jl
 
 
 RUN chmod +x ClassHistoryConverter/scripts/update.sh

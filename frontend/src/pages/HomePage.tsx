@@ -74,6 +74,9 @@ const HomePage = () => {
 
   let options = [];
 
+  console.log(etapas);
+
+  
   for(var i = min_year; i < current_year; i++){
     options.unshift(`${i}/1`);
     options.unshift(`${i}/2`);
