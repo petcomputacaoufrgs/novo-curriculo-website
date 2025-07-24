@@ -6,7 +6,7 @@ export const OverlayContainer = styled.div`
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(255, 255, 255, 0.7); /* fundo branco translúcido */
+  background-color: rgba(0, 0, 0, 0.5); /* fundo branco translúcido */
   backdrop-filter: blur(4px); /* efeito blur */
   z-index: 9999;
   display: flex;
@@ -16,7 +16,7 @@ export const OverlayContainer = styled.div`
 
 export const OverlayContent = styled.div`
   text-align: center;
-  color: #553525;
+  color:  rgba(32, 42, 67, 1);
   font-family: 'Nunito Sans', sans-serif;
   font-weight: bold;
   font-size: 18px;
