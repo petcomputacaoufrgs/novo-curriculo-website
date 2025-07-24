@@ -5,7 +5,7 @@ import axios, { AxiosInstance } from 'axios';
 
 const api:AxiosInstance = axios.create({
      /* baseURL: "https://test-render-uimd.onrender.com" */ 
-      baseURL: "http://localhost:8000"  
+      baseURL: 'http://backend:8000'
 
 })
 
