@@ -109,21 +109,21 @@ novo,Obrigatória,1,fis01181,FÍSICA I-C,90,6,NA
 novo,Obrigatória,1,ecp99002,INTRODUÇÃO À ENGENHARIA DE COMPUTAÇÃO,30,2,NA
 novo,Obrigatória,1,inf05508,LÓGICA PARA COMPUTAÇÃO,60,4,NA
 novo,Obrigatória,2,mat01355,ÁLGEBRA LINEAR I - A,60,4,mat01353
-novo,Obrigatória,2,arq,Arquitetura de Computadores,60,4,inf01202; ecp99002
+novo,Obrigatória,2,arq,ARQUITETURA DE COMPUTADORES,60,4,inf01202; ecp99002
 novo,Obrigatória,2,mat01354,CÁLCULO E GEOMETRIA ANALÍTICA II - A,90,6,mat01353
-novo,Obrigatória,2,inf01203,Estruturas de Dados,60,4,inf01202
+novo,Obrigatória,2,inf01203,ESTRUTURAS DE DADOS,60,4,inf01202
 novo,Obrigatória,2,fis01182,FÍSICA GERAL - ELETROMAGNETISMO,90,6,fis01181; mat01353
 novo,Obrigatória,2,mat01375,MATEMÁTICA DISCRETA B,60,4,NA
-novo,Obrigatória,3,inf01120,Desenvolvimento de Software,60,4,inf01203
+novo,Obrigatória,3,inf01120,DESENVOLVIMENTO DE SOFTWARE,60,4,inf01203
 novo,Obrigatória,3,mat01167,EQUAÇÕES DIFERENCIAIS II,90,6,mat01354; mat01355
 novo,Obrigatória,3,fis01183,FÍSICA III-C,90,6,fis01182
-novo,Obrigatória,3,cdnovo,Projeto de Circuitos Digitais,90,6,arq
-novo,Obrigatória,3,paa1,Projeto e Análise de Algoritmos I,60,4,mat01353; inf01203; mat01375
+novo,Obrigatória,3,cdnovo,PROJETO DE CIRCUITOS DIGITAIS,90,6,arq
+novo,Obrigatória,3,paa1,PROJETO E ANÁLISE DE ALGORITMOS I,60,4,mat01353; inf01203; mat01375
 novo,Obrigatória,4,eng10001,CIRCUITOS ELÉTRICOS I - C,60,4,fis01182; mat01167
 novo,Obrigatória,4,mat01168,MATEMÁTICA APLICADA II,90,6,mat01167
 novo,Obrigatória,4,mat02219,PROBABILIDADE E ESTATÍSTICA,60,4,mat01353
-novo,Obrigatória,4,teocompecp,Teoria da Computação,60,4,inf05508; mat01375
-novo,Obrigatória,4,inf01113,Organização de Computadores,60,4,cdnovo
+novo,Obrigatória,4,teocompecp,TEORIA DA COMPUTAÇÃO,60,4,inf05508; mat01375
+novo,Obrigatória,4,inf01113,ORGANIZAÇÃO DE COMPUTADORES,60,4,cdnovo
 novo,Eletiva,5,inf01146,AVALIAÇÃO DE DESEMPENHO,60,4,mat02219
 novo,Obrigatória,5,eng10002,CIRCUITOS ELÉTRICOS II - C,60,4,eng10001; mat01168
 novo,Obrigatória,5,inf01127,ENGENHARIA DE SOFTWARE N,60,4,inf01120
@@ -135,41 +135,41 @@ novo,Obrigatória,6,inf01185,CONCEPÇÃO DE CIRCUITOS INTEGRADOS I,60,4,eng10001
 novo,Obrigatória,6,eng04077,CIRCUITOS ELETRÔNICOS I,90,6,eng10002
 novo,Eletiva,6,inf01048,INTELIGÊNCIA ARTIFICIAL,60,4,paa1; mat02219
 novo,Obrigatória,6,eng10003,LABORATÓRIO DE CIRCUITOS ELÉTRICOS,30,2,eng10002
-novo,Obrigatória,6,redes,Redes de Computadores e Internet,60,4,arq
-novo,Obrigatória,6,labinternet,Laboratório de Redes de Computadores,30,2,arq
+novo,Obrigatória,6,redes,REDES DE COMPUTADORES E INTERNET,60,4,arq
+novo,Obrigatória,6,labinternet,LABORATÓRIO DE REDES DE COMPUTADORES,30,2,arq
 novo,Eletiva,6,eng10017,SISTEMAS E SINAIS,90,6,mat01168
-novo,Obrigatória,7,sdtf,Sistemas Distribuídos e Tolerantes a Falhas,60,4,inf01142
+novo,Obrigatória,7,sdtf,SISTEMAS DISTRIBUÍDOS E TOLERANTES A FALHAS,60,4,inf01142
 novo,Eletiva,7,inf01191,ARQUITETURAS AVANÇADAS DE COMPUTADORES,60,4,inf01113
 novo,Eletiva,7,mat01169,CÁLCULO NUMÉRICO,90,6,inf01203; mat01167
 novo,Eletiva,7,eng04078,CIRCUITOS ELETRÔNICOS II,60,4,eng10002; eng04077
-novo,Eletiva,7,lp1,Compiladores I,60,4,inf01203; teocompecp
+novo,Eletiva,7,lp1,COMPILADORES I,60,4,inf01203; teocompecp
 novo,Obrigatória,7,inf01194,CONCEPÇÃO DE CIRCUITOS INTEGRADOS II,60,4,inf01175; inf01185
 novo,Eletiva,7,inf01001,ESPECIFICAÇÃO FORMAL N,60,4,inf05501
-novo,Eletiva,7,inf01047,Computação Gráfica e Visualização I,60,4,mat01354; mat01355; inf01203
+novo,Eletiva,7,inf01047,COMPUTAÇÃO GRÁFICA E VISUALIZAÇÃO I,60,4,mat01354; mat01355; inf01203
 novo,Eletiva,7,eng10032,MICROCONTROLADORES,30,2,eng04077; arq
 novo,Eletiva,7,eng10004,SISTEMAS DE CONTROLE I - B,60,4,eng10017
-novo,Eletiva,8,lp2,Compiladores II,60,4,arq; lp1
-novo,Eletiva,8,inf01008,Programação Paralela,60,4,inf01142
-novo,Eletiva,8,inf01017,Aprendizado de Máquina,60,4,mat01355; mat01354; inf01203; mat02219
+novo,Eletiva,8,lp2,COMPILADORES II,60,4,arq; lp1
+novo,Eletiva,8,inf01008,PROGRAMAÇÃO PARALELA,60,4,inf01142
+novo,Eletiva,8,inf01017,APRENDIZADO DE MÁQUINA,60,4,mat01355; mat01354; inf01203; mat02219
 novo,Eletiva,8,eng04061,CIRCUITOS ELETRÔNICOS INTEGRADOS,60,4,eng04010; eng04078
 novo,Eletiva,8,eng04055,CIRCUITOS INTEGRADOS ANALÓGICOS,60,4,inf01185
 novo,Adicional,8,eco02254,ECONOMIA A,60,4,OBRIGA100
-novo,Eletiva,8,inf01046,Processamento de Imagens e Visão Computacional I,60,4,mat01355; mat01354; inf01203
+novo,Eletiva,8,inf01046,PROCESSAMENTO DE IMAGENS E VISÃO COMPUTACIONAL I,60,4,mat01355; mat01354; inf01203
 novo,Eletiva,8,eng10005,LABORATÓRIO DE CONTROLE,30,2,eng10004
-novo,Eletiva,8,inf01002,Serviços Avançados em Redes de Computadores,60,4,inf01154
+novo,Eletiva,8,inf01002,SERVIÇOS AVANÇADOS EM REDES DE COMPUTADORES,60,4,inf01154
 novo,Eletiva,8,eng10026,ROBÓTICA A,60,4,eng10017; eng10032
 novo,Eletiva,8,inf01050,TÓPICOS ESPECIAIS EM ENGENHARIA DE COMPUTAÇÃO I,60,4,OBRIGA100
 novo,Eletiva,8,eng04041,TÓPICOS ESPECIAIS EM ENGENHARIA DE COMPUTAÇÃO III,30,2,OBRIGA100
 novo,Eletiva,8,inf05024,TÓPICOS ESPECIAIS EM ENGENHARIA DE COMPUTAÇÃO V,30,2,OBRIGA100
 novo,Adicional,9,adm01134,ADMINISTRAÇÃO E FINANÇAS,60,4,OBRIGA100
-novo,Eletiva,9,inf01205,CAD para Sistemas Digitais,60,4,inf01203; inf01175
-novo,Eletiva,9,inf01005,Comunicação de Dados e Tecnologias de Redes Emergentes,60,4,inf01154
+novo,Eletiva,9,inf01205,CAD PARA SISTEMAS DIGITAIS,60,4,inf01203; inf01175
+novo,Eletiva,9,inf01005,COMUNICAÇÃO DE DADOS E TECNOLOGIAS DE REDES EMERGENTES,60,4,inf01154
 novo,Eletiva,9,eng10051,DINÂMICA E CONTROLE DE ROBÔS,60,4,eng10004; eng10026
 novo,Eletiva,9,eng04457,INSTRUMENTAÇÃO A,60,4,eng04077; mat02219
 novo,Eletiva,9,eng10052,LABORATÓRIO DE ROBÓTICA,30,2,eng10026
 novo,Eletiva,9,eng04476,MICROPROCESSADORES II,75,5,eng10032
-novo,Eletiva,9,inf01034,Robótica Móvel Inteligente,60,4,paa1; mat02219; inf01120
-novo,Eletiva,9,inf01045,Cibersegurança,60,4,mat01375; mat02219
+novo,Eletiva,9,inf01034,ROBÓTICA MÓVEL INTELIGENTE,60,4,paa1; mat02219; inf01120
+novo,Eletiva,9,inf01045,CIBERSEGURANÇA,60,4,mat01375; mat02219
 novo,Eletiva,9,eng10019,SISTEMAS DE CONTROLE DIGITAIS,60,4,eng10004
 novo,Eletiva,9,eng10018,SISTEMAS DE CONTROLE II,60,4,eng10004
 novo,Adicional,9,hum04020,SOCIEDADE DA INFORMAÇÃO,60,4,OBRIGA100
@@ -179,16 +179,16 @@ novo,Eletiva,9,inf05025,TÓPICOS ESPECIAIS EM ENGENHARIA DE COMPUTAÇÃO VI,30,2
 novo,Eletiva,10,eng04063,DISPOSITIVOS SEMICONDUTORES,60,4,eng04010; inf01185
 novo,Eletiva,10,inf01032,EMPREENDIMENTO EM INFORMÁTICA,60,4,OBRIGA100
 novo,Adicional,10,inf01213,FOTOGRAFIA COMPUTACIONAL,60,4,inf01046
-novo,Eletiva,10,inf01145,Bancos de Dados,60,4,inf01203
+novo,Eletiva,10,inf01145,BANCOS DE DADOS,60,4,inf01203
 novo,Eletiva,10,edu03071,LÍNGUA BRASILEIRA DE SINAIS (LIBRAS),30,2,NA
 novo,Eletiva,10,eng04434,PRINCÍPIOS DE COMUNICAÇÃO,60,4,eng04010; eng04077; eng0017
 novo,Eletiva,10,eng04477,PROCESSAMENTO DIGITAL DE SINAIS,60,4,eng10017; eng10032
-novo,Eletiva,10,inf01059,Sistemas Embarcados: Fundamentos e Arquiteturas,60,4,cdnovo; inf01142
+novo,Eletiva,10,inf01059,SISTEMAS EMBARCADOS: FUNDAMENTOS E ARQUITETURAS,60,4,cdnovo; inf01142
 novo,Eletiva,10,eng04057,TESTE DE SISTEMAS ELETRÔNICOS,60,4,inf01113; inf01185
 novo,Adicional,10,inf05026,TÓPICOS ESPECIAIS EM ENGENHARIA DE COMPUTAÇÃO VII,60,4,OBRIGA100
-novo,Eletiva,0,paa2,Projeto e Análise de Algoritmos II,60,4,paa1
-novo,Eletiva,0,inf01030,Visão Computacional II,60,4,inf01046
-novo,Eletiva,0,inf01216,Modelagem e Gerenciamento de Processos de Negócio,60,4,inf01127
+novo,Eletiva,0,paa2,PROJETO E ANÁLISE DE ALGORITMOS II,60,4,paa1
+novo,Eletiva,0,inf01030,VISÃO COMPUTACIONAL II,60,4,inf01046
+novo,Eletiva,0,inf01216,MODELAGEM E GERENCIAMENTO DE PROCESSOS DE NEGÓCIO,60,4,inf01127
 novo,Eletiva,0,eng10055,SISTEMAS DE TEMPO REAL - I,60,4,inf01113
 novo,Eletiva,0,inf05009,TÓPICOS ESPECIAIS EM COMPUTAÇÃO IX,60,4,OBRIGA100
 novo,Eletiva,0,inf01054,TÓPICOS ESPECIAIS EM COMPUTAÇÃO VII,60,4,OBRIGA100
@@ -212,4 +212,4 @@ novo,Eletiva,0,topicosnovoxliii,TÓPICOS ESPECIAIS EM COMPUTAÇÃO XLIII,60,4,OB
 novo,Eletiva,0,topicosnovoxliv,TÓPICOS ESPECIAIS EM COMPUTAÇÃO XLIV,60,4,OBRIGA94
 novo,Eletiva,0,topicosnovoxlv,TÓPICOS ESPECIAIS EM COMPUTAÇÃO XLV,60,4,OBRIGA94
 novo,Eletiva,0,topicosnovoxlvi,TÓPICOS ESPECIAIS EM COMPUTAÇÃO XLVI,60,4,OBRIGA94
-novo,Eletiva,0,dlvc,Aprendizado Profundo para Computação Visual,60,4,inf01202; mat01355; mat01354; mat02219
+novo,Eletiva,0,dlvc,APRENDIZADO PROFUNDO PARA COMPUTAÇÃO VISUAL,60,4,inf01202; mat01355; mat01354; mat02219

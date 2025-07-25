@@ -66,7 +66,6 @@ const HomePage = () => {
 
   return (
     <>
-      <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
         <Navbar links={links}/>
         <About 
           title="Bacharelado em Ciência da Computação" 
