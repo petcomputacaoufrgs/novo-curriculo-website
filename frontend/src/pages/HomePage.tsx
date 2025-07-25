@@ -95,6 +95,7 @@ const HomePage = () => {
     {link: "https://codeberg.org/hbecker/ClassHistoryConverter", label: "Conversor de Histórico (Repositório)", target: "_blank"}
   ]
 
+  console.log("Home Page Renderizada");
   return (
     <>
       <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
