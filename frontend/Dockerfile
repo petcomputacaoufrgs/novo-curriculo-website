@@ -7,6 +7,11 @@ COPY package*.json ./
 RUN npm install
 
 COPY . .
+
+# Variável de ambiente para a URL da API
+ARG VITE_API_URL
+ENV VITE_API_URL=$VITE_API_URL
+
 RUN npm run build
 
 # Etapa 2: servir os arquivos estáticos com NGINX

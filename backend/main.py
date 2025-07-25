@@ -3,6 +3,7 @@ import shutil
 import subprocess
 from fastapi import Depends, FastAPI, File, HTTPException, Request, UploadFile
 
+from dotenv import load_dotenv
 
 # Middleware do FastAPI para controlar as permissões de CORS (Cross-Origin Resource Sharing). Isso permite configurar DE QUAIS domínios ou portas o servidor pode receber requisições
 from fastapi.middleware.cors import CORSMiddleware
@@ -25,6 +26,12 @@ from contextlib import asynccontextmanager
 ANO_ATUAL = 2026
 BARRA_ATUAL = 1
 
+load_dotenv()
+
+FRONTEND_HOST = os.getenv("APP_HOST_IP")
+FRONTEND_PORT = os.getenv("FRONT_PORT")
+
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -34,6 +41,7 @@ async def lifespan(app: FastAPI):
         "disciplinas_ECP": pd.read_csv("ClassHistoryConverter/scripts/INF_UFRGS_DATA/ECP/disciplinas.csv"),
     }
     print("Arquivos carregados com sucesso!")
+
     yield  # Aqui a aplicação é executada
     # (opcional) Qualquer código após o yield será executado no shutdown
     print("Encerrando a aplicação")
@@ -45,9 +53,8 @@ app = FastAPI(lifespan=lifespan)
 
 # Define as origens de onde pode receber requisições
 origins = [
-    "http://localhost:5173",
-    "http://frontend:5173",   # Nome do serviço docker
-    "http://localhost",
+    f"http://{FRONTEND_HOST}:{FRONTEND_PORT}",
+    f"http://localhost:{FRONTEND_PORT}"
 ]
 
 

@@ -4,8 +4,7 @@ import axios, { AxiosInstance } from 'axios';
 // temos Conversão automática de JSON e Tratamento automático de erros na chamada da requisição
 
 const api:AxiosInstance = axios.create({
-     /* baseURL: "https://test-render-uimd.onrender.com" */ 
-      baseURL: 'http://backend:8000'
+      baseURL: import.meta.env.VITE_API_URL
 
 })
 

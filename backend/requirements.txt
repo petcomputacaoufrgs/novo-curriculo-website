@@ -6,3 +6,4 @@ python-multipart
 beautifulsoup4
 matplotlib
 pandas
+dotenv
