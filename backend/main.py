@@ -3,7 +3,6 @@ import shutil
 import subprocess
 from fastapi import Depends, FastAPI, File, HTTPException, Request, UploadFile
 
-from dotenv import load_dotenv
 
 # Middleware do FastAPI para controlar as permissões de CORS (Cross-Origin Resource Sharing). Isso permite configurar DE QUAIS domínios ou portas o servidor pode receber requisições
 from fastapi.middleware.cors import CORSMiddleware
@@ -17,19 +16,21 @@ from pydantic import BaseModel
 from typing import List
 
 from readHtml import LeHtml, criaHistoricoCSV
-from aux_functions import calculate_temporality, traduzir_path, plot_function, generate_unique_filename
+from aux_functions import calculate_temporality, correct_alternative_disciplines, traduzir_path, plot_function, generate_unique_filename
 
 import pandas as pd
 
 from contextlib import asynccontextmanager
 
+# DESCOMENTAR ISSO AO FAZER BUILD 
+# from dotenv import load_dotenv
+#load_dotenv()
+#FRONTEND_HOST = os.getenv("APP_HOST_IP")
+#FRONTEND_PORT = os.getenv("FRONT_PORT")
+
 ANO_ATUAL = 2026
 BARRA_ATUAL = 1
 
-load_dotenv()
-
-FRONTEND_HOST = os.getenv("APP_HOST_IP")
-FRONTEND_PORT = os.getenv("FRONT_PORT")
 
 
 
@@ -53,8 +54,11 @@ app = FastAPI(lifespan=lifespan)
 
 # Define as origens de onde pode receber requisições
 origins = [
-    f"http://{FRONTEND_HOST}:{FRONTEND_PORT}",
-    f"http://localhost:{FRONTEND_PORT}"
+    f"http://localhost:5173",
+    
+    # DESCOMENTAR ISSO AO FAZER BUILD
+    #f"http://{FRONTEND_HOST}:{FRONTEND_PORT}",
+    #f"http://localhost:{FRONTEND_PORT}"
 ]
 
 
@@ -81,6 +85,7 @@ async def get_old_history(dados = Depends(get_dados)):
     cic_history = cic_history[cic_history['cv'] == 'velho'][["etapa", "codigo", "creditos", "nome"]]
     cic_history["etapa"] = cic_history["etapa"].fillna(0).astype(int)
     
+    cic_history = cic_history[cic_history['creditos'] > 0] # Remove "disciplinas" que não são cadeiras, como "Ingresso até Temp-4" e "Vínculo Acadêmico"
     # Tranforma o historico da CIC em uma lista de etapas, onde cada etapa contém listas com os dados de cada cadeira
     cic_history = [
         cic_history[cic_history['etapa'] == i].drop('etapa', axis=1).to_dict(orient="list")
@@ -118,6 +123,8 @@ async def upload_html(file: UploadFile = File(...)):
     except:
         raise HTTPException(status_code=400, detail = "Tipo de HTML não identificado. Verifique se é o historico escolar ou histórico do curso disponibilizado no Portal do Aluno.")
         
+    dados_extraidos["dados"] = correct_alternative_disciplines(dados_extraidos["dados"], dados_extraidos["curso"])
+
     return dados_extraidos
 
 

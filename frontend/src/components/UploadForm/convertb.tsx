@@ -12,11 +12,11 @@ type ConvertbProps = {
   setFrontData: (frontData: FrontData) => void;
   setOldBlobUrl: (url: string) => void;
   setNewBlobUrl: (url: string) => void;
+  setMessage: (message: string) => void;
 };
 
-function Convertb({state, semester, curso, setFrontData, setOldBlobUrl, setNewBlobUrl}: ConvertbProps){
+function Convertb({state, semester, curso, setFrontData, setOldBlobUrl, setNewBlobUrl, setMessage}: ConvertbProps){
 
-  const [message, setMessage] = useState("");
 
       const handleError = (e: unknown) => {
       if (isAxiosError(e)) {
@@ -69,10 +69,9 @@ function Convertb({state, semester, curso, setFrontData, setOldBlobUrl, setNewBl
 
   return(
     <div>
-        <div className = "center-converter">
-            <button className = "convert-button" onClick={calculate}>Converter</button>
-        </div>
-        <p>{message}</p>
+
+      <button className = "convert-button" onClick={calculate} style={{height: "100%"}}>Converter</button>
+
 
     </div>  
   )

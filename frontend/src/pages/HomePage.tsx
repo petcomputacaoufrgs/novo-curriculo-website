@@ -66,6 +66,8 @@ const HomePage = () => {
   const [oldUrl, setOldBlobUrl] = useState<string | undefined>();
   const [newUrl, setNewBlobUrl] = useState<string | undefined>();
 
+  const [message, setMessage] = useState<string>("");
+
 
   const min_year = 1990;
   const current_year = 2026;
@@ -105,7 +107,12 @@ const HomePage = () => {
           text="O currículo da CIC está para ser reformulado, então o grupo PET Computação fez um esforço conjunto com o GT da troca de currículo e 
                 especialmente junto com o Professor Henrique Becker (responsável pelo código em Julia que faz a conversão) de fazer um site onde seja rápido e fácil ver as mudanças de transição."/>
         
-        <Loadb setCurso={setCurso} setSemester={setSemester} setState={setState} setEtapas={setEtapas}/>
+        <div style={{display: "flex", justifyContent: "center", gap: "20px"}}>
+        <Loadb setCurso={setCurso} setSemester={setSemester} setState={setState} setEtapas={setEtapas} setMessage={setMessage}/>
+        <Convertb curso={curso} semester={semester} state={state} setFrontData={setFrontData} setNewBlobUrl={setNewBlobUrl} setOldBlobUrl={setOldBlobUrl} setMessage={setMessage}/>
+        </div>
+
+        <p>{message}</p>
         
         {old_history && (
           <Transcript 
@@ -118,7 +125,6 @@ const HomePage = () => {
           />
         )}
         
-        <Convertb curso={curso} semester={semester} state={state} setFrontData={setFrontData} setNewBlobUrl={setNewBlobUrl} setOldBlobUrl={setOldBlobUrl} />
         
         <Divider />
         

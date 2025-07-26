@@ -10,13 +10,13 @@ type LoadbProps = {
     setCurso: (curso: string) => void;
     setSemester: (semester: string) => void;
     setEtapas: (etapas: number[]) => void;
+    setMessage: (message: string) => void;
 };
 
 
-const Loadb = ({ setState, setCurso, setSemester, setEtapas }: LoadbProps) =>{
+const Loadb = ({ setState, setCurso, setSemester, setEtapas, setMessage }: LoadbProps) =>{
 
 
-  const [message, setMessage] = useState<string>("");
 
     const handleError = (e: unknown) => {
     if (isAxiosError(e)) {
@@ -78,7 +78,6 @@ const Loadb = ({ setState, setCurso, setSemester, setEtapas }: LoadbProps) =>{
         Carregar Histórico
         <img src={uploadIcon} alt="ícone de upload" className="upload-icon" />
       </label>
-      <p>{message}</p>
     </div >
   );
 }
