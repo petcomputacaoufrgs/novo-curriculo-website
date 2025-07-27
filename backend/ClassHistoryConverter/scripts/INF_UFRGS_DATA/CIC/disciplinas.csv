@@ -20,7 +20,7 @@ novo,Obrigatória,4,PAA2,Projeto e Análise de Algoritmos II,60,4,PAA1
 novo,Obrigatória,4,OrgComp,Organização de Computadores,60,4,CD
 novo,Obrigatória,4,AlgLin,Álgebra Linear,60,4,Calc1
 novo,Obrigatória,4,ES,Engenharia de Software,60,4,TCP
-novo,Obrigatória,4,IHC,Interação Humano-Computador e UX,60,4,TCP
+novo,Obrigatória,4,IHC,Interação Homem-Computador,60,4,TCP
 novo,Obrigatória,5,SisOp,Sistemas Operacionais,60,4,Arq; ED
 novo,Obrigatória,5,IA,Inteligência Artificial,60,4,PAA1; ProbEst
 novo,Obrigatória,5,CC,Computação Científica,60,4,Calc2; AlgLin; ED
