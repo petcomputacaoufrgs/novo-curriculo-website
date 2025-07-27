@@ -15,9 +15,10 @@ interface TranscriptProps {
     ECP: FrontData['historico'];
   };
   uploaded_history?: string[][];
+  onHistoryChange?: (getHistoryFn: () => string[][]) => void;
 }
 
-const Transcript = ({optionsToSemesterButton, semester, onSelectSemester, curso, onSelectCurso, old_history, uploaded_history} : TranscriptProps) => {
+const Transcript = ({optionsToSemesterButton, semester, onSelectSemester, curso, onSelectCurso, old_history, uploaded_history, onHistoryChange} : TranscriptProps) => {
   return (
 
     <div style={{margin: "5%", display: "flex", flexDirection: "column", gap: "18px"}}>
@@ -34,7 +35,7 @@ const Transcript = ({optionsToSemesterButton, semester, onSelectSemester, curso,
 
     <OuterTranscriptBox>
       <InnerTranscriptBox>
-        <Historico history={old_history[curso === "CIC" ? 'CIC' : 'ECP']} historyType={HistoryType.OLD} uploadedHistory={uploaded_history} />
+        <Historico history={old_history[curso === "CIC" ? 'CIC' : 'ECP']} historyType={HistoryType.OLD} uploadedHistory={uploaded_history} onHistoryChange={onHistoryChange} />
       </InnerTranscriptBox>
     </OuterTranscriptBox>
 

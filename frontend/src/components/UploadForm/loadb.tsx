@@ -68,6 +68,10 @@ const Loadb = ({ setHistory, setCurso, setSemester, setEtapas, setMessage }: Loa
     else{
         setMessage("Nenhum arquivo selecionado!")
     }
+
+    // Limpa o valor do input para permitir carregar o mesmo arquivo novamente
+    // Adicionado pois o usuário pode querer resetar para o seu histórico carregado após fazer mudanças manuais.
+    event.target.value = '';
   };
 
   return (

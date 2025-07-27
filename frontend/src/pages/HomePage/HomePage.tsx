@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import Navbar from "../../components/Navbar/index.tsx"
 import About from "../../components/About/index.tsx"
 import Transcript from "../../components/Transcript/index.tsx"
@@ -17,6 +17,15 @@ import { ButtonsStyledContainer } from './styled.ts'
 const HomePage = () => {
   const [isDark, setIsDark] = useState(false)
   const [old_history, setOldHistory] = useState();
+  const [history, setHistory] = useState<string[][]>([]);
+
+  // Histórico modificado é usado para obter mudanças manuais do usuário, é usado para atualizar o histórico que será enviado para o backend.
+  const [getModifiedHistory, setGetModifiedHistory] = useState<(() => string[][]) | null>(null);
+
+  // Função para receber a função de obter histórico modificado
+    const handleHistoryChange = useCallback((getHistoryFn: () => string[][]) => {
+        setGetModifiedHistory(() => getHistoryFn);
+    }, []);
 
   useEffect(() => {
     const media = window.matchMedia('(prefers-color-scheme: dark)')
@@ -59,7 +68,6 @@ const HomePage = () => {
 
   const [semester, setSemester] = useState("Semestre");
   const [curso, setCurso] = useState("CIC");
-  const [history, setHistory] = useState<string[][]>([]);
   const [etapas, setEtapas] = useState<number[]>([]);
 
   const [frontData, setFrontData] = useState<FrontData | undefined>();
@@ -108,9 +116,24 @@ const HomePage = () => {
                 especialmente junto com o Professor Henrique Becker (responsável pelo código em Julia que faz a conversão) de fazer um site onde seja rápido e fácil ver as mudanças de transição."/>
         
         <ButtonsStyledContainer>
-          <Loadb setCurso={setCurso} setSemester={setSemester} setHistory={setHistory} setEtapas={setEtapas} setMessage={setMessage}/>
-          <Convertb curso={curso} semester={semester} history={history} setFrontData={setFrontData} setNewBlobUrl={setNewBlobUrl} setOldBlobUrl={setOldBlobUrl} setMessage={setMessage}/>
-        </ButtonsStyledContainer>
+                <Loadb 
+                    setCurso={setCurso} 
+                    setSemester={setSemester} 
+                    setHistory={setHistory} 
+                    setEtapas={setEtapas} 
+                    setMessage={setMessage}
+                />
+                <Convertb 
+                    curso={curso} 
+                    semester={semester} 
+                    history={history} // Histórico original
+                    getModifiedHistory={getModifiedHistory}
+                    setFrontData={setFrontData} 
+                    setNewBlobUrl={setNewBlobUrl} 
+                    setOldBlobUrl={setOldBlobUrl} 
+                    setMessage={setMessage}
+                />
+            </ButtonsStyledContainer>
 
         <p>{message}</p>
         
@@ -123,6 +146,7 @@ const HomePage = () => {
             optionsToSemesterButton={options}
             old_history={{CIC: old_history['CIC'], ECP: old_history['ECP']}}
             uploaded_history={history}
+            onHistoryChange={handleHistoryChange}
           />
         )}
         

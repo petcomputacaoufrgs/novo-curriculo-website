@@ -1,16 +1,19 @@
 import { FrontData, HistoryType } from '../../types';
 import { CheckboxContainer, StyledCheckbox, DataCell, DropdownButton, HeaderCell, Tabela, Wrapper } from './styled';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import React, { Fragment } from 'react';
 
 interface Props {
     history?: FrontData['historico'];
     historyType: HistoryType;
-    // Array onde cada elemento é um array de strings representando dados da disciplina: semestre, nome, código. É usado apenas para o histórico carregado (UPLOADED).
+
+    // Array onde cada elemento é um array de strings representando dados da disciplina: semestre, nome, código. É usado apenas para o histórico carregado pelo usuário.
     uploadedHistory?: string[][]; 
+
+    onHistoryChange?: (getHistoryFn: () => string[][]) => void;
 }
 
-const Historico: React.FC<Props> = ({ history, historyType, uploadedHistory }) => {
+const Historico: React.FC<Props> = ({ history, historyType, uploadedHistory, onHistoryChange}) => {
     const [expandedEtapas, setExpandedEtapas] = useState<Set<number>>(new Set());
     const [checkedStates, setCheckedStates] = useState<{[key: string]: boolean}>({});
     // Estado para armazenar a referência do histórico padrão antigo
@@ -45,7 +48,6 @@ const Historico: React.FC<Props> = ({ history, historyType, uploadedHistory }) =
                         const key = `${etapaIndex}-${disciplinaIndex}`;
                         // Marca como true apenas se a disciplina foi cursada pelo aluno
                         initialCheckedStates[key] = disciplinasCursadas.has(codigo);
-                        console.log(`Etapa ${etapaIndex}, Disciplina ${disciplinaIndex} (${codigo}): ${disciplinasCursadas.has(codigo) ? 'Cursada' : 'Não cursada'}`);
                     });
                 }
             });
@@ -66,11 +68,49 @@ const Historico: React.FC<Props> = ({ history, historyType, uploadedHistory }) =
         }));
     };
 
+    // Função para obter o histórico modificado baseado nos checkboxes
+    const getModifiedHistory = useCallback((): string[][] => {
+        if (!oldHistoryReference || !uploadedHistory) return [];
+        
+        const modifiedHistory: string[][] = [];
+        
+        oldHistoryReference.forEach((etapa, etapaIndex) => {
+            if (etapa.codigo) {
+                etapa.codigo.forEach((codigo, disciplinaIndex) => {
+                    const key = `${etapaIndex}-${disciplinaIndex}`;
+                    const isChecked = checkedStates[key] || false;
+                    
+                    if (isChecked) {
+                        // Encontra a disciplina correspondente no histórico carregado
+                        const disciplinaOriginal = uploadedHistory.find(d => d[2] === codigo);
+                        if (disciplinaOriginal) {
+                            modifiedHistory.push([...disciplinaOriginal]);
+                        } else {
+                            // Se não existe no histórico original, cria uma entrada padrão
+                            modifiedHistory.push([
+                                "2024/1", // semestre padrão
+                                etapa.nome?.[disciplinaIndex] || codigo,
+                                codigo
+                            ]);
+                        }
+                    }
+                });
+            }
+        });
+        
+        return modifiedHistory;
+    }, [oldHistoryReference, uploadedHistory, checkedStates]);
+
+    // Passa a função para o componente pai apenas quando necessário
+    useEffect(() => {
+        if (onHistoryChange) {
+            onHistoryChange(getModifiedHistory);
+        }
+    }, [getModifiedHistory, onHistoryChange]);
+
     const CheckBox = ({ etapaIndex, disciplinaIndex }: { etapaIndex: number, disciplinaIndex: number }) => {
         const key = `${etapaIndex}-${disciplinaIndex}`;
         const isChecked = checkedStates[key] || false;
-        
-        console.log(`CheckBox ${key}: state = ${checkedStates[key]}, isChecked = ${isChecked}`);
         
         return(
             <CheckboxContainer>

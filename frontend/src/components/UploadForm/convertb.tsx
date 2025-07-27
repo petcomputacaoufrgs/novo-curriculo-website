@@ -8,44 +8,42 @@ type ConvertbProps = {
   history: string[][];
   semester: string;
   curso: string;
+  getModifiedHistory?: (() => string[][]) | null;
   setFrontData: (frontData: FrontData) => void;
   setOldBlobUrl: (url: string) => void;
   setNewBlobUrl: (url: string) => void;
   setMessage: (message: string) => void;
 };
 
-function Convertb({history, semester, curso, setFrontData, setOldBlobUrl, setNewBlobUrl, setMessage}: ConvertbProps){
-
-
-      const handleError = (e: unknown) => {
-      if (isAxiosError(e)) {
-  
-        if (e.response) {
-          // erro com resposta do backend
-          const detail = e.response.data.detail;
-          setMessage(`Erro: ${detail}`);
-        } 
-        
-        else {
-          setMessage("Erro: Não foi possível conectar ao servidor.");
-        }
-      } 
-      
-      else {
-        setMessage("Erro inesperado.");
+function Convertb({history, semester, curso, getModifiedHistory, setFrontData, setOldBlobUrl, setNewBlobUrl, setMessage}: ConvertbProps){
+  const handleError = (e: unknown) => {
+    if (isAxiosError(e)) {
+      if (e.response) {
+        // Erro com resposta do backend
+        const detail = e.response.data.detail;
+        setMessage(`Erro: ${detail}`);
+      } else {
+        setMessage("Erro: Não foi possível conectar ao servidor.");
       }
-  
+    } else {
+      setMessage("Erro inesperado.");
+    }
   }
-
-  
-
 
   const calculate = async () => {
     try {
-      const response = await api.post("/calculate/", { tabela: history, semestre_ingresso: semester, curso: curso });
+      // Determina qual histórico usar: modificado (se disponível) ou original
+      const historyToUse = getModifiedHistory ? getModifiedHistory() : history;
+      
+      console.log("Histórico usado para conversão:", historyToUse);
+      
+      const response = await api.post("/calculate/", { 
+        tabela: historyToUse, 
+        semestre_ingresso: semester, 
+        curso: curso 
+      });
       
       setFrontData(response.data);
-      
       console.log(response.data);
 
       // Criar um Blob e carregar no iframe
@@ -60,7 +58,6 @@ function Convertb({history, semester, curso, setFrontData, setOldBlobUrl, setNew
 
       setMessage("");
 
-
     } catch (error) {
       handleError(error);
     }
@@ -68,13 +65,9 @@ function Convertb({history, semester, curso, setFrontData, setOldBlobUrl, setNew
 
   return(
     <div>
-
       <button className = "convert-button" onClick={calculate} style={{height: "100%"}}>Converter</button>
-
-
     </div>  
   )
-
 }
 
 export default Convertb;
