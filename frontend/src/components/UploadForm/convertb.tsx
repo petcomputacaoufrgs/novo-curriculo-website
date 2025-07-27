@@ -1,4 +1,3 @@
-import { useState } from "react";
 import api from "../../api";
 
 import { FrontData } from "../../types";
@@ -6,7 +5,7 @@ import './UploadForm.css'
 import { isAxiosError } from "axios";
 
 type ConvertbProps = {
-  state: string[][];
+  history: string[][];
   semester: string;
   curso: string;
   setFrontData: (frontData: FrontData) => void;
@@ -15,7 +14,7 @@ type ConvertbProps = {
   setMessage: (message: string) => void;
 };
 
-function Convertb({state, semester, curso, setFrontData, setOldBlobUrl, setNewBlobUrl, setMessage}: ConvertbProps){
+function Convertb({history, semester, curso, setFrontData, setOldBlobUrl, setNewBlobUrl, setMessage}: ConvertbProps){
 
 
       const handleError = (e: unknown) => {
@@ -43,7 +42,7 @@ function Convertb({state, semester, curso, setFrontData, setOldBlobUrl, setNewBl
 
   const calculate = async () => {
     try {
-      const response = await api.post("/calculate/", { tabela: state, semestre_ingresso: semester, curso: curso });
+      const response = await api.post("/calculate/", { tabela: history, semestre_ingresso: semester, curso: curso });
       
       setFrontData(response.data);
       

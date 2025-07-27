@@ -59,7 +59,7 @@ const HomePage = () => {
 
   const [semester, setSemester] = useState("Semestre");
   const [curso, setCurso] = useState("CIC");
-  const [state, setState] = useState<string[][]>([]);
+  const [history, setHistory] = useState<string[][]>([]);
   const [etapas, setEtapas] = useState<number[]>([]);
 
   const [frontData, setFrontData] = useState<FrontData | undefined>();
@@ -108,8 +108,8 @@ const HomePage = () => {
                 especialmente junto com o Professor Henrique Becker (responsável pelo código em Julia que faz a conversão) de fazer um site onde seja rápido e fácil ver as mudanças de transição."/>
         
         <ButtonsStyledContainer>
-          <Loadb setCurso={setCurso} setSemester={setSemester} setState={setState} setEtapas={setEtapas} setMessage={setMessage}/>
-          <Convertb curso={curso} semester={semester} state={state} setFrontData={setFrontData} setNewBlobUrl={setNewBlobUrl} setOldBlobUrl={setOldBlobUrl} setMessage={setMessage}/>
+          <Loadb setCurso={setCurso} setSemester={setSemester} setHistory={setHistory} setEtapas={setEtapas} setMessage={setMessage}/>
+          <Convertb curso={curso} semester={semester} history={history} setFrontData={setFrontData} setNewBlobUrl={setNewBlobUrl} setOldBlobUrl={setOldBlobUrl} setMessage={setMessage}/>
         </ButtonsStyledContainer>
 
         <p>{message}</p>
@@ -122,6 +122,7 @@ const HomePage = () => {
             onSelectCurso={(value: string) => setCurso(value)} 
             optionsToSemesterButton={options}
             old_history={{CIC: old_history['CIC'], ECP: old_history['ECP']}}
+            uploaded_history={history}
           />
         )}
         

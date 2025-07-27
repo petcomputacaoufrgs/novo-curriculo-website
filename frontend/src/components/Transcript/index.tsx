@@ -1,7 +1,7 @@
 import { DropdownInput } from '../DropDownInput';
 import { OuterTranscriptBox, InnerTranscriptBox, InputsBox } from './styled';
-import NovoHistorico from '../NovoHistorico';
-import { FrontData } from '../../types';
+import Historico from '../Historico';
+import { FrontData, HistoryType } from '../../types';
 
 
 interface TranscriptProps {
@@ -14,9 +14,10 @@ interface TranscriptProps {
     CIC: FrontData['historico'];
     ECP: FrontData['historico'];
   };
+  uploaded_history?: string[][];
 }
 
-const Transcript = ({optionsToSemesterButton, semester, onSelectSemester, curso, onSelectCurso, old_history} : TranscriptProps) => {
+const Transcript = ({optionsToSemesterButton, semester, onSelectSemester, curso, onSelectCurso, old_history, uploaded_history} : TranscriptProps) => {
   return (
 
     <div style={{margin: "5%", display: "flex", flexDirection: "column", gap: "18px"}}>
@@ -33,7 +34,7 @@ const Transcript = ({optionsToSemesterButton, semester, onSelectSemester, curso,
 
     <OuterTranscriptBox>
       <InnerTranscriptBox>
-        <NovoHistorico novo_historico={old_history[curso === "CIC" ? 'CIC' : 'ECP']} isOld = {true} />
+        <Historico history={old_history[curso === "CIC" ? 'CIC' : 'ECP']} historyType={HistoryType.OLD} uploadedHistory={uploaded_history} />
       </InnerTranscriptBox>
     </OuterTranscriptBox>
 
