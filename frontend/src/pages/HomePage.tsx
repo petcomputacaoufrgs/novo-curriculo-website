@@ -98,6 +98,8 @@ const HomePage = () => {
   ]
 
   console.log("Home Page Renderizada");
+  console.log("Teste");
+  
   return (
     <>
       <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
