@@ -39,6 +39,7 @@ async def lifespan(app: FastAPI):
     # Carrega os arquivos uma única vez
     app.state.dados = {
         "disciplinas_CIC": pd.read_csv("ClassHistoryConverter/scripts/INF_UFRGS_DATA/CIC/disciplinas.csv"),
+        "equivalencias_CIC": pd.read_csv("ClassHistoryConverter/scripts/INF_UFRGS_DATA/CIC/equivalencias_completas_final.csv"),
         "disciplinas_ECP": pd.read_csv("ClassHistoryConverter/scripts/INF_UFRGS_DATA/ECP/disciplinas.csv"),
     }
     print("Arquivos carregados com sucesso!")
@@ -130,8 +131,8 @@ async def upload_html(file: UploadFile = File(...)):
 
 
 @app.get(path="/api/regrasEquivalencia")
-async def get_regras_equivalencia():
-    regras = pd.read_csv(f"ClassHistoryConverter/scripts/INF_UFRGS_DATA/CIC/equivalencias_completas_final.csv")
+async def get_regras_equivalencia(dados = Depends(get_dados)):
+    regras = dados["equivalencias_CIC"]
 
     regras = regras.sort_values(by=["nome_fez"])
 
@@ -226,7 +227,7 @@ async def calculate(dados: CalculateRequest, cached_disciplines=Depends(get_dado
     # Processa esses dados e vai guardando eles no dicionário de retorno
     gerar_graficos_creditos(curso, summarised_metrics, return_value)
     gerar_maiores_caminhos(disciplines, file_path, return_value)
-    history_table = gerar_novo_historico(disciplines, new_history, new_demand)
+    history_table = gerar_novo_historico(disciplines, new_history, new_demand, curso)
     marcar_disciplinas_feitas_em_html(HTML_PATH_NEW_DIAGRAM, HTML_PATH_OLD_DIAGRAM, history_table, tabela, curso, return_value)
 
     # Organiza o novo histórico em uma lista de dicionários, separando por etapa
@@ -288,7 +289,7 @@ def gerar_graficos_creditos(curso, summarised_metrics, return_value):
 
 
 
-def gerar_novo_historico(disciplines, new_history, new_demand):
+def gerar_novo_historico(disciplines, new_history, new_demand, curso):
     """
     Constrói uma tabela contendo todas as disciplinas já cumpridas e pendentes, com informações completas sobre nome, etapa, créditos e regras de cumprimento.
 
@@ -317,11 +318,25 @@ def gerar_novo_historico(disciplines, new_history, new_demand):
     # Junta o histórico (cadeiras liberadas) e a demanda (cadeiras pendentes) em uma única tabela
     history_table = pd.concat([new_demand, new_history], ignore_index=True)
     history_table["qt_students_needing_it"] = history_table["qt_students_needing_it"].fillna(0)
+
+    
     history_table["rule_name"] = history_table["rule_name"].fillna("")
+
+    if(curso == "CIC"):
+        equivalencias = pd.read_csv('ClassHistoryConverter/scripts/INF_UFRGS_DATA/CIC/equivalencias_completas_final.csv')
+        history_table["rule_name"] = history_table["rule_name"].apply(lambda rule: put_discipline_name_on_rule(rule, equivalencias))
 
     return history_table
 
+def put_discipline_name_on_rule(rule, equivalencias):
+    if(rule == ""):
+        return ""
+    
+    discipline_done = equivalencias.loc[equivalencias['nome_regra'] == rule, 'nome_fez'].iloc[0]
 
+    rule = rule.split("=")
+
+    return rule[0] + " - " + discipline_done + " = " + rule[1]
 
 def gerar_maiores_caminhos(disciplines, file_path, return_value):
     """

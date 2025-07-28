@@ -1,5 +1,5 @@
 import { FrontData, HistoryType } from '../../types';
-import { CheckboxContainer, StyledCheckbox, DataCell, DropdownButton, HeaderCell, Tabela, Wrapper } from './styled';
+import { DataCell, DropdownButton, HeaderCell, Tabela, Wrapper } from './styled';
 import { useState, useEffect, useCallback } from 'react';
 import React, { Fragment } from 'react';
 
