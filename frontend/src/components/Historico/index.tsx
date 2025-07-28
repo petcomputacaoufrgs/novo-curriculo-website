@@ -19,6 +19,9 @@ const Historico: React.FC<Props> = ({ history, historyType, uploadedHistory, onH
     // Estado para armazenar a referência do histórico padrão antigo
     const [oldHistoryReference, setOldHistoryReference] = useState<FrontData['historico'] | null>(null);
 
+    const isDarkTheme = window.matchMedia("(prefers-color-scheme: dark)").matches;
+
+
     // useEffect para capturar e armazenar o histórico antigo como referência
     useEffect(() => {
         if (historyType === HistoryType.OLD && history) {
@@ -108,6 +111,7 @@ const Historico: React.FC<Props> = ({ history, historyType, uploadedHistory, onH
         }
     }, [getModifiedHistory, onHistoryChange]);
 
+/*
     const CheckBox = ({ etapaIndex, disciplinaIndex }: { etapaIndex: number, disciplinaIndex: number }) => {
         const key = `${etapaIndex}-${disciplinaIndex}`;
         const isChecked = checkedStates[key] || false;
@@ -118,11 +122,13 @@ const Historico: React.FC<Props> = ({ history, historyType, uploadedHistory, onH
                     id={`concluded-checkbox-${key}`}
                     name="Concluded"
                     checked={isChecked}
-                    onChange={() => handleOnChange(etapaIndex, disciplinaIndex)}
+                    
                 />
             </CheckboxContainer>
         )
     }
+
+*/
 
     if(!history && !oldHistoryReference) {
         return (<p> Erro: histórico de referência e histórico novo ou carregado não foram encontrados </p>);
@@ -175,24 +181,22 @@ const Historico: React.FC<Props> = ({ history, historyType, uploadedHistory, onH
                         <tr>
                             <HeaderCell>Sigla</HeaderCell>
                             <HeaderCell>Título</HeaderCell>
-                            <HeaderCell>
-                                {historyType === HistoryType.OLD ? 'Concluído' : 'Motivo'} 
-                            </HeaderCell>
+                            {historyType == HistoryType.NEW &&
+                            <HeaderCell>Motivo</HeaderCell>
+                            }
+
                         </tr>
                         {etapa.codigo && etapa.codigo.map((codigo, indiceDisciplina) => (
-                            <tr key={`${indiceEtapa}-${indiceDisciplina}`}>
+                            <tr key={`${indiceEtapa}-${indiceDisciplina}`} 
+                                onClick={historyType == HistoryType.OLD ? () => handleOnChange(indiceEtapa, indiceDisciplina) : undefined} 
+                                style={{backgroundColor: (historyType == HistoryType.OLD && checkedStates[`${indiceEtapa}-${indiceDisciplina}`])? (isDarkTheme? "#1b5e20" : "#a5d6a7") : 
+                                                         (historyType == HistoryType.NEW && etapa.rule_name[indiceDisciplina])? (isDarkTheme? "#1b5e20" : "#a5d6a7") : "",
+                                        cursor: "pointer"}}>
+
                                 <DataCell>{codigo}</DataCell>
                                 <DataCell>{etapa.nome?.[indiceDisciplina] || 'N/A'}</DataCell>
                                 {historyType === HistoryType.NEW &&
                                 <DataCell>{etapa.rule_name?.[indiceDisciplina] || 'N/A'}</DataCell>
-                                }
-                                {historyType === HistoryType.OLD &&
-                                <DataCell>
-                                    <CheckBox 
-                                        etapaIndex={indiceEtapa} 
-                                        disciplinaIndex={indiceDisciplina}
-                                    />
-                                </DataCell>
                                 }
                             
                             </tr> 
