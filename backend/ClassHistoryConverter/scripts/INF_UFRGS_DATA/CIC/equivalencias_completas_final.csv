@@ -1,5 +1,5 @@
 codigo_fez,carater_fez,creditos_fez,codigo_obtem,carater_obtem,creditos_obtem,nome_regra,nome_fez,nome_obtem,tipo_regra
-INF01032,Obrigatória,4,EmpreendimentoEletiva,Eletiva,4,INF01032=EmpreendimentoEletiva,Empreendimento Em Informática,Empreendimento Em Informática,mudança de caráter
+INF01032 ou QUI99009,Obrigatória,4,EmpreendimentoEletiva,Eletiva,4,INF01032=EmpreendimentoEletiva,Empreendimento Em Informática ou Introdução ao Empreendedorismo e Inovação,Empreendimento Em Informática,mudança de caráter
 INF01124,Obrigatória,4,CPDEletiva,Eletiva,4,INF01124=CPDEletiva,Classificação E Pesquisa De Dados,Classificação E Pesquisa De Dados,mudança de caráter
 INF01112,Obrigatória,4,ARQ2Eletiva,Eletiva,4,INF01112=ARQ2Eletiva,Arquitetura E Organização De Computadores II,Arquitetura E Organização De Computadores II,mudança de caráter
 ECO02254,Eletiva,4,EcnA,Eletiva,4,ECO02254=EcnA,Economia A,Economia A,mapeamento direto
@@ -129,7 +129,7 @@ Temp-6,Eletiva,0,PLN,Obrigatória,4,Temp-6=PLN,Ingresso Até Temp-6,Processament
 Temp-7,Eletiva,0,ProjInt,Obrigatória,8,Temp-7=ProjInt,Ingresso Até Temp-7,Projeto Integrador,temporalidade
 VAERE201,Eletiva,0,VAEREUm,Eletiva,0,VAERE201=VAEREUm,Vínculo Acadêmico - Ere 2020/1,Vinculo Academico - Ere 2020/1,mapeamento direto
 VAERE202,Eletiva,0,VAEREDois,Eletiva,0,VAERE202=VAEREDois,Vínculo Acadêmico - Ere 2020/2,Vinculo Academico - Ere 2020/2,mapeamento direto
-INF01032 + INF01022,Obrigatória e Eletiva respectivamente,4 + 4,ProjInt,Obrigatória,8,INF01032 + INF01022=ProjInt,Empreendimento Em Informática + Laboratório De Sistema De Software,Projeto Integrador,mapeamento não direto
-INF01032 + INF01019,Obrigatória e Eletiva respectivamente,4 + 4,ProjInt,Obrigatória,8,INF01032 + INF01019=ProjInt,Empreendimento Em Informática + Projeto Em Computação Gráfica,Projeto Integrador,mapeamento não direto
-INF01032 + INF01006,Obrigatória e Eletiva respectivamente,4 + 4,ProjInt,Obrigatória,8,INF01032 + INF01006=ProjInt,Empreendimento Em Informática + Projeto De Banco De Dados,Projeto Integrador,mapeamento não direto
-INF01032 + INF01215,Obrigatória e Eletiva respectivamente,4 + 4,ProjInt,Obrigatória,8,INF01032 + INF01215=ProjInt,Empreendimento Em Informática + Métodos Ágeis,Projeto Integrador,mapeamento não direto
+(INF01032 + QUI99009) + INF01022,Obrigatória e Eletiva respectivamente,4 + 4,ProjInt,Obrigatória,8,INF01032 + INF01022=ProjInt,(Empreendimento Em Informática ou Introdução ao Empreendedorismo e Inovação) + Laboratório De Sistema De Software,Projeto Integrador,mapeamento não direto
+(INF01032 + QUI99009) + INF01019,Obrigatória e Eletiva respectivamente,4 + 4,ProjInt,Obrigatória,8,INF01032 + INF01019=ProjInt,(Empreendimento Em Informática ou Introdução ao Empreendedorismo e Inovação) + Projeto Em Computação Gráfica,Projeto Integrador,mapeamento não direto
+(INF01032 + QUI99009) + INF01006,Obrigatória e Eletiva respectivamente,4 + 4,ProjInt,Obrigatória,8,INF01032 + INF01006=ProjInt,(Empreendimento Em Informática ou Introdução ao Empreendedorismo e Inovação) + Projeto De Banco De Dados,Projeto Integrador,mapeamento não direto
+(INF01032 + QUI99009) + INF01215,Obrigatória e Eletiva respectivamente,4 + 4,ProjInt,Obrigatória,8,INF01032 + INF01215=ProjInt,(Empreendimento Em Informática ou Introdução ao Empreendedorismo e Inovação) + Métodos Ágeis,Projeto Integrador,mapeamento não direto

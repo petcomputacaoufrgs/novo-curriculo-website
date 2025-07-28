@@ -5,9 +5,49 @@ import time
 from matplotlib import pyplot as plt
 import pandas as pd
 
+alternativas_cic = {
+    # Empreendimentos ou Introdução ao Empreendedorismo: considerando código de Empreendimentos como o principal para o grupo
+    "EMPREENDIMENTO EM INFORMÁTICA": "INF01032",
+    "INTRODUÇÃO AO EMPREENDEDORISMO E INOVAÇÃO": "INF01032"
+}
+
+alternativas_ecp = {
+    "PROBABILIDADE E ESTATÍSTICA": "MAT02219",
+    "PROBABILIDADE E ESTATÍSTICA - EAD": "MAT02219"
+}
+
+
 
 ANO_ATUAL = 2026
 BARRA_ATUAL = 1
+
+
+def get_alternative_discipline(discipline_name, curso_nome):
+    if curso_nome == "CIC":
+        return alternativas_cic.get(discipline_name, "Not Found")
+    elif curso_nome == "ECP":
+        return alternativas_ecp.get(discipline_name, "Not Found")
+    
+def correct_alternative_disciplines(cadeiras, curso):
+    """
+    Ajusta as cadeiras alternativas de cada curso. Se o usuário tiver feito uma das cadeiras do grupo de alternativas, entrega pra ele o grupo de alternativas completo
+    """
+    if curso == "CIC":
+        for dados_cadeira in cadeiras:
+            if dados_cadeira[2] in ("INF01032", "QUI99009"):
+                dados_cadeira[1] = "EMPREENDIMENTO EM INFORMÁTICA OU INTRODUÇÃO AO EMPREENDEDORISMO E INOVAÇÃO"
+                dados_cadeira[2] = "INF01032"
+    elif curso == "ECP":
+        for dados_cadeira in cadeiras:
+            if dados_cadeira[2] in ("MAT02219", "MAT02050"):
+                dados_cadeira[1] = "PROBABILIDADE E ESTATÍSTICA"
+                dados_cadeira[2] = "MAT02219"
+
+
+    return cadeiras
+
+
+
 
 def calculate_temporality(semestre_ingresso: str) -> int:
     """

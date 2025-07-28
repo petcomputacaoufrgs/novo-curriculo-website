@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { AbaContainer, Aba, Conteudo } from './styled'
-import { FrontData } from '../../types'
+import { FrontData, HistoryType } from '../../types'
 import Overview from '../Overview';
 import { DropdownInput } from '../DropDownInput';
 import DiagramaComResumo from '../DiagramaComResumo';
-import NovoHistorico from '../NovoHistorico';
+import Historico from '../Historico';
 
 interface ITabs {
   frontData: FrontData;
@@ -65,7 +65,7 @@ useEffect(() => {
         
         {abaAtiva === 'Diagramas' && <DiagramaComResumo oldUrl={oldUrl} newUrl={newUrl} windowSize={windowSize} frontData={frontData} />}
         
-        {abaAtiva === 'Histórico Novo' && <NovoHistorico novo_historico={frontData.historico} isOld={false} />}
+        {abaAtiva === 'Histórico Novo' && <Historico history={frontData.historico} historyType={HistoryType.NEW} />}
       </Conteudo>
     </div>
 

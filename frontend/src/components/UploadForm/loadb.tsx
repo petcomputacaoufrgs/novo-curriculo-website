@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React from "react";
 import api from "../../api";
 
 import './UploadForm.css'
@@ -6,17 +6,15 @@ import uploadIcon from '../../assets/upload_icon.png'
 import { isAxiosError } from "axios";
 
 type LoadbProps = {
-    setState: (state: string[][]) => void;
+    setHistory: (history: string[][]) => void;
     setCurso: (curso: string) => void;
     setSemester: (semester: string) => void;
     setEtapas: (etapas: number[]) => void;
+    setMessage: (message: string) => void;
 };
 
 
-const Loadb = ({ setState, setCurso, setSemester, setEtapas }: LoadbProps) =>{
-
-
-  const [message, setMessage] = useState<string>("");
+const Loadb = ({ setHistory, setCurso, setSemester, setEtapas, setMessage }: LoadbProps) =>{
 
     const handleError = (e: unknown) => {
     if (isAxiosError(e)) {
@@ -54,10 +52,11 @@ const Loadb = ({ setState, setCurso, setSemester, setEtapas }: LoadbProps) =>{
 
       console.log(response.data)
 
-      setState(response.data.dados);
+      setHistory(response.data.dados);
       setSemester(response.data.semestre_ingresso);
       setCurso(response.data.curso);
       setEtapas(response.data.etapas);
+      console.log("dados", response.data.dados);
       
       setMessage("");
 
@@ -69,6 +68,10 @@ const Loadb = ({ setState, setCurso, setSemester, setEtapas }: LoadbProps) =>{
     else{
         setMessage("Nenhum arquivo selecionado!")
     }
+
+    // Limpa o valor do input para permitir carregar o mesmo arquivo novamente
+    // Adicionado pois o usuário pode querer resetar para o seu histórico carregado após fazer mudanças manuais.
+    event.target.value = '';
   };
 
   return (
@@ -78,7 +81,6 @@ const Loadb = ({ setState, setCurso, setSemester, setEtapas }: LoadbProps) =>{
         Carregar Histórico
         <img src={uploadIcon} alt="ícone de upload" className="upload-icon" />
       </label>
-      <p>{message}</p>
     </div >
   );
 }

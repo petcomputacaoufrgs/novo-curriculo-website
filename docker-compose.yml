@@ -18,6 +18,9 @@ services:
       - APP_HOST_IP=${APP_HOST_IP}
       - FRONT_PORT=${FRONT_PORT}
 
+    restart: always
+
+
   frontend:
     build:
       context: ./frontend
@@ -31,6 +34,9 @@ services:
       - app-network
     depends_on:
       - backend
+
+    restart: always
+
 
 networks:
   app-network:

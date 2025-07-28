@@ -1,8 +1,8 @@
-import Navbar from "../components/Navbar"
-import About from "../components/About"
-import Divider from "../components/Divider"
-import Footer from "../components/Footer"
-import RegrasEquivalencia from "../components/RegrasDeEquivalencia"
+import Navbar from "../../components/Navbar"
+import About from "../../components/About"
+import Divider from "../../components/Divider"
+import Footer from "../../components/Footer"
+import RegrasEquivalencia from "../../components/RegrasDeEquivalencia"
 
 
 

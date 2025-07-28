@@ -2,6 +2,8 @@ from bs4 import BeautifulSoup   # Biblioteca para fazer parsing do html.
 import pandas as pd             # Biblioteca para manipulação de dados csv.
 import os
 
+from aux_functions import get_alternative_discipline
+
 def LeHtml(conteudo_html):
     
     # Lê o conteúdo do arquivo HTML.
@@ -165,7 +167,7 @@ def getCodCadeiras(nomeDisciplinas, curso_nome):
     # Lookup de códigos de disciplinas
     codDisciplinas = []
     for discipline_name in nomeDisciplinas:
-        codDisciplinas.append(nomeToCod.get(discipline_name, "Not Found"))
+        codDisciplinas.append(nomeToCod.get(discipline_name, get_alternative_discipline(discipline_name, curso_nome)))
         if codDisciplinas[-1] == "Not Found":
             print(f"Disciplina {discipline_name} não encontrada.")
 

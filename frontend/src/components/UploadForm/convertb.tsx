@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import api from "../../api";
 import Butterfly from "../Butterfly";
 import { FrontData } from "../../types";
@@ -6,17 +6,18 @@ import './UploadForm.css'
 import { isAxiosError } from "axios";
 
 type ConvertbProps = {
-  state: string[][];
+  history: string[][];
   semester: string;
   curso: string;
+  getModifiedHistory?: (() => string[][]) | null;
   setFrontData: (frontData: FrontData) => void;
   setOldBlobUrl: (url: string) => void;
   setNewBlobUrl: (url: string) => void;
+  setMessage: (message: string) => void;
 };
 
-function Convertb({state, semester, curso, setFrontData, setOldBlobUrl, setNewBlobUrl}: ConvertbProps){
+function Convertb({history, semester, curso, getModifiedHistory, setFrontData, setOldBlobUrl, setNewBlobUrl, setMessage}: ConvertbProps){
   const [isCalculating, setIsCalculating] = useState(false);
-  const [message, setMessage] = useState("");
 
       const handleError = (e: unknown) => {
       if (isAxiosError(e)) {
@@ -38,15 +39,20 @@ function Convertb({state, semester, curso, setFrontData, setOldBlobUrl, setNewBl
   
   }
 
-  
-
-
   const calculate = async () => {
     try {
-      const response = await api.post("/calculate/", { tabela: state, semestre_ingresso: semester, curso: curso });
+      // Determina qual histórico usar: modificado (se disponível) ou original
+      const historyToUse = getModifiedHistory ? getModifiedHistory() : history;
+      
+      console.log("Histórico usado para conversão:", historyToUse);
+      
+      const response = await api.post("/calculate/", { 
+        tabela: historyToUse, 
+        semestre_ingresso: semester, 
+        curso: curso 
+      });
       
       setFrontData(response.data);
-      
       console.log(response.data);
 
       // Criar um Blob e carregar no iframe
@@ -61,7 +67,6 @@ function Convertb({state, semester, curso, setFrontData, setOldBlobUrl, setNewBl
 
       setMessage("");
 
-
     } catch (error) {
       handleError(error);
     }finally{
@@ -71,15 +76,10 @@ function Convertb({state, semester, curso, setFrontData, setOldBlobUrl, setNewBl
 
   return(
     <div>
-        {isCalculating && <Butterfly />}
-        <div className = "center-converter">
-            <button className = "convert-button" onClick={calculate}>Converter</button>
-        </div>
-        <p>{message}</p>
-
+      {isCalculating && <Butterfly />}
+      <button className = "convert-button" onClick={calculate} style={{height: "100%"}}>Converter</button>
     </div>  
   )
-
 }
 
 export default Convertb;
