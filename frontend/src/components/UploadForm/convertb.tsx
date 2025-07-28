@@ -40,6 +40,8 @@ function Convertb({history, semester, curso, getModifiedHistory, setFrontData, s
   }
 
   const calculate = async () => {
+    setIsCalculating(true);
+    document.body.style.overflow = 'hidden';
     try {
       // Determina qual histórico usar: modificado (se disponível) ou original
       const historyToUse = getModifiedHistory ? getModifiedHistory() : history;
@@ -71,6 +73,7 @@ function Convertb({history, semester, curso, getModifiedHistory, setFrontData, s
       handleError(error);
     }finally{
       setIsCalculating(false);
+      document.body.style.overflow = 'auto';
     }
   }
 
