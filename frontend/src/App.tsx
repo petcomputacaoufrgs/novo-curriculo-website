@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import HomePage from "./pages/HomePage"
-import RegrasEquivalenciaView from "./pages/RegrasEquivalenciaView";
+import HomePage from "./pages/HomePage/HomePage"
+import RegrasEquivalenciaView from "./pages/RegrasEquivalenciaView/RegrasEquivalenciaView";
 
 import "./App.css";
 

@@ -84,3 +84,11 @@ export interface FrontData {
   /** Caminho das disciplinas no currículo novo */
   caminho_novo: string;
 }
+
+export enum HistoryType {
+  /** Histórico antigo, antes da adaptação curricular */
+  OLD = "old",
+
+  /** Histórico atual, após a adaptação curricular */
+  NEW = "new",
+}
