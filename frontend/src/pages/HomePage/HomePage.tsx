@@ -100,7 +100,6 @@ const HomePage = () => {
 
   const links = [
     {link: "https://www.inf.ufrgs.br/~eslgastal/gt-cic/novo-curriculo-cic-consolidado.html", label: "Informações Oficiais (CIC)", target: "_blank"},
-    {link: "#", label: "Tutorial", target: "_self"},
     {link: "/regras", label: "Regras de Equivalência", target: "_self"},
     {link: "https://codeberg.org/hbecker/ClassHistoryConverter", label: "Conversor de Histórico (Repositório)", target: "_blank"}
   ]
@@ -127,8 +126,10 @@ const HomePage = () => {
         <Navbar links={links}/>
         <About 
           title="Bacharelado em Ciência da Computação" 
-          text="O currículo da CIC está para ser reformulado, então o grupo PET Computação fez um esforço conjunto com o GT da troca de currículo e 
-                especialmente junto com o Professor Henrique Becker (responsável pelo código em Julia que faz a conversão) de fazer um site onde seja rápido e fácil ver as mudanças de transição."/>
+          text="Para converter seu currículo, você pode selecionar as cadeiras que completou na tabela abaixo e clicar em 'Converter'.
+                Se preferir, ao invés disso, você também pode carregar direto o seu histórico de curso. Para isso, basta acessar o portal do aluno e, uma vez dentro da página 'Histórico de Curso' (ou 'Histórico Escolar', já que para ambas o conversor funciona), 
+                pressionar o botão direito do mouse e selecionar 'salvar como'. Tendo baixado o arquivo HTML, direcione-se para o Conversor de currículo e clique no botão 'Carregar Histórico'. Selecione o arquivo
+                HTML baixado e clique em 'Converter'."/>
         
         <ButtonsStyledContainer>
                 <Loadb 
