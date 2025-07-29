@@ -71,8 +71,15 @@ export const DataRow = styled.tr<{
   transition: background-color 0.2s ease;
   
   &:hover {
-    background-color: ${({ $isClickable, $isDarkTheme }) =>
-      $isClickable ? ($isDarkTheme ? "#25334dff" : "#94b3edff") : "transparent"};
+    background-color: ${({ $isClickable, $isHighlighted, $isDarkTheme }) => {
+      if ($isClickable) {
+        return $isDarkTheme ? "#25334dff" : "#94b3edff";
+      }
+      if ($isHighlighted) {
+        return $isDarkTheme ? "#304162ff" : "#94b3edff";
+      }
+      return "transparent";
+    }};
   }
 `;
 
