@@ -2,7 +2,7 @@
 
 #### Projeto: Borboleta
 
-#### Ferramentas utilizada: FastAPI + React
+#### Ferramentas utilizadas: FastAPI + React
 
 #### Autores: [eduardapmichels](https://github.com/eduardapmichels), [edufsi](https://github.com/edufsi), [GuiDavillaP](https://github.com/GuiDavilaP), [Joao-Scheffel-Koller](https://github.com/Joao-Scheffel-Koller), [Kenjikuta-br](https://github.com/Kenjikuta-br)
 
@@ -28,8 +28,8 @@ Primeiramente, você vai precisar ter o Docker instalado.
 
 Agora, você pode clonar esse repositório.
      
-⚠️ **IMPORTANTE:** pelo **Windows**, evite usar git clone via Git Bash ou terminal (com o comando abaixo) — o sistema pode substituir os linefeeds LF por CRLF, o que pode (e provavelmente vai) quebrar a execução de scripts .sh.    
-**Prefira clonar via Github Desktop ou baixar o .zip e extrair.**
+⚠️ **IMPORTANTE:** no **Windows**, evite usar `git clone` via Git Bash ou terminal — isso pode causar problemas de quebra de linha (`LF` → `CRLF`), o que prejudica a execução de scripts `.sh`.  
+**Prefira clonar usando o GitHub Desktop** ou **baixar o .zip e extrair manualmente**.
 
 ```
 git clone https://github.com/petcomputacaoufrgs/novo-curriculo-website.git
@@ -49,6 +49,9 @@ Isso pode levar alguns minutos.
 A aplicação já deve estar rodando!  
 Abra o navegador e acesse o endereço indicado no terminal para interagir com a aplicação. Se você não mexeu no código, esse endereço deve ser:
 http://localhost:5173
+
+E o backend deve estar rodando em: http://localhost:8000
+
 
 ### 5) Encerrando e rodando novamente
 
@@ -97,7 +100,7 @@ wsl
 
 ### 2) Interpretador Julia
 
-Uma vez no sistema Linux, você vai precisar de um interpretador Julia paa rodar o backend da aplicação.
+Uma vez no sistema Linux, você vai precisar de um interpretador Julia para rodar o backend da aplicação.
 
 Recomendamos instalar a versão mais recente disponível no site [oficial](https://julialang.org/downloads/
 ).
@@ -126,7 +129,7 @@ Agora, você pode clonar esse repositório (sempre no sistema Linux):
 git clone https://github.com/petcomputacaoufrgs/novo-curriculo-website.git
 ```
 
-4) Testando a instalação do Julia
+### 4) Testando a instalação do Julia
 
 Dentro do repositório, vá até a pasta:
 
@@ -172,7 +175,7 @@ Por exemplo:
 python3 -m venv myenv
 ```
 
-Caso não tenha o pytohn3-venv, garanta a instalação:
+Caso não tenha o python3-venv, garanta a instalação:
 
 ```
 apt install python3.12-venv
@@ -249,4 +252,9 @@ npm run dev
 
 ### 6) Pronto! Aplicação rodando!
 Agora você pode rodar o back e o front ao mesmo tempo e a aplicação deverá estar funcionando.
+
+Abra o navegador e acesse o endereço indicado no terminal para interagir com a aplicação. Se você não mexeu no código, esse endereço deve ser:
+http://localhost:5173
+
+E o backend deve estar rodando em: http://localhost:8000
 
