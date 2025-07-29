@@ -125,7 +125,7 @@ const HomePage = () => {
       <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
         <Navbar links={links}/>
         <About 
-          title="Bacharelado em Ciência da Computação" 
+          title="Conversor de Histórico" 
           text="Para converter seu currículo, você pode selecionar as cadeiras que completou na tabela abaixo e clicar em 'Converter'.
                 Se preferir, ao invés disso, você também pode carregar direto o seu histórico de curso. Para isso, basta acessar o portal do aluno e, uma vez dentro da página 'Histórico de Curso' (ou 'Histórico Escolar', já que para ambas o conversor funciona), 
                 pressionar o botão direito do mouse e selecionar 'salvar como'. Tendo baixado o arquivo HTML, direcione-se para o Conversor de currículo e clique no botão 'Carregar Histórico'. Selecione o arquivo
