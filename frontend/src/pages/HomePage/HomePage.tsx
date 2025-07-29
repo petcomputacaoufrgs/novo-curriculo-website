@@ -66,7 +66,7 @@ const HomePage = () => {
 
 
 
-  const [semester, setSemester] = useState("Semestre");
+  const [semester, setSemester] = useState("2025/2");
   const [curso, setCurso] = useState("CIC");
   const [etapas, setEtapas] = useState<number[]>([]);
 

@@ -35,6 +35,7 @@ export const MenuItem = styled.li`
 `;
 
 export const MenuLink = styled.a`
+ transition: background-color 0.3s ease, color 0.3s ease;
   text-decoration: none;
   color: white;
   display: block;
@@ -54,8 +55,11 @@ export const MenuButton = styled.button<{$highlighted: boolean}>`
   cursor: pointer;
   padding: 8px;
   border-radius: 10px;
+  transition: background-color 0.3s ease, color 0.3s ease;
 
   &:hover {
+  transition: background-color 0.3s ease, color 0.3s ease;
+
     background-color: rgb(21, 28, 46);
   }
 `;

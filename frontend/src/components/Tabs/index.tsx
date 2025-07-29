@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { AbaContainer, Aba, Conteudo } from './styled'
+import { AbaContainer, Aba, Conteudo, ContainerHistorico} from './styles'
 import { FrontData, HistoryType } from '../../types'
 import Overview from '../Overview';
 import { DropdownInput } from '../DropDownInput';
@@ -65,7 +65,7 @@ useEffect(() => {
         
         {abaAtiva === 'Diagramas' && <DiagramaComResumo oldUrl={oldUrl} newUrl={newUrl} windowSize={windowSize} frontData={frontData} />}
         
-        {abaAtiva === 'Histórico Novo' && <Historico history={frontData.historico} historyType={HistoryType.NEW} />}
+        {abaAtiva === 'Histórico Novo' && <ContainerHistorico><Historico history={frontData.historico} historyType={HistoryType.NEW} /></ContainerHistorico>}
       </Conteudo>
     </div>
 

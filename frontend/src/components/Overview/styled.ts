@@ -3,14 +3,17 @@ import styled from "styled-components";
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  width: 85%;
-  padding: 30px;
+  width: 100%;
+  border-radius: 10px;
+  padding: 35px 10%;
   gap: 64px;
+  background-color: ${({ theme }) => theme.background};
 
   @media(max-width: 1430px){
     width: 100%;
   
   }
+    
 `;
 
 export const ToggleGroup = styled.div`

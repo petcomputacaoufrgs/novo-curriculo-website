@@ -42,3 +42,8 @@ export const Conteudo = styled.div`
 
 
 `
+export const ContainerHistorico = styled.div`
+  background-color: ${({ theme }) => theme.background};
+  width: 100%;
+  border-radius: 10px;
+`

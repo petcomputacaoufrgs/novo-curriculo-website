@@ -1,5 +1,6 @@
+import { useState } from "react";
 import api from "../../api";
-
+import Butterfly from "../Butterfly";
 import { FrontData } from "../../types";
 import './UploadForm.css'
 import { isAxiosError } from "axios";
@@ -16,21 +17,31 @@ type ConvertbProps = {
 };
 
 function Convertb({history, semester, curso, getModifiedHistory, setFrontData, setOldBlobUrl, setNewBlobUrl, setMessage}: ConvertbProps){
-  const handleError = (e: unknown) => {
-    if (isAxiosError(e)) {
-      if (e.response) {
-        // Erro com resposta do backend
-        const detail = e.response.data.detail;
-        setMessage(`Erro: ${detail}`);
-      } else {
-        setMessage("Erro: Não foi possível conectar ao servidor.");
+  const [isCalculating, setIsCalculating] = useState(false);
+
+      const handleError = (e: unknown) => {
+      if (isAxiosError(e)) {
+  
+        if (e.response) {
+          // erro com resposta do backend
+          const detail = e.response.data.detail;
+          setMessage(`Erro: ${detail}`);
+        } 
+        
+        else {
+          setMessage("Erro: Não foi possível conectar ao servidor.");
+        }
+      } 
+      
+      else {
+        setMessage("Erro inesperado.");
       }
-    } else {
-      setMessage("Erro inesperado.");
-    }
+  
   }
 
   const calculate = async () => {
+    setIsCalculating(true);
+    document.body.style.overflow = 'hidden';
     try {
       // Determina qual histórico usar: modificado (se disponível) ou original
       const historyToUse = getModifiedHistory ? getModifiedHistory() : history;
@@ -60,11 +71,15 @@ function Convertb({history, semester, curso, getModifiedHistory, setFrontData, s
 
     } catch (error) {
       handleError(error);
+    }finally{
+      setIsCalculating(false);
+      document.body.style.overflow = 'auto';
     }
   }
 
   return(
     <div>
+      {isCalculating && <Butterfly />}
       <button className = "convert-button" onClick={calculate} style={{height: "100%"}}>Converter</button>
     </div>  
   )
