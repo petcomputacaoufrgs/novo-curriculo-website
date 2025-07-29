@@ -24,6 +24,7 @@ const Overview: React.FC<OverviewProps> = ({ images, metrics }) => {
   const [selectedCategory, setSelectedCategory] = useState<OverviewCategory>("Total");
   const [windowSize, setWindowSize] = useState(window.innerWidth);
 
+  const isDarkTheme = window.matchMedia("(prefers-color-scheme: dark)").matches;
 
   useEffect(() => {
     const handleResize = () => {
@@ -48,7 +49,7 @@ const Overview: React.FC<OverviewProps> = ({ images, metrics }) => {
   };
 
   const renderTable = (suffix: "antigos" | "novos") => (
-    <Table>
+    <Table $isDarkTheme={isDarkTheme}>
       <thead>
         <tr>
           <th>Caráter</th>
