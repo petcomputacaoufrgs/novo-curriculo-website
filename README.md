@@ -2,7 +2,7 @@
 
 #### Projeto: Borboleta
 
-#### Ferramentas utilizada: FastAPI + React
+#### Ferramentas utilizadas: FastAPI + React
 
 #### Autores: [eduardapmichels](https://github.com/eduardapmichels), [edufsi](https://github.com/edufsi), [GuiDavillaP](https://github.com/GuiDavilaP), [Joao-Scheffel-Koller](https://github.com/Joao-Scheffel-Koller), [Kenjikuta-br](https://github.com/Kenjikuta-br)
 
@@ -14,22 +14,83 @@ Ferramenta original do professor Henrique disponível [aqui](https://codeberg.or
 
 
 ## Como instalar e rodar o projeto
+São 2 alternativas para rodar o projeto: via Docker ou nativamente.
+
+## Rodando o projeto via Docker (recomendado)
+
+### 1) Instalação do Docker
+
+Primeiramente, você vai precisar ter o Docker instalado. 
+- Pelo Windows ou MacOS você pode instalar o Docker Desktop pelo link disponível [aqui](https://www.docker.com/products/docker-desktop/)
+- Para distribuições Linux, você pode seguir as instruções específicas da sua distro disponíveis [aqui](https://docs.docker.com/desktop/setup/install/linux/)
+
+### 2) Clonando o repositório
+
+Agora, você pode clonar esse repositório.
+     
+⚠️ **IMPORTANTE:** no **Windows**, evite usar `git clone` via Git Bash ou terminal — isso pode causar problemas de quebra de linha (`LF` → `CRLF`), o que prejudica a execução de scripts `.sh`.  
+**Prefira clonar usando o GitHub Desktop** ou **baixar o .zip e extrair manualmente**.
+
+```
+git clone https://github.com/petcomputacaoufrgs/novo-curriculo-website.git
+```
+
+### 3) Construa e suba os containers
+
+Acessando o repositório pelo terminal, rode:
+
+```
+docker-compose up --build
+```
+Isso pode levar alguns minutos.
+
+### 4) Pronto!
+
+A aplicação já deve estar rodando!  
+Abra o navegador e acesse o endereço indicado no terminal para interagir com a aplicação. Se você não mexeu no código, esse endereço deve ser:
+http://localhost:5173
+
+E o backend deve estar rodando em: http://localhost:8000
+
+
+### 5) Encerrando e rodando novamente
+
+Caso queira encerrá-la, basta rodar:
+
+```
+docker-compose down
+```
+(Ou interrompê-la no terminal em que está rodando com ctrl+c ou pelo Docker Desktop, caso o tenha instalado)
+
+E caso queira rodá-la de novo, basta acessar o repositório e rodar:
+
+```
+docker-compose up
+```
+
+-------------------
+
+## Rodando o projeto nativamente
 
 ### 1) Configuração do Ambiente Linux
 
 Primeiramente, você vai precisar de um ambiente Linux. Se você já está usando um sistema Linux, pule para o passo 2. 
 
-Caso esteja usando Windows, você precsa rodar por meio do WSL.
+Caso esteja usando Windows, você pode rodar por meio do WSL (Windows Subsystem for Linux).
 
 Você pode ver o tutorial oficial de instalação do WSL [aqui](https://learn.microsoft.com/pt-br/windows/wsl/install
 ).
 
-Você pode, por exemplo, instalar a distribuição Ubuntu do Linux rodando o comando:
+Você pode, por exemplo, instalar a distribuição Ubuntu do Linux rodando um desses comandos:
 
 ```
 wsl --install
+```
+```
 wsl --install -d ubuntu
 ```
+
+**IMPORTANTE:** Se você não tiver a virtualização habilitada na BIOS, isso ocasionará um erro. Você deve habilitá-la e então instalar.
 
 E então acessar o sistema rodando:
 
@@ -39,7 +100,7 @@ wsl
 
 ### 2) Interpretador Julia
 
-Uma vez no sistema Linux, você vai precisar de um interpretador Julia paa rodar o backend da aplicação.
+Uma vez no sistema Linux, você vai precisar de um interpretador Julia para rodar o backend da aplicação.
 
 Recomendamos instalar a versão mais recente disponível no site [oficial](https://julialang.org/downloads/
 ).
@@ -62,13 +123,13 @@ source ~/.profile
 
 ### 3) Clonando o repositório
 
-Agora, você pode clonar esse repositório:
+Agora, você pode clonar esse repositório (sempre no sistema Linux):
 
 ```
 git clone https://github.com/petcomputacaoufrgs/novo-curriculo-website.git
 ```
 
-4) Testando a instalação do Julia
+### 4) Testando a instalação do Julia
 
 Dentro do repositório, vá até a pasta:
 
@@ -76,12 +137,12 @@ Dentro do repositório, vá até a pasta:
 cd backend/ClassHistoryConverter/scripts
 ```
 
-Você pode testar se está tudo certo com a instalação do Julia rodando o script de conversão do histórico diretamente. 
+Você pode testar se está tudo certo com a instalação do Julia rodando o script de conversão do histórico diretamente. Colocamos um caso de teste para isso. 
 
 Para isso, rode:
 
 ```
-./update.sh INF_UFRGS_DATA
+./update.sh INF_UFRGS_DATA teste_historico_completo CIC
 ```
 
 Se aparecer um erro de "Permissão negada", é porque você precisa dar permissão de execução ao script:
@@ -92,7 +153,7 @@ chmod +x update.sh
 
 E então rodar novamente.
 
-Isso deve rodar o script de conversão para um histórico de exemplo ```histórico.csv``` dentro da pasta ```INF_UFRGS_DATA``` e jogar os resultados da execução do script nessa pasta. Se a operação funcionar, então a instalação do Julia está correta.
+Isso deve rodar o script de conversão para um histórico de exemplo ```histórico.csv``` dentro da pasta ```teste_historico_completo``` e jogar os resultados da execução do script nessa pasta. Se a operação funcionar, então a instalação do Julia está correta.
 
 ### 5) Instalação das dependências do projeto
 
@@ -102,7 +163,7 @@ Agora, você precisa instalar as dependências do projeto.
 
 Indo para a pasta ```backend```:
 
-##### I. Crie um ambiente virtual:
+##### I. Crie um ambiente virtual (recomendado, mas opcional. Se não quiser, pule para III):
 
 ```
 python3 -m venv <nome>
@@ -114,7 +175,7 @@ Por exemplo:
 python3 -m venv myenv
 ```
 
-Caso não tenha o pytohn3-venv, garanta a instalação:
+Caso não tenha o python3-venv, garanta a instalação:
 
 ```
 apt install python3.12-venv
@@ -191,4 +252,9 @@ npm run dev
 
 ### 6) Pronto! Aplicação rodando!
 Agora você pode rodar o back e o front ao mesmo tempo e a aplicação deverá estar funcionando.
+
+Abra o navegador e acesse o endereço indicado no terminal para interagir com a aplicação. Se você não mexeu no código, esse endereço deve ser:
+http://localhost:5173
+
+E o backend deve estar rodando em: http://localhost:8000
 

@@ -23,6 +23,8 @@ const images = [
 
 const Butterfly: React.FC = () => {
   const [index, setIndex] = React.useState(0);
+  
+  const isDarkTheme = window.matchMedia("(prefers-color-scheme: dark)").matches;
 
   React.useEffect(() => {
     const interval = setInterval(() => {
@@ -34,7 +36,7 @@ const Butterfly: React.FC = () => {
 
   return (
     <OverlayContainer>
-      <OverlayContent>
+      <OverlayContent $isDarkTheme={isDarkTheme}>
         <SpinnerImage src={images[index]} alt="Carregando..." />
         <p>Calculando, por favor aguarde...</p>
       </OverlayContent>

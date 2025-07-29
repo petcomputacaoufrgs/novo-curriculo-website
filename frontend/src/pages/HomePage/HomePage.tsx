@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react'
+import { useEffect, useState, useCallback, useRef } from 'react'
 import Navbar from "../../components/Navbar/index.tsx"
 import About from "../../components/About/index.tsx"
 import Transcript from "../../components/Transcript/index.tsx"
@@ -22,7 +22,7 @@ const HomePage = () => {
   // Histórico modificado é usado para obter mudanças manuais do usuário, é usado para atualizar o histórico que será enviado para o backend.
   const [getModifiedHistory, setGetModifiedHistory] = useState<(() => string[][]) | null>(null);
 
-  // Função para receber a função de obter histórico modificado
+  // Recebe a função para obter histórico modificado
     const handleHistoryChange = useCallback((getHistoryFn: () => string[][]) => {
         setGetModifiedHistory(() => getHistoryFn);
     }, []);
@@ -105,6 +105,21 @@ const HomePage = () => {
     {link: "https://codeberg.org/hbecker/ClassHistoryConverter", label: "Conversor de Histórico (Repositório)", target: "_blank"}
   ]
 
+  const tabsRef = useRef<HTMLDivElement>(null);
+
+  // useEffect para rolar para os Tabs quando os dados estiverem prontos
+  useEffect(() => {
+    if (frontData && oldUrl && newUrl && tabsRef.current) {
+      // Pequeno delay para garantir que o componente foi renderizado
+      setTimeout(() => {
+        tabsRef.current?.scrollIntoView({ 
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }, 100);
+    }
+  }, [frontData, oldUrl, newUrl]);
+
   console.log("Home Page Renderizada");
   return (
     <>
@@ -150,14 +165,21 @@ const HomePage = () => {
           />
         )}
         
-        
         <Divider />
         
-        {frontData && oldUrl && newUrl &&<Tabs frontData={frontData} oldUrl={oldUrl} newUrl={newUrl}/>}
+        {frontData && oldUrl && newUrl && (
+          <div ref={tabsRef}>
+            <Tabs 
+              frontData={frontData} 
+              oldUrl={oldUrl} 
+              newUrl={newUrl}
+              oldHistory={old_history?.[curso as 'CIC' | 'ECP']}
+            />
+          </div>
+        )}
         
         <Footer />
       </ThemeProvider>
-
     </>
   )
 }

@@ -10,9 +10,10 @@ interface ITabs {
   frontData: FrontData;
   oldUrl: string;
   newUrl: string;
+  oldHistory?: FrontData['historico'];
 }
 
-const Tabs: React.FC<ITabs> = ({frontData, oldUrl, newUrl}: ITabs) => {
+const Tabs: React.FC<ITabs> = ({frontData, oldUrl, newUrl, oldHistory}: ITabs) => {
   const abas = ['Overview', 'Diagramas', 'Histórico Novo'] as const;
   type Aba = typeof abas[number];
 
@@ -65,7 +66,15 @@ useEffect(() => {
         
         {abaAtiva === 'Diagramas' && <DiagramaComResumo oldUrl={oldUrl} newUrl={newUrl} windowSize={windowSize} frontData={frontData} />}
         
-        {abaAtiva === 'Histórico Novo' && <ContainerHistorico><Historico history={frontData.historico} historyType={HistoryType.NEW} /></ContainerHistorico>}
+        {abaAtiva === 'Histórico Novo' && (
+          <ContainerHistorico>
+            <Historico 
+              history={frontData.historico} 
+              historyType={HistoryType.NEW} 
+              oldHistoryReference={oldHistory} // Passa a referência
+            />
+          </ContainerHistorico>
+        )}
       </Conteudo>
     </div>
 

@@ -78,7 +78,7 @@ export const TableContainer = styled.div`
 `
 
 
-export const Table = styled.table`
+export const Table = styled.table<{ $isDarkTheme: boolean }>`
   border-collapse: collapse;
 
   td,
@@ -98,7 +98,8 @@ export const Table = styled.table`
   }
 
   th {
-    background-color: #f4f4f4;
+    background-color: ${({ $isDarkTheme }) => $isDarkTheme ? '#4c4c4cff' : '#dfdfdfff'};
+    color: ${({ $isDarkTheme }) => $isDarkTheme ? '#ffffff' : '#000000'};
     padding: 12px;
   }
 

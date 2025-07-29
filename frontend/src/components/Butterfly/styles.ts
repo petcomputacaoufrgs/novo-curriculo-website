@@ -14,12 +14,15 @@ export const OverlayContainer = styled.div`
   justify-content: center;
 `;
 
-export const OverlayContent = styled.div`
+export const OverlayContent = styled.div<{ $isDarkTheme: boolean }>`
   text-align: center;
   color:  rgba(32, 42, 67, 1);
   font-family: 'Nunito Sans', sans-serif;
   font-weight: bold;
   font-size: 18px;
+  p{
+    color: ${({ $isDarkTheme }) => ($isDarkTheme ? 'white' : 'black')};
+  }
 `;
 
 export const SpinnerImage = styled.img`
