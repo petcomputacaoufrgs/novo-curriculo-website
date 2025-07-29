@@ -36,9 +36,9 @@ RUN rm -f ClassHistoryConverter/Manifest.toml
 RUN julia --project=./ClassHistoryConverter -e 'using Pkg; Pkg.instantiate()'
 
 # Instala o PackageCompiler e gera a sysimage
-#RUN julia --project=./ClassHistoryConverter -e 'using Pkg; Pkg.add("PackageCompiler")'
-#RUN chmod +x ClassHistoryConverter/scripts/create_sysimage.jl
-#RUN julia --startup-file=no --project=./ClassHistoryConverter ClassHistoryConverter/scripts/create_sysimage.jl
+RUN julia --project=./ClassHistoryConverter -e 'using Pkg; Pkg.add("PackageCompiler")'
+RUN chmod +x ClassHistoryConverter/scripts/create_sysimage.jl
+RUN julia --startup-file=no --project=./ClassHistoryConverter ClassHistoryConverter/scripts/create_sysimage.jl
 
 
 RUN chmod +x ClassHistoryConverter/scripts/update.sh
