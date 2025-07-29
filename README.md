@@ -14,22 +14,80 @@ Ferramenta original do professor Henrique disponível [aqui](https://codeberg.or
 
 
 ## Como instalar e rodar o projeto
+São 2 alternativas para rodar o projeto: via Docker ou nativamente.
+
+## Rodando o projeto via Docker (recomendado)
+
+### 1) Instalação do Docker
+
+Primeiramente, você vai precisar ter o Docker instalado. 
+- Pelo Windows ou MacOS você pode instalar o Docker Desktop pelo link disponível [aqui](https://www.docker.com/products/docker-desktop/)
+- Para distribuições Linux, você pode seguir as instruções específicas da sua distro disponíveis [aqui](https://docs.docker.com/desktop/setup/install/linux/)
+
+### 2) Clonando o repositório
+
+Agora, você pode clonar esse repositório.
+     
+⚠️ **IMPORTANTE:** pelo **Windows**, evite usar git clone via Git Bash ou terminal (com o comando abaixo) — o sistema pode substituir os linefeeds LF por CRLF, o que pode (e provavelmente vai) quebrar a execução de scripts .sh.    
+**Prefira clonar via Github Desktop ou baixar o .zip e extrair.**
+
+```
+git clone https://github.com/petcomputacaoufrgs/novo-curriculo-website.git
+```
+
+### 3) Construa e suba os containers
+
+Acessando o repositório pelo terminal, rode:
+
+```
+docker-compose up --build
+```
+Isso pode levar alguns minutos.
+
+### 4) Pronto!
+
+A aplicação já deve estar rodando!  
+Abra o navegador e acesse o endereço indicado no terminal para interagir com a aplicação. Se você não mexeu no código, esse endereço deve ser:
+http://localhost:5173
+
+### 5) Encerrando e rodando novamente
+
+Caso queira encerrá-la, basta rodar:
+
+```
+docker-compose down
+```
+(Ou interrompê-la no terminal em que está rodando com ctrl+c ou pelo Docker Desktop, caso o tenha instalado)
+
+E caso queira rodá-la de novo, basta acessar o repositório e rodar:
+
+```
+docker-compose up
+```
+
+-------------------
+
+## Rodando o projeto nativamente
 
 ### 1) Configuração do Ambiente Linux
 
 Primeiramente, você vai precisar de um ambiente Linux. Se você já está usando um sistema Linux, pule para o passo 2. 
 
-Caso esteja usando Windows, você precsa rodar por meio do WSL.
+Caso esteja usando Windows, você pode rodar por meio do WSL (Windows Subsystem for Linux).
 
 Você pode ver o tutorial oficial de instalação do WSL [aqui](https://learn.microsoft.com/pt-br/windows/wsl/install
 ).
 
-Você pode, por exemplo, instalar a distribuição Ubuntu do Linux rodando o comando:
+Você pode, por exemplo, instalar a distribuição Ubuntu do Linux rodando um desses comandos:
 
 ```
 wsl --install
+```
+```
 wsl --install -d ubuntu
 ```
+
+**IMPORTANTE:** Se você não tiver a virtualização habilitada na BIOS, isso ocasionará um erro. Você deve habilitá-la e então instalar.
 
 E então acessar o sistema rodando:
 
@@ -62,7 +120,7 @@ source ~/.profile
 
 ### 3) Clonando o repositório
 
-Agora, você pode clonar esse repositório:
+Agora, você pode clonar esse repositório (sempre no sistema Linux):
 
 ```
 git clone https://github.com/petcomputacaoufrgs/novo-curriculo-website.git
@@ -76,12 +134,12 @@ Dentro do repositório, vá até a pasta:
 cd backend/ClassHistoryConverter/scripts
 ```
 
-Você pode testar se está tudo certo com a instalação do Julia rodando o script de conversão do histórico diretamente. 
+Você pode testar se está tudo certo com a instalação do Julia rodando o script de conversão do histórico diretamente. Colocamos um caso de teste para isso. 
 
 Para isso, rode:
 
 ```
-./update.sh INF_UFRGS_DATA
+./update.sh INF_UFRGS_DATA teste_historico_completo CIC
 ```
 
 Se aparecer um erro de "Permissão negada", é porque você precisa dar permissão de execução ao script:
@@ -92,7 +150,7 @@ chmod +x update.sh
 
 E então rodar novamente.
 
-Isso deve rodar o script de conversão para um histórico de exemplo ```histórico.csv``` dentro da pasta ```INF_UFRGS_DATA``` e jogar os resultados da execução do script nessa pasta. Se a operação funcionar, então a instalação do Julia está correta.
+Isso deve rodar o script de conversão para um histórico de exemplo ```histórico.csv``` dentro da pasta ```teste_historico_completo``` e jogar os resultados da execução do script nessa pasta. Se a operação funcionar, então a instalação do Julia está correta.
 
 ### 5) Instalação das dependências do projeto
 
@@ -102,7 +160,7 @@ Agora, você precisa instalar as dependências do projeto.
 
 Indo para a pasta ```backend```:
 
-##### I. Crie um ambiente virtual:
+##### I. Crie um ambiente virtual (recomendado, mas opcional. Se não quiser, pule para III):
 
 ```
 python3 -m venv <nome>
