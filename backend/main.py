@@ -23,10 +23,10 @@ import pandas as pd
 from contextlib import asynccontextmanager
 
 # DESCOMENTAR ISSO AO FAZER BUILD 
-# from dotenv import load_dotenv
-#load_dotenv()
-#FRONTEND_HOST = os.getenv("APP_HOST_IP")
-#FRONTEND_PORT = os.getenv("FRONT_PORT")
+from dotenv import load_dotenv
+load_dotenv()
+FRONTEND_HOST = os.getenv("APP_HOST_IP")
+FRONTEND_PORT = os.getenv("FRONT_PORT")
 
 ANO_ATUAL = 2026
 BARRA_ATUAL = 1
@@ -57,8 +57,7 @@ origins = [
     f"http://localhost:5173",
     
     # DESCOMENTAR ISSO AO FAZER BUILD
-    #f"http://{FRONTEND_HOST}:{FRONTEND_PORT}",
-    #f"http://localhost:{FRONTEND_PORT}"
+    f"http://{FRONTEND_HOST}:{FRONTEND_PORT}",
 ]
 
 
@@ -194,6 +193,8 @@ async def calculate(dados: CalculateRequest, cached_disciplines=Depends(get_dado
     os.mkdir(nome_unico)
     file_path = os.path.join(os.path.dirname(__file__), nome_unico)
 
+
+    
     # Salva o CSV com o histórico enviado
 
     try:
@@ -203,12 +204,17 @@ async def calculate(dados: CalculateRequest, cached_disciplines=Depends(get_dado
 
     # Executa os scripts
     try:
+        print(os.path.dirname(__file__))
+        print(os.path.exists("ClassHistoryConverter/scripts/update.sh"))
+        print(os.path.exists("ClassHistoryConverter/scripts"))
+        print(os.path.exists("ClassHistoryConverter"))
+        
         result = subprocess.run(
         ["ClassHistoryConverter/scripts/update.sh", file_path, curso], capture_output=True, text=True, check=True)
     except subprocess.CalledProcessError as e:
         print("STDOUT:", e.stdout)
         print("STDERR:", e.stderr)
-        raise HTTPException(status_code=500, detail=f"Erro no script: {e.stderr}")
+        raise HTTPException(status_code=400, detail=f"Erro no script: {e.stderr}")
 
 
     # Inicializa o dicionário de retorno
