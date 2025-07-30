@@ -38,7 +38,6 @@ export default function RegrasEquivalencia() {
   useEffect(() => {
     const fetchRegras = async () => {
       const response = await api.get("/api/regrasEquivalencia");
-      console.log(response.data);
       setRegras(response.data);
     };
 

@@ -24,11 +24,9 @@ const Historico: React.FC<Props> = ({ history, historyType, uploadedHistory, onH
     // useEffect para capturar e armazenar o histórico antigo como referência
     useEffect(() => {
         if (historyType === HistoryType.OLD && history) {
-            console.log('Salvando histórico antigo como referência:', history);
             setOldHistoryReference(history);
         } else if (propOldHistoryReference) {
             // Se foi passado como prop, usa essa referência
-            console.log('Usando histórico antigo passado como prop:', propOldHistoryReference);
             setOldHistoryReference(propOldHistoryReference);
         }
     }, [history, historyType, propOldHistoryReference]);
@@ -60,7 +58,6 @@ const Historico: React.FC<Props> = ({ history, historyType, uploadedHistory, onH
             
             const newToggleEtapas = new Set(Array.from({ length: uploadedHistory.length }, (_, i) => i))
 
-            console.log('Setting initial checked states for UPLOADED:', initialCheckedStates);
             setCheckedStates(initialCheckedStates);
             setExpandedEtapas(newToggleEtapas);
             

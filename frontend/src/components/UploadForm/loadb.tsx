@@ -9,12 +9,11 @@ type LoadbProps = {
     setHistory: (history: string[][]) => void;
     setCurso: (curso: string) => void;
     setSemester: (semester: string) => void;
-    setEtapas: (etapas: number[]) => void;
     setMessage: (message: string) => void;
 };
 
 
-const Loadb = ({ setHistory, setCurso, setSemester, setEtapas, setMessage }: LoadbProps) =>{
+const Loadb = ({ setHistory, setCurso, setSemester, setMessage }: LoadbProps) =>{
 
     const handleError = (e: unknown) => {
     if (isAxiosError(e)) {
@@ -50,13 +49,10 @@ const Loadb = ({ setHistory, setCurso, setSemester, setEtapas, setMessage }: Loa
 
       const response = await api.post("/upload/", formData);
 
-      console.log(response.data)
 
       setHistory(response.data.dados);
       setSemester(response.data.semestre_ingresso);
       setCurso(response.data.curso);
-      setEtapas(response.data.etapas);
-      console.log("dados", response.data.dados);
       
       setMessage("Upload Concluído!");
 
