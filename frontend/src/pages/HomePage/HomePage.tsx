@@ -125,11 +125,11 @@ const HomePage = () => {
       <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
         <Navbar links={links}/>
         <About 
-          title="Conversor de Histórico" 
-          text="Para converter seu currículo, você pode selecionar as cadeiras que completou na tabela abaixo e clicar em 'Converter'.
-                Se preferir, ao invés disso, você também pode carregar direto o seu histórico de curso. Para isso, basta acessar o portal do aluno e, uma vez dentro da página 'Histórico de Curso' (ou 'Histórico Escolar', já que para ambas o conversor funciona), 
-                pressionar o botão direito do mouse e selecionar 'salvar como'. Tendo baixado o arquivo HTML, direcione-se para o Conversor de currículo e clique no botão 'Carregar Histórico'. Selecione o arquivo
-                HTML baixado e clique em 'Converter'."/>
+          title="Conversor de Histórico - CIC" 
+          text="Diante da mudança do currículo da CIC, cuja previsão é de acontecer em 2026/1, o professor Henrique Becker desenvolveu um script para a conversão do histórico dos alunos do antigo currículo para o novo. Esse site funciona como uma interface para esse script, além de reunir outras informações úteis. Para converter seu histórico, você pode selecionar as cadeiras que completou na tabela abaixo e clicar em 'Converter'.
+                Se preferir, ao invés disso, você também pode fazer upload do seu histórico. Para isso, basta acessar o portal do aluno e, uma vez dentro da página 'Histórico do Curso' ou 'Histórico Escolar', 
+                pressionar o botão direito do mouse e selecionar 'salvar como' em HTML. Tendo baixado o arquivo HTML, clique no botão 'Carregar Histórico'. Selecione o arquivo
+                HTML baixado e clique em 'Converter'. Note que isso é uma conversão automática, que pode não ser válida para todos os casos (ex: pedidos de equivalência vio processo)."/>
         
         <ButtonsStyledContainer>
                 <Loadb 
@@ -151,7 +151,7 @@ const HomePage = () => {
                 />
             </ButtonsStyledContainer>
 
-        <p>{message}</p>
+        <p style={{textAlign: "center"}}>{message}</p>
         
         {old_history && (
           <Transcript 

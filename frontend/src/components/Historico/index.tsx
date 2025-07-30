@@ -14,7 +14,7 @@ interface Props {
 }
 
 const Historico: React.FC<Props> = ({ history, historyType, uploadedHistory, onHistoryChange, oldHistoryReference: propOldHistoryReference}) => {
-    const [expandedEtapas, setExpandedEtapas] = useState<Set<number>>(new Set());
+    const [expandedEtapas, setExpandedEtapas] = useState<Set<number>>(history? new Set(Array.from({length : history.length}, (_, i) => 1 + i)) : new Set());
     const [checkedStates, setCheckedStates] = useState<{[key: string]: boolean}>({});
     // Estado para armazenar a referência do histórico padrão antigo
     const [oldHistoryReference, setOldHistoryReference] = useState<FrontData['historico'] | null>(null);
@@ -58,8 +58,12 @@ const Historico: React.FC<Props> = ({ history, historyType, uploadedHistory, onH
                 }
             });
             
+            const newToggleEtapas = new Set(Array.from({ length: uploadedHistory.length }, (_, i) => i))
+
             console.log('Setting initial checked states for UPLOADED:', initialCheckedStates);
             setCheckedStates(initialCheckedStates);
+            setExpandedEtapas(newToggleEtapas);
+            
         } else {
             // Para outros tipos de histórico, limpa o estado
             setCheckedStates({});
@@ -254,7 +258,7 @@ const Historico: React.FC<Props> = ({ history, historyType, uploadedHistory, onH
                     <Fragment key={indiceEtapa}>
                     {/* Cabeçalho da etapa com botão dropdown */}
                     <tr>
-                        <DropdownCell colSpan={3}>
+                        <DropdownCell colSpan={4}>
                             <DropdownButton onClick={() => toggleEtapa(indiceEtapa)}>
                                 {expandedEtapas.has(indiceEtapa) ? ' ▼ ' : ' ▶ '} 
                                 {indiceEtapa === 0 ? 'Eletivas' : 'Etapa ' + indiceEtapa}
@@ -268,6 +272,7 @@ const Historico: React.FC<Props> = ({ history, historyType, uploadedHistory, onH
                             <HeaderRow $isDarkTheme={isDarkTheme}>
                                 <HeaderCell>Sigla</HeaderCell>
                                 <HeaderCell>Título</HeaderCell>
+                                <HeaderCell>Cred</HeaderCell>
                                 {historyType == HistoryType.NEW &&
                                 <HeaderCell>Motivo</HeaderCell>}
                                 {historyType == HistoryType.OLD &&
@@ -275,18 +280,21 @@ const Historico: React.FC<Props> = ({ history, historyType, uploadedHistory, onH
 
                             </HeaderRow>
                             {etapa.codigo && etapa.codigo.map((codigo, indiceDisciplina) => (
-                                <DataRow 
+                                
+                                <DataRow
+
                                     key={`${indiceEtapa}-${indiceDisciplina}`}
                                     onClick={historyType == HistoryType.OLD ? () => handleOnChange(indiceEtapa, indiceDisciplina) : undefined}
                                     $isClickable={historyType === HistoryType.OLD}
                                     $isHighlighted={
                                         (historyType === HistoryType.OLD && checkedStates[`${indiceEtapa}-${indiceDisciplina}`]) ||
-                                        (historyType === HistoryType.NEW && etapa.rule_name[indiceDisciplina] !== 'N/A')
+                                        (historyType === HistoryType.NEW && etapa.rule_name[indiceDisciplina] != '')
                                     }
                                     $isDarkTheme={isDarkTheme}
                                 >
-                                    <DataCell>{codigo}</DataCell>
+                                    <DataCell style={{width: "1%"}}>{codigo}</DataCell>
                                     <DataCell>{etapa.nome?.[indiceDisciplina] || 'N/A'}</DataCell>
+                                    <DataCell>{etapa.creditos?.[indiceDisciplina] || 'N/A'}</DataCell>
                                     {historyType === HistoryType.NEW &&
                                     <DataCell>{formatRuleName(etapa.rule_name?.[indiceDisciplina] || 'N/A')}</DataCell>
                                     }

@@ -5,11 +5,11 @@ import { ChevronDown, ChevronUp } from 'lucide-react';
 
 
 const regraExplicacoes = {
-  'temporalidade': 'Regras baseadas no tempo de curso. A temporalidade é contada a partir do semestre em que a primeira cadeira foi completada. Ex: no semestre 2026/01, uma pessoa que completou a primeira cadeira em 2023/01 terá temporalidade 7 (Temp-7).',
-  'mudança de caráter': 'Disciplinas que eram obrigatórias e vão virar eletivas ou disciplinas que eram eletivas e se tornarão obrigatórias. Uma pessoa que tenha feito uma das cadeiras obrigatórias que se tornarão eletivas pode optar por fazer a conversão dos créditos ou manter seus créditos obrigatórios?',
-  'mudança no número de créditos': 'Disciplinas que permanecem com o mesmo nome, mas que tiveram seu número de créditos alterado',
-  'mapeamento não direto': 'Disciplinas que tem seu nome alterado com a mudança do currículo.',
-  'mapeamento direto': 'Disciplinas que permanecem as mesmas após a mudança curricular.'
+  'temporalidade': 'Regras baseadas no tempo de curso. A temporalidade é contada a partir do semestre em que a primeira cadeira do curso foi completada até o semestre atual. Ex: durante o processo de matrícula em 2026/1, uma pessoa que completou a primeira cadeira em 2023/1 terá temporalidade 6 (Temp-6), pois se passaram 6 semestres desde que ela completou a primeira cadeira: 2023/1, 2023/2, 2024/1, 2024/2, 2025/1, 2025/2',
+  'mudança de caráter': 'Disciplinas obrigatórias que serão convertidas em eletivas ou disciplinas eeletivas que liberarão obrigatórias.',
+  'mudança no número de créditos': 'Disciplinas que permanecem com o mesmo nome e caráter, mas que tiveram seu número de créditos alterado',
+  'mapeamento não direto': 'Regras não imediatas, de disciplinas que mapeiam para outras de nomes diferentes.',
+  'mapeamento direto': 'Disciplinas que permanecem com o mesmo nome, caráter e quantidade de créditos após a mudança curricular.'
 
 };
 

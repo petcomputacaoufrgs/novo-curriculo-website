@@ -21,7 +21,7 @@ const RegrasEquivalenciaView = () => {
       
       <About 
         title="Regras de Equivalência" 
-        text="A seguir estão as regras de equivalência categorizadas por tipo de regra. Note que o processo de conversão não é exatamente 100% automático"/>
+        text="A seguir estão as regras de equivalência categorizadas por tipo de regra."/>
       
       <RegrasEquivalencia />
       <Divider />
