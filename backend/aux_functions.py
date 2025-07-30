@@ -18,8 +18,8 @@ alternativas_ecp = {
 
 
 
-ANO_ATUAL = 2026
-BARRA_ATUAL = 1
+ANO_ATUAL = 2025
+BARRA_ATUAL = 2
 
 
 def get_alternative_discipline(discipline_name, curso_nome):

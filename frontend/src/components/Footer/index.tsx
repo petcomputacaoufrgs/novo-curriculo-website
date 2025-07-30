@@ -6,10 +6,9 @@ const Footer = () => {
   return (
     <FooterContainer>
       <LeftColumn>
-        <h5>Em caso de dúvida sobre o currículo, contate</h5>
+        <h5>Em caso de dúvidas ou problemas com o site, contate</h5>
         <ul className="emails">
-          <li>emailimportante@ufrgs.br</li>
-          <li>outroemailimportante@ufrgs.br</li>
+          <li>pet@inf.ufrgs.br</li>
         </ul>
 
         <br />
@@ -30,11 +29,10 @@ const Footer = () => {
       <RightColumn>
         <h5>Aplicação Web desenvolvida por PET - Computação</h5>
         <ul>
-          <li>Nome Sobrenome</li>
-          <li>Nome Nome Sobrenome Sobrenome</li>
-          <li>Nome Sobrenome Sobrenome</li>
-          <li>Nome Sobrenome</li>
-          <li>Nome Nome Sobrenome</li>
+          <li>Eduarda Post Michels</li>
+          <li>Eduardo Fonseca da Silva</li>
+          <li>Guilherme D'Ávila Pinheiro</li>
+          <li>João Luís Scheffel Koller</li>
         </ul>
 
         <br />

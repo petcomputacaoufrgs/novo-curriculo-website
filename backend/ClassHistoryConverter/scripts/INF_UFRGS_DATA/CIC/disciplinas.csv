@@ -1,6 +1,6 @@
 cv,carater,etapa,codigo,nome,carga_horaria,creditos,prerequisito
 novo,Obrigatória,1,PC,Pensamento Computacional,60,4,NA
-novo,Obrigatória,1,ALP,Algoritmos e Programação,90,6,NA
+novo,Obrigatória,1,ALP,Algorítmos e Programação,90,6,NA
 novo,Obrigatória,1,IntroCIC,Introdução à Ciência da Computação,60,4,NA
 novo,Obrigatória,1,Calc1,Cálculo e Geometria Analítica I - A,90,6,NA
 novo,Obrigatória,1,Logica,Lógica e Correção de Programas,60,4,NA

@@ -49,6 +49,11 @@ export const HeaderCell = styled.th`
   border-bottom: 1px solid #ccc;
   text-align: center;
   color: white;
+    
+  @media (max-width: 400px){
+    font-size: 12px;
+  }
+
 `;
 
 export const DataCell = styled.td`
@@ -57,6 +62,20 @@ export const DataCell = styled.td`
   border-bottom: 1px solid #eee;
   font-size: 0.9rem;
   text-align: left;
+
+  @media (max-width: 500px){
+      padding-left: 0;
+
+  }
+
+  @media (max-width: 438px){
+    font-size: 11px;
+  }
+
+  @media (max-width: 350px){
+    font-size: 10px;
+  }
+
 `;
 
 export const DataRow = styled.tr<{
@@ -81,6 +100,8 @@ export const DataRow = styled.tr<{
       return "transparent";
     }};
   }
+
+
 `;
 
 export const CheckmarkContainer = styled.div`

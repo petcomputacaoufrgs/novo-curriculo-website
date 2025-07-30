@@ -140,7 +140,7 @@ const Overview: React.FC<OverviewProps> = ({ images, metrics }) => {
       </Section>
 
       <WarningText>
-        As informações acadêmicas exibidas neste site são uma previsão baseada no novo currículo do curso. Entretanto,
+        As informações exibidas neste site são uma *previsão* baseada no novo currículo do curso. Entretanto,
         há decisões que os alunos podem tomar para a aplicação de algumas das regras. Portanto algumas informações
         podem não ser totalmente precisas.
       </WarningText>

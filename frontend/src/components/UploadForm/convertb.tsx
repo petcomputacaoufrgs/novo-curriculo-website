@@ -67,7 +67,7 @@ function Convertb({history, semester, curso, getModifiedHistory, setFrontData, s
       setOldBlobUrl(oldUrlBlob);
       setNewBlobUrl(newUrlBlob);
 
-      setMessage("");
+      setMessage("Conversão Concluída!");
 
     } catch (error) {
       handleError(error);

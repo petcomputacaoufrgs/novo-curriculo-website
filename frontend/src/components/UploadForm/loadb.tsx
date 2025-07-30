@@ -58,7 +58,7 @@ const Loadb = ({ setHistory, setCurso, setSemester, setEtapas, setMessage }: Loa
       setEtapas(response.data.etapas);
       console.log("dados", response.data.dados);
       
-      setMessage("");
+      setMessage("Upload Concluído!");
 
     } catch (error) {
       handleError(error);

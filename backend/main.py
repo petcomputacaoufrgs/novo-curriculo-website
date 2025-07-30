@@ -23,10 +23,10 @@ import pandas as pd
 from contextlib import asynccontextmanager
 
 # DESCOMENTAR ISSO AO FAZER BUILD 
-from dotenv import load_dotenv
-load_dotenv()
-FRONTEND_HOST = os.getenv("APP_HOST_IP")
-FRONTEND_PORT = os.getenv("FRONT_PORT")
+#from dotenv import load_dotenv
+#load_dotenv()
+#FRONTEND_HOST = os.getenv("APP_HOST_IP")
+#FRONTEND_PORT = os.getenv("FRONT_PORT")
 
 ANO_ATUAL = 2026
 BARRA_ATUAL = 1
@@ -57,7 +57,7 @@ origins = [
     f"http://localhost:5173",
     
     # DESCOMENTAR ISSO AO FAZER BUILD
-    f"http://{FRONTEND_HOST}:{FRONTEND_PORT}",
+    #f"http://{FRONTEND_HOST}:{FRONTEND_PORT}",
 ]
 
 
