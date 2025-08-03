@@ -5,7 +5,7 @@ import { ChevronDown, ChevronUp } from 'lucide-react';
 
 
 const regraExplicacoes = {
-  'temporalidade': 'Regras baseadas no tempo de curso. A temporalidade é contada a partir do semestre em que a primeira cadeira do curso foi completada até o semestre atual. Ex: durante o processo de matrícula em 2026/1, uma pessoa que completou a primeira cadeira em 2023/1 terá temporalidade 6 (Temp-6), pois se passaram 6 semestres desde que ela completou a primeira cadeira: 2023/1, 2023/2, 2024/1, 2024/2, 2025/1, 2025/2',
+  'temporalidade': 'Regras baseadas no tempo de curso. A temporalidade é contada a partir da quantidade de semestres desde seu ingresso no curso da CIC até o semestre atual. Ex: durante o processo de matrícula em 2026/1, uma pessoa que completou a primeira cadeira em 2023/1 terá temporalidade 6 (Temp-6), pois se passaram 6 semestres desde que ela completou a primeira cadeira: 2023/1, 2023/2, 2024/1, 2024/2, 2025/1, 2025/2',
   'mudança de caráter': 'Disciplinas obrigatórias que serão convertidas em eletivas ou disciplinas eeletivas que liberarão obrigatórias.',
   'mudança no número de créditos': 'Disciplinas que permanecem com o mesmo nome e caráter, mas que tiveram seu número de créditos alterado',
   'mapeamento não direto': 'Regras não imediatas, de disciplinas que mapeiam para outras de nomes diferentes.',
