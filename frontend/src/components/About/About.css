@@ -13,5 +13,6 @@
 .About p{
     border-left: 1px solid rgba(115, 113, 113, 1); 
     padding-left: 10px;
-    text-align: center;
+    text-align: justify;
+    text-justify: inter-word;
 }

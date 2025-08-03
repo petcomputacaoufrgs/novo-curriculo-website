@@ -273,7 +273,7 @@ def gerar_graficos_creditos(curso, summarised_metrics, return_value):
         old_obligatory_credit_demand = 152
         old_elective_credit_demand = 24
         new_obligatory_credit_demand = 166
-        new_elective_credit_demand = 20
+        new_elective_credit_demand = 16
     elif(curso == "ECP"):
         old_obligatory_credit_demand = 158
         old_elective_credit_demand = 36
