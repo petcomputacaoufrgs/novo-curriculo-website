@@ -45,6 +45,7 @@ const HomePage = () => {
         const response = await api.get("/get_old_history");
         
         if (!isFinished) {
+
           setOldHistory(response.data);
         }
 
@@ -67,6 +68,7 @@ const HomePage = () => {
 
   const [semester, setSemester] = useState("2025/2");
   const [curso, setCurso] = useState("CIC");
+  const [etapas, setEtapas] = useState<number[]>([]);
 
   const [frontData, setFrontData] = useState<FrontData | undefined>();
   const [oldUrl, setOldBlobUrl] = useState<string | undefined>();
@@ -133,6 +135,7 @@ const HomePage = () => {
                     setCurso={setCurso} 
                     setSemester={setSemester} 
                     setHistory={setHistory} 
+                    setEtapas={setEtapas} 
                     setMessage={setMessage}
                 />
                 <Convertb 
