@@ -55,7 +55,9 @@ app = FastAPI(lifespan=lifespan)
 # Define as origens de onde pode receber requisições
 origins = [
     f"http://localhost:5173",
-    f"http://{FRONTEND_HOST}:{FRONTEND_PORT}",
+    "https://borboleta.petcompufrgs.com.br", 
+    # DESCOMENTAR ISSO AO FAZER BUILD
+    #f"http://{FRONTEND_HOST}:{FRONTEND_PORT}",
 ]
 
 
@@ -198,6 +200,7 @@ async def calculate(dados: CalculateRequest, cached_disciplines=Depends(get_dado
     try:
         criaHistoricoCSV(tabela, os.path.join(file_path, "historico.csv"), temporalidade)
     except:
+        shutil.rmtree(file_path)
         raise HTTPException(status_code=400, detail="Erro ao criar o histórico.") 
 
     # Executa os scripts
@@ -212,6 +215,7 @@ async def calculate(dados: CalculateRequest, cached_disciplines=Depends(get_dado
     except subprocess.CalledProcessError as e:
         print("STDOUT:", e.stdout)
         print("STDERR:", e.stderr)
+        shutil.rmtree(file_path)
         raise HTTPException(status_code=400, detail=f"Erro no script: {e.stderr}")
 
 

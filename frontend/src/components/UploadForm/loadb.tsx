@@ -49,11 +49,10 @@ const Loadb = ({ setHistory, setCurso, setSemester, setMessage }: LoadbProps) =>
 
       const response = await api.post("/upload/", formData);
 
-
       setHistory(response.data.dados);
       setSemester(response.data.semestre_ingresso);
       setCurso(response.data.curso);
-      
+     
       setMessage("Upload Concluído!");
 
     } catch (error) {

@@ -8,22 +8,12 @@ services:
     networks:
       - app-network
 
-    env_file:
-      - .env  
-    environment:
-      - APP_HOST_IP=${APP_HOST_IP}
-      - FRONT_PORT=${FRONT_PORT}
-
     restart: always
 
 
   frontend:
     build:
       context: ./frontend
-      args:
-        VITE_API_URL: "http://${APP_HOST_IP}:${BACK_PORT}"
-    environment:
-      - VITE_API_URL=http://${APP_HOST_IP}:${BACK_PORT}
     ports:
       - "5173:80"
     networks:

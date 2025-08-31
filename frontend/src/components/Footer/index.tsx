@@ -16,13 +16,13 @@ const Footer = () => {
         <br />
 
         <ul className="social">
-          {[1, 2, 3].map((i) => (
-            <li key={i}>
-              <a href="#">
-                <img src={instagram} alt={`Instagram ${i}`} />
+       
+            <li>
+              <a href="https://www.instagram.com/petcompufrgs?igsh=eGx6dWIwMXpzeGQw" target="_blank">
+                <img src={instagram} alt={`Instagram do PET Computação`} />
               </a>
             </li>
-          ))}
+         
         </ul>
       </LeftColumn>
 

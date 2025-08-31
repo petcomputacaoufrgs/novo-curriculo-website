@@ -14,7 +14,7 @@ interface Props {
 }
 
 const Historico: React.FC<Props> = ({ history, historyType, uploadedHistory, onHistoryChange, oldHistoryReference: propOldHistoryReference}) => {
-    const [expandedEtapas, setExpandedEtapas] = useState<Set<number>>(history? new Set(Array.from({length : history.length}, (_, i) => 1 + i)) : new Set());
+        const [expandedEtapas, setExpandedEtapas] = useState<Set<number>>(history? ((historyType == HistoryType.NEW)? new Set(Array.from({length : history.length}, (_, i) => i)) : new Set(Array.from({length : history.length}, (_, i) => 1 + i))) : new Set());
     const [checkedStates, setCheckedStates] = useState<{[key: string]: boolean}>({});
     // Estado para armazenar a referência do histórico padrão antigo
     const [oldHistoryReference, setOldHistoryReference] = useState<FrontData['historico'] | null>(null);
@@ -24,9 +24,11 @@ const Historico: React.FC<Props> = ({ history, historyType, uploadedHistory, onH
     // useEffect para capturar e armazenar o histórico antigo como referência
     useEffect(() => {
         if (historyType === HistoryType.OLD && history) {
+
             setOldHistoryReference(history);
         } else if (propOldHistoryReference) {
             // Se foi passado como prop, usa essa referência
+
             setOldHistoryReference(propOldHistoryReference);
         }
     }, [history, historyType, propOldHistoryReference]);

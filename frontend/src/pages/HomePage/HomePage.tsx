@@ -116,6 +116,7 @@ const HomePage = () => {
     }
   }, [frontData, oldUrl, newUrl]);
 
+  
   return (
     <>
       <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
