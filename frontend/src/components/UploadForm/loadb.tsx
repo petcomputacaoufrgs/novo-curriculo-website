@@ -50,14 +50,11 @@ const Loadb = ({ setHistory, setCurso, setSemester, setEtapas, setMessage }: Loa
 
       const response = await api.post("/upload/", formData);
 
-      console.log(response.data)
-
       setHistory(response.data.dados);
       setSemester(response.data.semestre_ingresso);
       setCurso(response.data.curso);
       setEtapas(response.data.etapas);
-      console.log("dados", response.data.dados);
-      
+     
       setMessage("Upload Concluído!");
 
     } catch (error) {

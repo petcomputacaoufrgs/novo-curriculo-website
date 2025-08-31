@@ -45,7 +45,7 @@ const HomePage = () => {
         const response = await api.get("/get_old_history");
         
         if (!isFinished) {
-          console.log(response.data);
+
           setOldHistory(response.data);
         }
 
@@ -84,7 +84,6 @@ const HomePage = () => {
 
   let options = [];
 
-  console.log(etapas);
 
   
   for(var i = min_year; i < current_year; i++){
@@ -119,7 +118,7 @@ const HomePage = () => {
     }
   }, [frontData, oldUrl, newUrl]);
 
-  console.log("Home Page Renderizada");
+  
   return (
     <>
       <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
