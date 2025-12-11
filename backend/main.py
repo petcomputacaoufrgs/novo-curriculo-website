@@ -95,9 +95,6 @@ async def get_old_history(dados = Depends(get_dados)):
 
     # Pega o historico da ECP
     ecp_history : pd.DataFrame = dados["disciplinas_ECP"]
-
-    print("Colunas do DataFrame de histórico ECP:")
-    print(ecp_history.columns)
     
     # Trata o histórico
     ecp_history["etapa"] = np.where(
@@ -143,10 +140,7 @@ async def upload_html(file: UploadFile = File(...)):
 
 @app.get(path="/api/regrasEquivalencia/{curso}")
 async def get_regras_equivalencia(curso: str):
-    print(f"Recebido pedido de regras de equivalência para o curso: {curso}")
     regras = pd.read_csv(f"ClassHistoryConverter/scripts/INF_UFRGS_DATA/{curso}/equivalencias_completas_final.csv")
-    print("Colunas do DataFrame de regras de equivalência:")
-    print(regras.columns)
     regras = regras.sort_values(by=["nome_fez"])
 
     regras = regras.fillna("")
@@ -222,10 +216,6 @@ async def calculate(dados: CalculateRequest, cached_disciplines=Depends(get_dado
 
     # Executa os scripts
     try:
-        print(os.path.dirname(__file__))
-        print(os.path.exists("ClassHistoryConverter/scripts/update.sh"))
-        print(os.path.exists("ClassHistoryConverter/scripts"))
-        print(os.path.exists("ClassHistoryConverter"))
         
         result = subprocess.run(
         ["ClassHistoryConverter/scripts/update.sh", file_path, curso], capture_output=True, text=True, check=True)
@@ -435,7 +425,6 @@ def marcar_disciplinas_feitas_em_html(html_path_new_diagram, html_path_old_diagr
     # Modificar o conteúdo do HTML
     for linha_historico_antigo in tabela:
         nome_cadeira = linha_historico_antigo[1]
-        print(nome_cadeira)
         nome_escapado = re.escape(nome_cadeira)
         teste = re.findall(rf"{nome_escapado}(?=[\\&]).*?style=.*?fillColor=#FFFFFA", html_texto)
         

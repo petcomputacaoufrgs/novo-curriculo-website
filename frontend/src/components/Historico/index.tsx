@@ -32,8 +32,6 @@ const Historico: React.FC<Props> = ({ history, historyType, uploadedHistory, onH
             setOldHistoryReference(propOldHistoryReference);
         }
     }, [history, historyType, propOldHistoryReference]);
-
-    console.log(historyType, oldHistoryReference, history);
     
     // useEffect para inicializar o estado dos checkboxes quando um histórico é carregado
     useEffect(() => {
