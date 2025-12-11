@@ -52,7 +52,7 @@ useEffect(() => {
 
       <DropdownInput 
         value={abaAtiva} 
-        options={['Overview', 'Diagramas', 'Histórico Novo', 'Regras de Transição']} 
+        options={['Overview', 'Diagramas', 'Histórico Novo']} 
         onSelect={(value: string) => setAbaAtiva(value as Aba)}
         backgroundColor={"#c2d2f0"}
         borderRadius='4px 4px 0 0'

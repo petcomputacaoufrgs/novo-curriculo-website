@@ -46,7 +46,6 @@ function Convertb({history, semester, curso, getModifiedHistory, setFrontData, s
       // Determina qual histórico usar: modificado (se disponível) ou original
       const historyToUse = getModifiedHistory ? getModifiedHistory() : history;
       
-
       
       const response = await api.post("/calculate/", { 
         tabela: historyToUse, 
@@ -55,7 +54,6 @@ function Convertb({history, semester, curso, getModifiedHistory, setFrontData, s
       });
       
       setFrontData(response.data);
-
 
       // Criar um Blob e carregar no iframe
       const oldBlob = new Blob([response.data["html_old_diagram"]], { type: "text/html" });

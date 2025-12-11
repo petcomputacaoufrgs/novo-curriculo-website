@@ -12,6 +12,7 @@ import os
 
 import time
 
+import numpy as np
 from pydantic import BaseModel
 from typing import List
 
@@ -22,14 +23,14 @@ import pandas as pd
 
 from contextlib import asynccontextmanager
 
-# DESCOMENTAR ISSO AO FAZER BUILD 
-#from dotenv import load_dotenv
-#load_dotenv()
-#FRONTEND_HOST = os.getenv("APP_HOST_IP")
-#FRONTEND_PORT = os.getenv("FRONT_PORT")
 
-ANO_ATUAL = 2026
-BARRA_ATUAL = 1
+from dotenv import load_dotenv
+load_dotenv()
+FRONTEND_HOST = os.getenv("APP_HOST_IP")
+FRONTEND_PORT = os.getenv("FRONT_PORT")
+
+ANO_ATUAL = 2025
+BARRA_ATUAL = 2
 
 
 
@@ -83,7 +84,7 @@ async def get_old_history(dados = Depends(get_dados)):
     # Trata o histórico
     cic_history = cic_history[cic_history['cv'] == 'velho'][["etapa", "codigo", "creditos", "nome"]]
     cic_history["etapa"] = cic_history["etapa"].fillna(0).astype(int)
-    
+
     cic_history = cic_history[cic_history['creditos'] > 0] # Remove "disciplinas" que não são cadeiras, como "Ingresso até Temp-4" e "Vínculo Acadêmico"
     # Tranforma o historico da CIC em uma lista de etapas, onde cada etapa contém listas com os dados de cada cadeira
     cic_history = [
@@ -91,10 +92,21 @@ async def get_old_history(dados = Depends(get_dados)):
         for i in range(int(cic_history['etapa'].max()) + 1)
     ]
 
+
     # Pega o historico da ECP
     ecp_history : pd.DataFrame = dados["disciplinas_ECP"]
 
+    print("Colunas do DataFrame de histórico ECP:")
+    print(ecp_history.columns)
+    
     # Trata o histórico
+    ecp_history["etapa"] = np.where(
+        ecp_history["carater"].str.lower() == "eletiva",
+        0,                                             
+        ecp_history["etapa"]                            
+    )
+
+    ecp_history = ecp_history[ecp_history["carater"] != "Adicional"]  # Remove disciplinas de caráter "Adicional", que apenas dão créditos complementares
     ecp_history = ecp_history[ecp_history['cv'] == 'velho'][["etapa", "codigo", "creditos", "nome"]]
     ecp_history["etapa"] = ecp_history["etapa"].fillna(0).astype(int)
 
@@ -103,6 +115,7 @@ async def get_old_history(dados = Depends(get_dados)):
         ecp_history[ecp_history['etapa'] == i].drop('etapa', axis=1).to_dict(orient="list")
         for i in range(int(ecp_history['etapa'].max()) + 1)
     ]
+
 
     # Retorna os dois históricos em um dicionário, onde a chave é o nome do curso e o valor é a lista de etapas
     return {"CIC": cic_history, "ECP": ecp_history}
@@ -128,11 +141,15 @@ async def upload_html(file: UploadFile = File(...)):
 
 
 
-@app.get(path="/api/regrasEquivalencia")
-async def get_regras_equivalencia():
-    regras = pd.read_csv(f"ClassHistoryConverter/scripts/INF_UFRGS_DATA/CIC/equivalencias_completas_final.csv")
-
+@app.get(path="/api/regrasEquivalencia/{curso}")
+async def get_regras_equivalencia(curso: str):
+    print(f"Recebido pedido de regras de equivalência para o curso: {curso}")
+    regras = pd.read_csv(f"ClassHistoryConverter/scripts/INF_UFRGS_DATA/{curso}/equivalencias_completas_final.csv")
+    print("Colunas do DataFrame de regras de equivalência:")
+    print(regras.columns)
     regras = regras.sort_values(by=["nome_fez"])
+
+    regras = regras.fillna("")
 
     return regras.to_dict(orient="records")
 
@@ -212,11 +229,9 @@ async def calculate(dados: CalculateRequest, cached_disciplines=Depends(get_dado
         
         result = subprocess.run(
         ["ClassHistoryConverter/scripts/update.sh", file_path, curso], capture_output=True, text=True, check=True)
-    except subprocess.CalledProcessError as e:
-        print("STDOUT:", e.stdout)
-        print("STDERR:", e.stderr)
+    except Exception as e:
         shutil.rmtree(file_path)
-        raise HTTPException(status_code=400, detail=f"Erro no script: {e.stderr}")
+        raise HTTPException(status_code=400, detail=f"Erro no script: {e}")
 
 
     # Inicializa o dicionário de retorno
