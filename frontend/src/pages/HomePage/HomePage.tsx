@@ -68,11 +68,11 @@ const HomePage = () => {
 
   const [semester, setSemester] = useState("2025/2");
   const [curso, setCurso] = useState("CIC");
-  const [etapas, setEtapas] = useState<number[]>([]);
+  const [_, setEtapas] = useState<number[]>([]);
 
-  const [frontData, setFrontData] = useState<FrontData | undefined>();
-  const [oldUrl, setOldBlobUrl] = useState<string | undefined>();
-  const [newUrl, setNewBlobUrl] = useState<string | undefined>();
+    const [frontData, setFrontData] = useState<FrontData | undefined>();
+    const [oldUrl, setOldBlobUrl] = useState<string | undefined>();
+    const [newUrl, setNewBlobUrl] = useState<string | undefined>();
 
   const [message, setMessage] = useState<string>("");
 
