@@ -1,0 +1,259 @@
+cv,carater,etapa,codigo,nome,carga_horaria,creditos,prerequisito
+novo,Obrigatória,1,PC,Pensamento Computacional,60,4,NA
+novo,Obrigatória,1,ALP,Algoritmos e Programação,90,6,NA
+novo,Obrigatória,1,IntroCIC,Introdução à Ciência da Computação,60,4,NA
+novo,Obrigatória,1,Calc1,Cálculo e Geometria Analítica I - A,90,6,NA
+novo,Obrigatória,1,Logica,Lógica e Correção de Programas,60,4,NA
+novo,Obrigatória,2,VerifTeste,Verificação e Teste de Software,30,2,NA
+novo,Obrigatória,2,MatDisc,Matemática Discreta,60,4,NA
+novo,Obrigatória,2,Arq,Arquitetura de Computadores,60,4,IntroCIC; ALP
+novo,Obrigatória,2,ED,Estruturas de Dados,60,4,PC; ALP
+novo,Obrigatória,2,ProbEst,Probabilidade e Estatística,60,4,MAT01353
+novo,Obrigatória,2,Calc2,Cálculo e Geometria Analítica II - A,90,6,MAT01353
+novo,Obrigatória,3,TeoComp1,Teoria da Computação I - Linguagens Formais e Autômatos,60,4,Logica; MatDisc
+novo,Obrigatória,3,CD,Circuitos Digitais,90,6,Arq
+novo,Obrigatória,3,PAA1,Projeto e Análise de Algoritmos I,60,4,ED; MatDisc; MAT01353
+novo,Obrigatória,3,TCP,Desenvolvimento de Software de Qualidade,60,4,ED
+novo,Obrigatória,3,BD,Fundamentos de Bancos de Dados,60,4,ED
+novo,Obrigatória,4,TeoComp2,Teoria da Computação II - Computabilidade e Complexidade,60,4,TeoComp1
+novo,Obrigatória,4,PAA2,Projeto e Análise de Algoritmos II,60,4,PAA1
+novo,Obrigatória,4,OrgComp,Organização de Computadores,60,4,CD
+novo,Obrigatória,4,AlgLin,Álgebra Linear,60,4,MAT01353
+novo,Obrigatória,4,ES,Engenharia de Software,60,4,TCP
+novo,Obrigatória,4,IHC,Interação Humano-Computador e UX,60,4,TCP
+novo,Obrigatória,5,SisOp,Sistemas Operacionais,60,4,Arq; ED
+novo,Obrigatória,5,IA,Inteligência Artificial,60,4,PAA1; ProbEst
+novo,Obrigatória,5,CC,Computação Científica,60,4,Calc2; AlgLin; ED
+novo,Obrigatória,5,ProjCI,Projeto em Ciência e Inovação,120,8,IntroCIC; TCP; PAA1; ProbEst
+novo,Obrigatória,5,CGVis,Computação Gráfica e Visualização,60,4,Calc2; AlgLin; ED
+novo,Obrigatória,6,Redes,Redes de Computadores,60,4,Arq
+novo,Obrigatória,6,ML,Aprendizado de Máquina,60,4,ProbEst; PAA1
+novo,Obrigatória,6,PIVC,Processamento de Imagens e Visão Computacional,60,4,Calc2; ED
+novo,Obrigatória,6,ProgPar,Programação Paralela,60,4,SisOp
+novo,Eletiva,,ProgParEletiva,Programação Paralela (eletiva espelho),60,4
+novo,Obrigatória,6,LP1,Linguagens de Programação I,60,4,TeoComp1; ED
+novo,Obrigatória,7,Seg,Segurança de Sistemas e da Informação,60,4,MatDisc; ProbEst
+novo,Obrigatória,7,SDTF,Sistemas Distribuídos e Tolerantes a Falhas,60,4,SisOp
+novo,Obrigatória,7,PAA3,Projeto e Análise de Algoritmos III,60,4,PAA1; TeoComp2; AlgLin
+novo,Obrigatória,7,PLN,Processamento de Linguagem Natural,60,4,ML; TeoComp1; PIVC
+novo,Obrigatória,7,LP2,Linguagens de Programação II,60,4,LP1; Arq
+novo,Obrigatória,8,ProjInt,Projeto Integrador,120,8,ProjCI; #cred(60)
+velho,Obrigatória,1,INF01202,ALGORÍTMOS E PROGRAMAÇÃO - CIC,90,6,NA
+velho,Obrigatória,1,MAT01353,CÁLCULO E GEOMETRIA ANALÍTICA I - A,90,6,NA
+velho,Obrigatória,1,INF05008,FUNDAMENTOS DE ALGORITMOS,60,4,NA
+velho,Obrigatória,1,INF01107,INTRODUÇÃO À ARQUITETURA DE COMPUTADORES,60,4,NA
+velho,Obrigatória,1,MAT01375,MATEMÁTICA DISCRETA B,60,4,NA
+velho,Obrigatória,2,MAT01355,ÁLGEBRA LINEAR I - A,60,4,MAT01353
+velho,Obrigatória,2,INF01108,ARQUITETURA E ORGANIZAÇÃO DE COMPUTADORES I,60,4,INF01107
+velho,Obrigatória,2,MAT01354,CÁLCULO E GEOMETRIA ANALÍTICA II - A,90,6,MAT01353
+velho,Obrigatória,2,INF01203,ESTRUTURAS DE DADOS,60,4,INF01202; INF05008
+velho,Obrigatória,2,INF05508,LÓGICA PARA COMPUTAÇÃO,60,4,MAT01375
+velho,Obrigatória,2,INF05512,TEORIA DOS GRAFOS E ANÁLISE COMBINATÓRIA,60,4,MAT01375
+velho,Obrigatória,3,INF01112,ARQUITETURA E ORGANIZAÇÃO DE COMPUTADORES II,60,4,INF01108
+novo,Eletiva,,ARQ2Eletiva,ARQUITETURA E ORGANIZAÇÃO DE COMPUTADORES II,60,4,
+velho,Obrigatória,3,MAT01032,CÁLCULO NUMÉRICO A,60,4,INF01202; MAT01355
+velho,Obrigatória,3,INF01058,CIRCUITOS DIGITAIS,60,4,INF01108; MAT01375
+velho,Obrigatória,3,INF01124,CLASSIFICAÇÃO E PESQUISA DE DADOS,60,4,INF01203
+novo,Eletiva,,CPDEletiva,ANTIGA CLASSIFICAÇÃO E PESQUISA DE DADOS,60,4,
+velho,Obrigatória,3,INF05005,LINGUAGENS FORMAIS E AUTÔMATOS N,60,4,INF05508
+velho,Obrigatória,3,MAT02219,PROBABILIDADE E ESTATÍSTICA,60,4,MAT01353
+velho,Obrigatória,3,INF05501,TEORIA DA COMPUTAÇÃO N,60,4,INF05508
+velho,Obrigatória,4,INF05515,COMPLEXIDADE DE ALGORITMOS - B,60,4,INF01124; INF05501; INF05512
+velho,Obrigatória,4,INF01145,FUNDAMENTOS DE BANCO DE DADOS,60,4,INF01124
+velho,Obrigatória,4,INF01046,FUNDAMENTOS DE PROCESSAMENTO DE IMAGENS,60,4,MAT01354; MAT02219
+velho,Obrigatória,4,INF01113,ORGANIZAÇÃO DE COMPUTADORES B,60,4,INF01058; INF01112
+velho,Obrigatória,4,INF01120,TÉCNICAS DE CONSTRUÇÃO DE PROGRAMAS,60,4,OBRIGA70; INF01124
+velho,Obrigatória,5,INF01127,ENGENHARIA DE SOFTWARE N,60,4,INF01120
+velho,Obrigatória,5,INF01047,FUNDAMENTOS DE COMPUTAÇÃO GRÁFICA,60,4,MAT01354; MAT01355
+velho,Obrigatória,5,INF01048,INTELIGÊNCIA ARTIFICIAL,60,4,INF01120; INF05508
+velho,Obrigatória,5,INF01121,MODELOS DE LINGUAGEM DE PROGRAMAÇÃO,60,4,INF01120
+velho,Obrigatória,5,INF05010,OTIMIZAÇÃO COMBINATÓRIA,60,4,INF05515; MAT01355
+velho,Obrigatória,5,INF05516,SEMÂNTICA FORMAL N,60,4,INF05005
+velho,Obrigatória,5,INF01142,SISTEMAS OPERACIONAIS I N,60,4,INF01112; INF01203
+velho,Obrigatória,6,INF01147,COMPILADORES,60,4,INF05516
+velho,Obrigatória,6,INF01032,EMPREENDIMENTO EM INFORMÁTICA,60,4,OBRIGA88
+novo,Eletiva,,EmpreendimentoEletiva,ANTIGA EMPREENDIMENTO EM INFORMÁTICA,60,4,
+velho,Obrigatória,6,INF01209,FUNDAMENTOS DE TOLERÂNCIA A FALHAS,60,4,INF01142
+velho,Obrigatória,6,INF01043,INTERAÇÃO HOMEM-COMPUTADOR,60,4,INF01120
+velho,Obrigatória,6,INF01154,REDES DE COMPUTADORES N,90,6,INF01058; INF01142; MAT02219
+velho,Obrigatória,6,INF01151,SISTEMAS OPERACIONAIS II N,60,4,INF01142
+velho,Eletiva,,INF05019,AGENTES AUTÔNOMOS E SISTEMAS MULTIAGENTES,60,4,INF01048
+velho,Eletiva,,INF01017,APRENDIZADO DE MÁQUINA,60,4,INF01048
+novo,Eletiva,,MLEletiva,NOVO APRENDIZADO DE MÁQUINA,60,4,
+velho,Eletiva,,INF01023,ARQUITETURA E DESEMPENHO DE BANCO DE DADOS,60,4,INF01145
+velho,Eletiva,,INF01191,ARQUITETURAS AVANÇADAS DE COMPUTADORES,60,4,INF01113
+velho,Eletiva,,INF01146,AVALIAÇÃO DE DESEMPENHO,60,4,MAT02219
+velho,Eletiva,,INF05018,BIOLOGIA COMPUTACIONAL,60,4,INF01202
+velho,Eletiva,,INF01205,CAD PARA SISTEMAS DIGITAIS,60,4,INF01175
+velho,Eletiva,,INF05006,CATEGORIAS COMPUTACIONAIS N,60,4,INF05501
+velho,Eletiva,,INF01037,COMPUTAÇÃO EVOLUTIVA,60,4,INF01048
+velho,Eletiva,,INF01009,COMPUTAÇÃO GRÁFICA,60,4,INF01047
+velho,Eletiva,,INF01140,COMPUTADOR E SOCIEDADE,60,4,OBRIGA120
+velho,Eletiva,,INF01005,COMUNICAÇÃO DE DADOS,60,4,INF01154
+velho,Eletiva,,INF01185,CONCEPÇÃO DE CIRCUITOS INTEGRADOS I,60,4,INF01058
+velho,Eletiva,,INF01056,DESAFIOS DE PROGRAMAÇÃO,60,4,INF01120; INF05515
+velho,Eletiva,,ECO02254,ECONOMIA A,60,4,OBRIGA120
+velho,Eletiva,,INF01001,ESPECIFICAÇÃO FORMAL N,60,4,INF05501
+velho,Eletiva,,INF01213,FOTOGRAFIA COMPUTACIONAL,60,4,INF01046
+velho,Eletiva,,INF01030,FUNDAMENTOS DE VISÃO COMPUTACIONAL,60,4,INF01046
+velho,Eletiva,,INF01016,GERÊNCIA E ADMINISTRAÇÃO DE PROJETOS,60,4,INF01127
+velho,Eletiva,,INF01015,GERÊNCIA E APLICAÇÕES EM REDES,60,4,INF01154
+velho,Eletiva,,INF01039,HISTÓRIA DA COMPUTAÇÃO,60,4,OBRIGA94
+velho,Eletiva,,LET02720,INGLÊS INSTRUMENTAL PARA PROCESSAMENTO DE DADOS I,60,4,NA
+velho,Eletiva,,INF05004,INTELIGÊNCIA ARTIFICIAL AVANÇADA,60,4,INF01048
+velho,Eletiva,,INF01049,INTRODUÇÃO À PESQUISA EM INFORMÁTICA,30,2,OBRIGA80
+velho,Eletiva,,INF05001,LABORATÓRIO DE PROGRAMAÇÃO EM LÓGICA,60,4,INF01048
+velho,Eletiva,,INF01022,LABORATÓRIO DE SISTEMA DE SOFTWARE,60,4,INF01127
+velho,Eletiva,,INF01215,MÉTODOS ÁGEIS,60,4,INF01127
+velho,Eletiva,,INF01216,MODELAGEM E GERENCIAMENTO DE PROCESSOS DE NEGÓCIO,60,4,INF01127
+velho,Eletiva,,INF01008,PROGRAMAÇÃO DISTRIBUÍDA E PARALELA,60,4,INF01120; INF01151
+velho,Eletiva,,INF01006,PROJETO DE BANCO DE DADOS,60,4,INF01145
+velho,Eletiva,,INF01021,PROJETO DE HIPERDOCUMENTOS,60,4,INF01145
+velho,Eletiva,,INF01019,PROJETO EM COMPUTAÇÃO GRÁFICA,60,4,INF01047
+velho,Eletiva,,INF01002,PROTOCOLOS DE COMUNICAÇÃO,60,4,INF01154
+velho,Eletiva,,INF01034,ROBÓTICA II,60,4,INF01058; INF01120
+velho,Eletiva,,INF01045,SEGURANÇA EM SISTEMAS DE COMPUTAÇÃO,60,4,INF01154; INF05515
+novo,Eletiva,,SegEletiva,ANTIGA SEGURANÇA EM SISTEMAS DE COMPUTAÇÃO,60,4,
+velho,Eletiva,,INF01014,SISTEMAS DE BANCO DE DADOS DISTRIBUÍDOS,60,4,INF01145
+velho,Eletiva,,INF01175,SISTEMAS DIGITAIS PARA COMPUTADORES A,60,4,INF01058
+velho,Eletiva,,INF01059,SISTEMAS EMBARCADOS,60,4,INF01058; INF01142
+velho,Eletiva,,INF01038,SISTEMAS ESPECIALISTAS N,60,4,INF01048
+velho,Eletiva,,INF01018,SISTEMAS OPERACIONAIS DISTRIBUÍDOS E DE REDES,60,4,INF01151
+velho,Eletiva,,INF01217,TENDÊNCIAS EM ENGENHARIA DE SOFTWARE,60,4,INF01127
+velho,Eletiva,,INF05003,TEORIA DA COMPUTAÇÃO DISTRIBUÍDA,60,4,INF05006
+velho,Eletiva,,INF01214,TESTE DE SOFTWARE,60,4,INF01127
+velho,Eletiva,,INF01179,TÓPICOS ESPECIAIS EM COMPUTAÇÃO I,30,2,OBRIGA94
+velho,Eletiva,,INF01182,TÓPICOS ESPECIAIS EM COMPUTAÇÃO II,30,2,OBRIGA94
+velho,Eletiva,,INF01188,TÓPICOS ESPECIAIS EM COMPUTAÇÃO III,30,2,OBRIGA94
+velho,Eletiva,,INF01198,TÓPICOS ESPECIAIS EM COMPUTAÇÃO IV,30,2,OBRIGA94
+velho,Eletiva,,INF05009,TÓPICOS ESPECIAIS EM COMPUTAÇÃO IX,60,4,OBRIGA94
+velho,Eletiva,,INF05504,TÓPICOS ESPECIAIS EM COMPUTAÇÃO V,30,2,OBRIGA94
+velho,Eletiva,,INF05505,TÓPICOS ESPECIAIS EM COMPUTAÇÃO VI,30,2,OBRIGA94
+velho,Eletiva,,INF01054,TÓPICOS ESPECIAIS EM COMPUTAÇÃO VII,60,4,OBRIGA94
+velho,Eletiva,,INF01055,TÓPICOS ESPECIAIS EM COMPUTAÇÃO VIII,60,4,OBRIGA94
+velho,Eletiva,,INF01065,TÓPICOS ESPECIAIS EM COMPUTAÇÃO X,30,2,OBRIGA94
+velho,Eletiva,,INF01064,TÓPICOS ESPECIAIS EM COMPUTAÇÃO XI,30,2,OBRIGA94
+velho,Eletiva,,INF01063,TÓPICOS ESPECIAIS EM COMPUTAÇÃO XII,60,4,OBRIGA94
+velho,Eletiva,,INF05011,TÓPICOS ESPECIAIS EM COMPUTAÇÃO XIII,30,2,OBRIGA94
+velho,Eletiva,,INF05012,TÓPICOS ESPECIAIS EM COMPUTAÇÃO XIV,30,2,OBRIGA94
+velho,Eletiva,,INF05014,TÓPICOS ESPECIAIS EM COMPUTAÇÃO XIX,30,2,OBRIGA94
+velho,Eletiva,,INF05013,TÓPICOS ESPECIAIS EM COMPUTAÇÃO XV,60,4,OBRIGA94
+velho,Eletiva,,INF01062,TÓPICOS ESPECIAIS EM COMPUTAÇÃO XVI,30,2,OBRIGA94
+velho,Eletiva,,INF01061,TÓPICOS ESPECIAIS EM COMPUTAÇÃO XVII,30,2,OBRIGA94
+velho,Eletiva,,INF01060,TÓPICOS ESPECIAIS EM COMPUTAÇÃO XVIII,60,4,OBRIGA94
+velho,Eletiva,,INF05015,TÓPICOS ESPECIAIS EM COMPUTAÇÃO XX,30,2,OBRIGA94
+velho,Eletiva,,INF05016,TÓPICOS ESPECIAIS EM COMPUTAÇÃO XXI,60,4,OBRIGA94
+velho,Eletiva,,INF01066,TÓPICOS ESPECIAIS EM COMPUTAÇÃO XXII,30,2,OBRIGA94
+velho,Eletiva,,INF01067,TÓPICOS ESPECIAIS EM COMPUTAÇÃO XXIII,30,2,OBRIGA94
+velho,Eletiva,,INF01068,TÓPICOS ESPECIAIS EM COMPUTAÇÃO XXIV,60,4,OBRIGA94
+velho,Eletiva,,INF01069,TÓPICOS ESPECIAIS EM COMPUTAÇÃO XXIX,30,2,OBRIGA94
+velho,Eletiva,,INF05020,TÓPICOS ESPECIAIS EM COMPUTAÇÃO XXV,30,2,OBRIGA94
+velho,Eletiva,,INF05021,TÓPICOS ESPECIAIS EM COMPUTAÇÃO XXVI,30,2,OBRIGA94
+velho,Eletiva,,INF05022,TÓPICOS ESPECIAIS EM COMPUTAÇÃO XXVII,60,4,OBRIGA94
+velho,Eletiva,,INF05023,TÓPICOS ESPECIAIS EM COMPUTAÇÃO XXVIII,60,4,OBRIGA94
+velho,Eletiva,,INF01070,TÓPICOS ESPECIAIS EM COMPUTAÇÃO XXX,30,2,OBRIGA94
+velho,Eletiva,,INF01071,TÓPICOS ESPECIAIS EM COMPUTAÇÃO XXXI,30,2,OBRIGA94
+velho,Eletiva,,INF01072,TÓPICOS ESPECIAIS EM COMPUTAÇÃO XXXII,30,2,OBRIGA94
+velho,Eletiva,,INF01218,TÓPICOS ESPECIAIS EM COMPUTAÇÃO XXXIII,60,4,OBRIGA94
+velho,Eletiva,,INF01219,TÓPICOS ESPECIAIS EM COMPUTAÇÃO XXXIV,60,4,OBRIGA94
+velho,Eletiva,,INF01220,TÓPICOS ESPECIAIS EM COMPUTAÇÃO XXXV,60,4,OBRIGA94
+velho,Eletiva,,INF01221,TÓPICOS ESPECIAIS EM COMPUTAÇÃO XXXVI,60,4,OBRIGA94
+velho,Eletiva,,INF01050,TÓPICOS ESPECIAIS EM ENGENHARIA DE COMPUTAÇÃO I,60,4,OBRIGA94
+novo,Eletiva,,PLNEletiva,Nova INF01050,60,4,
+velho,Eletiva,,INF01053,TÓPICOS ESPECIAIS EM ENGENHARIA DE COMPUTAÇÃO IV,30,2,OBRIGA94
+velho,Eletiva,,INF05024,TÓPICOS ESPECIAIS EM ENGENHARIA DE COMPUTAÇÃO V,30,2,OBRIGA94
+velho,Eletiva,,INF05025,TÓPICOS ESPECIAIS EM ENGENHARIA DE COMPUTAÇÃO VI,30,2,OBRIGA94
+velho,Eletiva,,VAERE201,VÍNCULO ACADÊMICO - ERE 2020/1,0,0,NA
+velho,Eletiva,,VAERE202,VÍNCULO ACADÊMICO - ERE 2020/2,0,0,NA
+velho,Eletiva,,Temp-4,Ingresso até Temp-4,0,0,NA
+velho,Eletiva,,Temp-5,Ingresso até Temp-5,0,0,NA
+velho,Eletiva,,Temp-6,Ingresso até Temp-6,0,0,NA
+velho,Eletiva,,Temp-7,Ingresso até Temp-7,0,0,NA
+novo,Eletiva,,AAeSM,Agentes Autonomos e Sistemas Multiagentes,60,4,NA
+novo,Eletiva,,ApdM,Aprendizado de Maquina,60,4,NA
+novo,Eletiva,,AeDdBdD,Arquitetura e Desempenho de Banco de Dados,60,4,NA
+novo,Eletiva,,AAdC,Arquiteturas Avancadas de Computadores,60,4,NA
+novo,Eletiva,,AvdD,Avaliacao de Desempenho,60,4,NA
+novo,Eletiva,,BlgC,Biologia Computacional,60,4,NA
+novo,Eletiva,,CpSD,Cad para Sistemas Digitais,60,4,NA
+novo,Eletiva,,CtCN,Categorias Computacionais N,60,4,NA
+novo,Eletiva,,CmpE,Computacao Evolutiva,60,4,NA
+novo,Eletiva,,CmpG,Computacao Grafica,60,4,NA
+novo,Eletiva,,CmeS,Computador e Sociedade,60,4,NA
+novo,Eletiva,,CmdD,Comunicacao de Dados,60,4,NA
+novo,Eletiva,,CdCII,Concepcao de Circuitos Integrados I,60,4,NA
+novo,Eletiva,,DsdP,Desafios de Programacao,60,4,NA
+novo,Eletiva,,EcnA,Economia A,60,4,NA
+novo,Eletiva,,EsFN,Especificacao Formal N,60,4,NA
+novo,Eletiva,,FtgC,Fotografia Computacional,60,4,NA
+novo,Eletiva,,FdVC,Fundamentos de Visao Computacional,60,4,NA
+novo,Eletiva,,GeAdP,Gerencia e Administracao de Projetos,60,4,NA
+novo,Eletiva,,GeAeR,Gerencia e Aplicacoes em Redes,60,4,NA
+novo,Eletiva,,HsdC,Historia da Computacao,60,4,NA
+novo,Eletiva,,IIpPdDI,Ingles Instrumental para Processamento de Dados I,60,4,NA
+novo,Eletiva,,InAA,Inteligencia Artificial Avancada,60,4,NA
+novo,Eletiva,,IAPeI,Introducao A Pesquisa em Informatica,30,2,NA
+novo,Eletiva,,LdPeL,Laboratorio de Programacao em Logica,60,4,NA
+novo,Eletiva,,LdSdS,Laboratorio de Sistema de Software,60,4,NA
+novo,Eletiva,,MtdA,Metodos Ageis,60,4,NA
+novo,Eletiva,,MeGdPdN,Modelagem e Gerenciamento de Processos de Negocio,60,4,NA
+novo,Eletiva,,PDeP,Programacao Distribuida e Paralela,60,4,NA
+novo,Eletiva,,PdBdD,Projeto de Banco de Dados,60,4,NA
+novo,Eletiva,,PrdH,Projeto de Hiperdocumentos,60,4,NA
+novo,Eletiva,,PeCG,Projeto em Computacao Grafica,60,4,NA
+novo,Eletiva,,PrdC,Protocolos de Comunicacao,60,4,NA
+novo,Eletiva,,RbtI,Robotica Ii,60,4,NA
+novo,Eletiva,,SeSdC,Seguranca em Sistemas de Computacao,60,4,NA
+novo,Eletiva,,SdBdDD,Sistemas de Banco de Dados Distribuidos,60,4,NA
+novo,Eletiva,,SDpCA,Sistemas Digitais para Computadores A,60,4,NA
+novo,Eletiva,,SstE,Sistemas Embarcados,60,4,NA
+novo,Eletiva,,SsEN,Sistemas Especialistas N,60,4,NA
+novo,Eletiva,,SODedR,Sistemas Operacionais Distribuidos e de Redes,60,4,NA
+novo,Eletiva,,TeEdS,Tendencias em Engenharia de Software,60,4,NA
+novo,Eletiva,,TdCD,Teoria da Computacao Distribuida,60,4,NA
+novo,Eletiva,,TsdS,Teste de Software,60,4,NA
+novo,Eletiva,,TDGeAC,Teoria Dos Grafos e Analise Combinatoria,60,4,NA
+novo,Eletiva,,MdLdP,Modelos de Linguagem de Programacao,60,4,NA
+novo,Eletiva,,FdTAF,Fundamentos de Tolerancia A Falhas,60,4,NA
+novo,Eletiva,,ToCICI,TOPICOS ESPECIAIS EM COMPUTACAO I,30,2,NA
+novo,Eletiva,,ToCICII,TOPICOS ESPECIAIS EM COMPUTACAO II,30,2,NA
+novo,Eletiva,,ToCICIII,TOPICOS ESPECIAIS EM COMPUTACAO III,30,2,NA
+novo,Eletiva,,ToCICIV,TOPICOS ESPECIAIS EM COMPUTACAO IV,30,2,NA
+novo,Eletiva,,ToCICIX,TOPICOS ESPECIAIS EM COMPUTACAO IX,60,4,NA
+novo,Eletiva,,ToCICV,TOPICOS ESPECIAIS EM COMPUTACAO V,30,2,NA
+novo,Eletiva,,ToCICVI,TOPICOS ESPECIAIS EM COMPUTACAO VI,30,2,NA
+novo,Eletiva,,ToCICVII,TOPICOS ESPECIAIS EM COMPUTACAO VII,60,4,NA
+novo,Eletiva,,ToCICVIII,TOPICOS ESPECIAIS EM COMPUTACAO VIII,60,4,NA
+novo,Eletiva,,ToCICX,TOPICOS ESPECIAIS EM COMPUTACAO X,30,2,NA
+novo,Eletiva,,ToCICXI,TOPICOS ESPECIAIS EM COMPUTACAO XI,30,2,NA
+novo,Eletiva,,ToCICXII,TOPICOS ESPECIAIS EM COMPUTACAO XII,60,4,NA
+novo,Eletiva,,ToCICXIII,TOPICOS ESPECIAIS EM COMPUTACAO XIII,30,2,NA
+novo,Eletiva,,ToCICXIV,TOPICOS ESPECIAIS EM COMPUTACAO XIV,30,2,NA
+novo,Eletiva,,ToCICXIX,TOPICOS ESPECIAIS EM COMPUTACAO XIX,30,2,NA
+novo,Eletiva,,ToCICXV,TOPICOS ESPECIAIS EM COMPUTACAO XV,60,4,NA
+novo,Eletiva,,ToCICXVI,TOPICOS ESPECIAIS EM COMPUTACAO XVI,30,2,NA
+novo,Eletiva,,ToCICXVII,TOPICOS ESPECIAIS EM COMPUTACAO XVII,30,2,NA
+novo,Eletiva,,ToCICXVIII,TOPICOS ESPECIAIS EM COMPUTACAO XVIII,60,4,NA
+novo,Eletiva,,ToCICXX,TOPICOS ESPECIAIS EM COMPUTACAO XX,30,2,NA
+novo,Eletiva,,ToCICXXI,TOPICOS ESPECIAIS EM COMPUTACAO XXI,60,4,NA
+novo,Eletiva,,ToCICXXII,TOPICOS ESPECIAIS EM COMPUTACAO XXII,30,2,NA
+novo,Eletiva,,ToCICXXIII,TOPICOS ESPECIAIS EM COMPUTACAO XXIII,30,2,NA
+novo,Eletiva,,ToCICXXIV,TOPICOS ESPECIAIS EM COMPUTACAO XXIV,60,4,NA
+novo,Eletiva,,ToCICXXIX,TOPICOS ESPECIAIS EM COMPUTACAO XXIX,30,2,NA
+novo,Eletiva,,ToCICXXV,TOPICOS ESPECIAIS EM COMPUTACAO XXV,30,2,NA
+novo,Eletiva,,ToCICXXVI,TOPICOS ESPECIAIS EM COMPUTACAO XXVI,30,2,NA
+novo,Eletiva,,ToCICXXVII,TOPICOS ESPECIAIS EM COMPUTACAO XXVII,60,4,NA
+novo,Eletiva,,ToCICXXVIII,TOPICOS ESPECIAIS EM COMPUTACAO XXVIII,60,4,NA
+novo,Eletiva,,ToCICXXX,TOPICOS ESPECIAIS EM COMPUTACAO XXX,30,2,NA
+novo,Eletiva,,ToCICXXXI,TOPICOS ESPECIAIS EM COMPUTACAO XXXI,30,2,NA
+novo,Eletiva,,ToCICXXXII,TOPICOS ESPECIAIS EM COMPUTACAO XXXII,30,2,NA
+novo,Eletiva,,ToCICXXXIII,TOPICOS ESPECIAIS EM COMPUTACAO XXXIII,60,4,NA
+novo,Eletiva,,ToCICXXXIV,TOPICOS ESPECIAIS EM COMPUTACAO XXXIV,60,4,NA
+novo,Eletiva,,ToCICXXXV,TOPICOS ESPECIAIS EM COMPUTACAO XXXV,60,4,NA
+novo,Eletiva,,ToCICXXXVI,TOPICOS ESPECIAIS EM COMPUTACAO XXXVI,60,4,NA
+novo,Eletiva,,ToECPI,TOPICOS ESPECIAIS EM ENGENHARIA DE COMPUTACAO I,60,4,NA
+novo,Eletiva,,ToECPIV,TOPICOS ESPECIAIS EM ENGENHARIA DE COMPUTACAO IV,30,2,NA
+novo,Eletiva,,ToECPV,TOPICOS ESPECIAIS EM ENGENHARIA DE COMPUTACAO V,30,2,NA
+novo,Eletiva,,ToECPVI,TOPICOS ESPECIAIS EM ENGENHARIA DE COMPUTACAO VI,30,2,NA
+novo,Eletiva,,VAEREUm,VINCULO ACADEMICO - ERE 2020/1,0,0,NA
+novo,Eletiva,,VAEREDois,VINCULO ACADEMICO - ERE 2020/2,0,0,NA

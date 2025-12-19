@@ -1,0 +1,14 @@
+name = "ClassHistoryConverter"
+uuid = "2856f4b2-999b-4712-9eec-aa5f162f190b"
+authors = ["Henrique Becker <hbecker@inf.ufrgs.br>"]
+version = "0.1.0"
+
+[deps]
+CSV = "336ed68f-0bac-5ca0-87d4-7b16caf5d00b"
+DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
+PackageCompiler = "9b87118b-4619-50d2-8e1e-99f35a4d4d9d"
+
+[compat]
+CSV = "v0.10.13"
+DataFrames = "v1.6.1"
+PackageCompiler = "2.2.1"

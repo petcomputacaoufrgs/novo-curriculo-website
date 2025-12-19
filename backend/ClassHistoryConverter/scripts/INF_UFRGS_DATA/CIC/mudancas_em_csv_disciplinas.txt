@@ -1,0 +1,9 @@
+1)
+NOME DA CADEIRA Desenvolvimento de Software de Qualidade (ex-TCP)passou a ser Desenvolvimento de Software de Qualidade
+
+2)
+Etapa de Cálculo Numérico velho alterado de 3 pra 4
+
+3) Etapa de MLP velho alterado de 5 pra 6
+
+4) Etapa de Empreendimento velho alterado de 6 pra 7

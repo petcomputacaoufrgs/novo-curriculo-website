@@ -1,0 +1,28 @@
+services:
+  backend:
+    build:
+      context: ./backend
+    expose:
+      - "10000"
+    networks:
+      - app-network
+    command: uvicorn main:app --host 0.0.0.0 --port 10000
+    restart: always
+
+
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "80:80"
+    networks:
+      - app-network
+    depends_on:
+      - backend
+
+    restart: always
+
+
+networks:
+  app-network:
+    driver: bridge

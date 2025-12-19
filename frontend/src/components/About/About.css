@@ -1,0 +1,18 @@
+.About{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 5%;
+}
+
+.About h1{
+    font-size: 32px;
+    text-align: center;
+}
+.About p{
+    border-left: 1px solid rgba(115, 113, 113, 1); 
+    padding-left: 10px;
+    text-align: justify;
+    text-justify: inter-word;
+}

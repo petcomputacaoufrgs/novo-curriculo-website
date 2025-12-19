@@ -1,0 +1,219 @@
+# -*- coding: utf-8 -*-
+#+TITLE: ClassHistoryConverter
+#+STARTUP: overview indent
+
+* Introdução
+
+Roteiro utilizado no contexto da migração do histórico de discentes do
+antigo currículo do curso de Ciência da Computação da UFRGS para o
+novo currículo. Ou seja, converte todo o histórico de uma pessoa para
+como ficará o histórico dessa mesma pessoa no novo currículo.
+
+* Como utilizar
+** Prerequisitos
+
+Tu vais precisar de um interpretador da Linguagem =julia= recente.
+
+Recomendamos empregar a versão mais recente [[https://julialang.org/downloads/][disponível no site oficial]].
+
+Basicamente é só executar:
+
+#+begin_src shell :results output :exports both
+curl -fsSL https://install.julialang.org | sh
+#+end_src
+
+** Passo 0
+
+Realize um clone deste repositório em sua máquina:
+
+#+begin_src shell :results output :exports both
+git clone https://codeberg.org/hbecker/ClassHistoryConverter
+#+end_src
+
+Nos passos seguintes, vamos assumir que existe apenas o histórico de uma pessoa.
+
+** Passo 1
+
+Dentro do diretório =ClassHistoryConverter/scripts=, edite um arquivo
+com no caminho =INF_UFRGS_DATA/historico.csv= para conter o seu
+histórico escolar.
+
+Um exemplo de histórico de uma pessoa fictícia encontra-se no caminho
+=INF_UFRGS_DATA/historico_exemplo.csv=. O conteúdo do arquivo deve estar
+no formato CSV (Comma-Separated Values), que é um tipo de arquivo de
+texto que armazena dados em uma estrutura de tabela, separando os
+valores por vírgulas. Cada linha representa uma disciplina aprovada.
+
+- Coluna 1, =cartao=: o número do teu cartão
+  - Pode ser qualquer string
+- Coluna 2, =ingresso=: o semestre de realização da disciplina
+- Coluna 3, =codigo=: o código da disciplina
+- Coluna 4, =titulo=: o nome da disciplina
+- Coluna 5, =situacao=: sempre com o valor "Aprovado"
+  - Não recomenda-se colocar as reprovações, cancelamentos, etc
+
+** Passo 2
+
+De dentro do diretório =ClassHistoryConverter/scripts=, executar o
+script =shell= que fará o processamento e a aplicação das regras de
+equivalência correntes (flexível).
+
+#+begin_src shell :results output :exports both
+cd ClassHistoryConverter/scripts
+./update.sh
+#+end_src
+
+** Passo 3
+
+Interpretar o resultado, composto de vários arquivos CSV. A descrição
+detalhada de cada arquivo encontra-se abaixo.
+
+1. Seu novo histórico após aplicação das regras de equivalência
+   #+begin_src shell :results output :exports both
+   novo_historico_flexivel.csv
+   #+end_src
+2. Quantos créditos obrigatórios tinha no antigo, e agora no novo currículo.
+   #+begin_src shell :results output :exports bot
+   required_credit_losses_per_student_from_novo_historico_flexivel.csv=
+   #+end_src
+3. Quantos créditos eletivos tinha no antigo, e agora no novo currículo.
+   #+begin_src shell :results output :exports both
+   diff_opt_creds_needed_per_student_from_novo_historico_flexivel.csv=
+   #+end_src
+4. Quantos semestres faltavam para terminar no antigo, e no novo currículo.
+   #+begin_src shell :results output :exports both
+   semesters_remaining_by_student_comparison_from_novo_historico_flexivel.csv=
+   #+end_src
+   - Consideram apenas créditos obrigatórios.
+5. Quais foram as disciplinas não usadas como equivalência
+   #+begin_src shell :results output :exports both
+   unconverted_required_classes_no_redundancy_from_novo_historico_flexivel.csv=
+   #+end_src
+
+* Descrição do formato e significado dos arquivos de saída
+
+Saídas do script =update.sh= ou =update.jl=:
+
+** =novo_historico_{flexivel,ortodoxo}.csv=
+
+Cada linha representa uma regra (=rule_name=) que foi aplicada com
+sucesso para obter disciplina nova (=codigo=) para a pessoa
+(=cartao=). Note que a mesma disciplina pode aparecer múltiplas vezes
+porque múltiplas regras distintas a concederam.
+
+|--------+--------+-----------|
+| *cartao* | *codigo* | *rule_name* |
+|--------+--------+-----------|
+ 
+** =old_class_demand.csv=
+
+Considerando somente o histórico antigo e as disciplinas obrigatórias
+em disciplinas.csv, indica quantas pessoas ainda precisam fazer cada
+disciplina obrigatória. Para uma única pessoa, tem 0 para as
+disciplinas que ele já tinha feito, e 1 nas que falta fazer.
+
+|-------+--------+------+------------------------|
+| *etapa* | *codigo* | *nome* | *qt_students_needing_it* |
+|-------+--------+------+------------------------|
+
+** =new_class_demand_from_novo_historico_{flexivel,ortodoxo}.csv=
+
+Similar a =old_class_demand.csv= (mesmas colunas inclusive), mas trata
+da demanda por disciplinas no novo currículo, após a migração (se ela
+acontecesse imediatamente), no cenário flexível, ou ortodoxo.
+
+** =required_credit_losses_per_student_from_novo_historico_{flexivel,ortodoxo}.csv=
+
+Para cada pessoa, quantos créditos ela tinha no currículo antigo, e
+quantos ela tem no novo. Contém também a diferença do novo menos o
+antigo, logo positivo é um aumento dos créditos que a pessoa possui, e
+negativo indica perda de créditos.
+
+|--------+-------------+-------------+--------------|
+| *cartao* | *old_credits* | *new_credits* | *diff_credits* |
+|--------+-------------+-------------+--------------|
+
+** =semesters_remaining_by_student_comparison_from_novo_historico_{flexivel,ortodoxo}.csv=
+
+Para cada pessoa, mostra UM dos caminhos críticos de maior tamanho no
+currículo antigo, e UM outro caminho crítico de maior tamanho no
+currículo novo. Ou seja, uma sequência de disciplinas com
+pré-requisitos que forçava a pessoa a demorar mais semestres no antigo
+e outra no novo. Só leva em conta disciplinas obrigatórias (não assume
+quais eletivas discentes farão) e assume que a pessoa pode fazer
+infinitas disciplinas em um semestre caso nenhuma delas tenha outra
+como pré-requisito.
+
+|--------+------+----------+----------+----------+----------|
+| *cartao* | *diff* | *old_size* | *old_path* | *new_size* | *new_path* |
+|--------+------+----------+----------+----------+----------|
+
+** =both_negatives_from_novo_historico_{flexivel,ortodoxo}.csv=
+
+Traz as informações de
+=required_credit_losses_per_student_from_novo_historico_X.csv= e de
+=semesters_remaining_by_student_comparison_from_novo_historico_X.csv= em
+um único CSV (mas sem o detalhamento de quais disciplinas que faziam o
+caminho crítico). Ou seja, agrega a perda/ganho de créditos e o
+atraso/avanço em número de semestres, para cada pessoa, em um único
+CSV.
+
+** =diff_opt_creds_needed_per_student_from_novo_historico_{flexivel,ortodoxo}.csv=
+
+Para cada pessoa (=cartao=), traz quantos créditos eletivos (=opt= =
+optional) ela PRECISAVA no currículo antigo (=old_opt_cred=) e quantos
+ela PRECISA no novo (=new_opt_cred=), e a differença do novo menos o
+antigo. Logo, positivo significa que precisa de mais créditos e
+negativo significa que precisa de menos créditos.
+
+|--------+--------------+--------------+------|
+| *cartao* | *old_opt_cred* | *new_opt_cred* | *diff* |
+|--------+--------------+--------------+------|
+
+** =unconverted_required_classes_redundant_from_novo_historico_{flexivel,ortodoxo}.csv=
+
+Considerando todos as pessoas na entrada =historico.csv= e as
+disciplinas em que elas foram aprovadas, entrega a quantidade de
+pessoas (=qt_students=) com uma certa disciplina feita (indicada por
+etapa/codigo/nome/creditos) que não aproveitaram ela para nenhum
+disciplina do novo (obrigatória OU ELETIVA). Isso é feito verificando
+se uma disciplina antiga estava no histórico da pessoa mas não aparece
+em nenhum =rule_name= do histórico novo da pessoa.
+
+Ou seja, as disciplinas completamente "desperdiçadas" pelo corpo
+discente (ou, caso se esteja rodando com uma única pessoa, para aquela
+pessoa específica). A distinção para a versão com "=no_redundancy="
+deriva do fato que duas disciplinas distintas do currículo antigo
+podem liberar uma do novo individualmente: na versão "redundant" uma
+disciplina é considerada desperdiçada somente se ela não libera nada
+mesmo (nem mesmo coisas já liberadas por outra); na versão
+"=no_redundancy=", se uma disciplina do novo é liberada por múltiplas do
+antigo, uma disciplina do antigo é escolhida arbitrariamente para ser
+a "verdadeira" liberadora, e as demais são consideradas desperdiçadas
+se não se tornarem as "verdadeiras" liberadoras de outras disciplinas
+do novo.
+
+|-------+--------+------+----------+-------------|
+| *etapa* | *codigo* | *nome* | *creditos* | *qt_students* |
+|-------+--------+------+----------+-------------|
+
+** =unconverted_required_classes_no_redundancy_from_novo_historico_{flexivel,ortodoxo}.csv=
+
+Vide explicação em
+=unconverted_required_classes_redundant_from_novo_historico_{flexivel,ortodoxo}.csv=.
+Basicamente, mostra as disciplinas que não são aproveitadas para
+liberar nada no currículo novo (às vezes, porque alguma outra coisa já
+liberou o que elas liberavam).
+
+** =summarised_metrics_from_novo_historico_{flexivel,ortodoxo}.csv=
+
+|------+-------|
+| *name* | *value* |
+|------+-------|
+
+Traz algumas estatísticas acerca de todo o corpo discente no histórico
+no formato nome e valor (ou seja, são específicas de uma pessoa se só
+uma pessoa estava presente no histórico).  No momento, as estatísticas
+são sobre a demanda de créditos obrigatórios e eletivos em ambos os
+cenários.
+
