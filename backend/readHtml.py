@@ -88,7 +88,8 @@ def leHistoricoCurso(parsed_html):
         for linha in tabela.find_all('tr')[1:]:
             colunas = linha.find_all('td')
             situacao = colunas[6].text.strip()
-            if situacao == "Aprovado":
+            situacao = situacao.lower()
+            if situacao == "aprovado" or situacao == "liberação com crédito":
                 semestres.append(colunas[0].text.strip())
                 nomeCodigo = colunas[1].text.strip()
                 # Separa o código da disciplina do nome da disciplina.
@@ -133,12 +134,11 @@ def leHistoricoEscolar(parsed_html):
             colunas = linha.find_all('td')
             if len(colunas) >= 5:
                 situacao = colunas[4].text.strip()
-                if situacao == "Aprovado":
+                situacao = situacao.lower()
+                if situacao == "aprovado" or situacao == "liberação com crédito":
                     semestres.append(colunas[0].text.strip())
                     nomeDisciplinas.append(colunas[1].text.strip())
 
-                    # DEBUG: Imprime o semestre e o nome da disciplina. Índice -1 é o último elemento da lista.
-                    #print(f"Semestre: {semestres[-1]}, Nome: {nomeDisciplinas[-1]}")
     else:
         print("Tabela do histórico não encontrada.")
 

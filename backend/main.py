@@ -17,7 +17,7 @@ from pydantic import BaseModel
 from typing import List
 
 from readHtml import LeHtml, criaHistoricoCSV
-from aux_functions import calculate_temporality, correct_alternative_disciplines, traduzir_path, plot_function, generate_unique_filename
+from aux_functions import calculate_temporality, correct_alternative_disciplines, correct_other_known_issues, traduzir_path, plot_function, generate_unique_filename
 
 import pandas as pd
 
@@ -130,7 +130,8 @@ async def upload_html(file: UploadFile = File(...)):
         raise HTTPException(status_code=400, detail = "Tipo de HTML não identificado. Verifique se é o historico escolar ou histórico do curso disponibilizado no Portal do Aluno.")
         
     dados_extraidos["dados"] = correct_alternative_disciplines(dados_extraidos["dados"], dados_extraidos["curso"])
-
+    dados_extraidos["dados"] = correct_other_known_issues(dados_extraidos["dados"], dados_extraidos["curso"])
+    print(dados_extraidos)
     return dados_extraidos
 
 

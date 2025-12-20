@@ -14,7 +14,7 @@ const RegrasEquivalenciaView = () => {
 
   const links = [
     {link: "/", label: "Conversor", target: "_self"},
-
+    {link: "/faq", label: "Perguntas Frequentes", target: "_self"},
     {link: "https://www.inf.ufrgs.br/~eslgastal/gt-cic/novo-curriculo-cic-consolidado.html", label: "Informações Oficiais (CIC)", target: "_blank"},
     {link: "https://www.inf.ufrgs.br/~pet/ECP_Resolucao_de_Alteracoes_Curriculares.pdf", label: "Informações Oficiais (ECP)", target: "_blank"},
     {link: "https://codeberg.org/hbecker/ClassHistoryConverter", label: "Conversor de Histórico (Repositório)", target: "_blank"}
