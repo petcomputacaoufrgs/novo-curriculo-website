@@ -17,6 +17,7 @@ import Navbar from '../../components/Navbar';
 import { DropdownInput } from '../../components/DropDownInput';
 import About from '../../components/About';
 import { faqData } from './perguntas';
+import Footer from '../../components/Footer';
 
 
 export default function FAQ() {
@@ -143,6 +144,8 @@ export default function FAQ() {
         </LayoutContainer>
 
       </Wrapper>
+
+      <Footer />
     </>
   );
 }
