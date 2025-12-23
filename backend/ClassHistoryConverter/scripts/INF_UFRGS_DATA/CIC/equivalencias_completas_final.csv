@@ -1,5 +1,6 @@
 codigo_fez,carater_fez,creditos_fez,codigo_obtem,carater_obtem,creditos_obtem,nome_regra,nome_fez,nome_obtem,tipo_regra
 INF01032 ou QUI99009,Obrigatória,4,EmpreendimentoEletiva,Eletiva,4,INF01032=EmpreendimentoEletiva,Empreendimento em Informática ou Introdução ao Empreendedorismo e Inovação,Empreendimento em Informática,mudança de caráter
+INF01060-ProjIntPiloto,Eletiva,4,ProjInt,Obrigatória,8,ProjIntPiloto=ProjInt,TÓPICOS ESPECIAIS EM COMPUTAÇÃO XVIII (Projeto Integrador em Computação),Projeto Integrador,mudança de caráter
 INF01124,Obrigatória,4,CPDEletiva,Eletiva,4,INF01124=CPDEletiva,Classificação e Pesquisa de Dados,Classificação e Pesquisa de Dados,mudança de caráter
 INF01112,Obrigatória,4,ARQ2Eletiva,Eletiva,4,INF01112=ARQ2Eletiva,Arquitetura e Organização de Computadores II,Arquitetura e Organização de Computadores II,mudança de caráter
 ECO02254,Eletiva,4,EcnA,Eletiva,4,ECO02254=EcnA,Economia A,Economia A,mapeamento direto
@@ -36,7 +37,7 @@ INF01055,Eletiva,4,ToCICVIII,Eletiva,4,INF01055=ToCICVIII,Tópicos Especiais em 
 INF01056,Eletiva,4,DsdP,Eletiva,4,INF01056=DsdP,Desafios de Programação,Desafios de Programacao,mapeamento direto
 INF01058,Obrigatória,4,CD,Obrigatória,6,INF01058=CD,Circuitos Digitais,Circuitos Digitais,mudança no número de créditos
 INF01059,Eletiva,4,SstE,Eletiva,4,INF01059=SstE,Sistemas Embarcados,Sistemas Embarcados,mapeamento direto
-INF01060,Eletiva,4,ToCICXVIII,Eletiva,4,INF01060=ToCICXVIII,Tópicos Especiais em Computação XVIII,Topicos Especiais em Computacao XVIII,mapeamento direto
+INF01060,Eletiva,4,ToCICXVIII,Eletiva,4,INF01060=ToCICXVIII,TÓPICOS ESPECIAIS EM COMPUTAÇÃO XVIII (A que não é piloto do Projeto Integrador),Topicos Especiais em Computacao XVIII,mapeamento direto
 INF01061,Eletiva,2,ToCICXVII,Eletiva,2,INF01061=ToCICXVII,Tópicos Especiais em Computação XVII,Topicos Especiais em Computacao XVII,mapeamento direto
 INF01062,Eletiva,2,ToCICXVI,Eletiva,2,INF01062=ToCICXVI,Tópicos Especiais em Computação XVI,Topicos Especiais em Computacao XVI,mapeamento direto
 INF01063,Eletiva,4,ToCICXII,Eletiva,4,INF01063=ToCICXII,Tópicos Especiais em Computação XII,Topicos Especiais em Computacao XII,mapeamento direto

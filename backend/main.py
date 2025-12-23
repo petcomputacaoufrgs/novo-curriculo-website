@@ -17,7 +17,7 @@ from pydantic import BaseModel
 from typing import List
 
 from readHtml import LeHtml, criaHistoricoCSV
-from aux_functions import calculate_temporality, correct_alternative_disciplines, traduzir_path, plot_function, generate_unique_filename
+from aux_functions import calculate_temporality, correct_alternative_disciplines, correct_other_known_issues, traduzir_path, plot_function, generate_unique_filename
 
 import pandas as pd
 
@@ -55,10 +55,7 @@ app = FastAPI(lifespan=lifespan)
 
 # Define as origens de onde pode receber requisições
 origins = [
-    f"http://localhost:5173",
-    "https://borboleta.petcompufrgs.com.br", 
-    # DESCOMENTAR ISSO AO FAZER BUILD
-    #f"http://{FRONTEND_HOST}:{FRONTEND_PORT}",
+    "*"
 ]
 
 
@@ -133,7 +130,7 @@ async def upload_html(file: UploadFile = File(...)):
         raise HTTPException(status_code=400, detail = "Tipo de HTML não identificado. Verifique se é o historico escolar ou histórico do curso disponibilizado no Portal do Aluno.")
         
     dados_extraidos["dados"] = correct_alternative_disciplines(dados_extraidos["dados"], dados_extraidos["curso"])
-
+    dados_extraidos["dados"] = correct_other_known_issues(dados_extraidos["dados"], dados_extraidos["curso"])
     return dados_extraidos
 
 
@@ -366,71 +363,73 @@ def gerar_maiores_caminhos(disciplines, file_path, return_value):
 def marcar_disciplinas_feitas_em_html(html_path_new_diagram, html_path_old_diagram, history_table, tabela, curso, return_value):
     """
     Edita os arquivos HTML dos diagramas curriculares, destacando em vermelho as disciplinas que já foram concluídas.
-
-    Parâmetros:
-
-        - html_path_new_diagram (str): Caminho para o HTML do diagrama do novo currículo.
-        - html_path_old_diagram (str): Caminho para o HTML do diagrama do currículo antigo.
-        - history_table (pd.DataFrame): Tabela com disciplinas liberadas e pendentes (usada para identificar quais já foram feitas).
-        - tabela (list): Lista com o histórico original enviado pelo usuário, usada para marcar o HTML antigo.
-        - curso (str): Código do curso ("CIC" ou "ECP"), usado para lógica específica de créditos.
-        - return_value (dict): Dicionário onde os HTMLs modificados serão adicionados.
-
-    Modifica:
-        return_value["html"]: HTML do novo currículo com disciplinas feitas destacadas.
-        return_value["html_old_diagram"]: HTML do currículo antigo com disciplinas feitas destacadas.
-
+    Versão Otimizada com Regex Callback.
     """
 
+    # Filtra disciplinas obrigatórias feitas
     obligatoryClasses = history_table[history_table["etapa"] != 0]
     alreadyDoneClasses = obligatoryClasses[obligatoryClasses["qt_students_needing_it"] == 0]["nome"]
-
-    # Remove duplicatas (porque se uma mesma cadeira é obtida por mais de 1 regra diferente, ela vai aparecer múltiplas vezes)    
+    
+    # Remove duplicatas
     alreadyDoneClasses = alreadyDoneClasses.drop_duplicates()
 
-    # Adiciona 130 créditos obrigatórios à lista de "cadeiras" feitas no novo currículo se a pessoa já os fez
+    # Verifica créditos obrigatórios (Lógica de CIC)
     numAlreadyDoneNewCredits = return_value["summarized_metrics"]["obrigatorios_novos"][1]
-
     numAlreadyDoneOldCredits = return_value["summarized_metrics"]["obrigatorios_antigos"][1]
 
     if curso == "CIC":
         if numAlreadyDoneNewCredits >= 130:
+            # Adiciona à Series do Pandas
             alreadyDoneClasses = pd.concat([alreadyDoneClasses, pd.Series(["130 Créditos Obrigatórios"])])
+        
         if numAlreadyDoneOldCredits >= 100:
+            # Adiciona à lista bruta 'tabela' que será usada no diagrama antigo
             tabela.append(["", "100 Créditos Obrigatórios", ""])
 
-
-    # Ler o arquivo HTML
-    with open(html_path_new_diagram, "r") as f:
-        html_texto = f.read()
-            
-    # Modificar o conteúdo do HTML
-    for disciplina in alreadyDoneClasses:
-        nome_escapado = re.escape(disciplina)
-        teste = re.findall(rf"{nome_escapado}(?=[\\&]).*?style=.*?fillColor=#FFFFFA", html_texto)
+    
+    def aplicar_destaque(html_content, lista_disciplinas, cor_nova):
+        """
+        Função interna que varre o HTML e aplica a cor nas células encontradas na lista.
+        """
         
-        if len(teste) > 0:
-            substituido = re.sub(r"fillColor=#\w{6}", "fillColor=red", teste[0])
-            html_texto = html_texto.replace(teste[0], substituido)
+        # Converte para set para busca O(1)
+        set_disciplinas = set(lista_disciplinas)
 
-    # Retornar o HTML modificado como resposta
-    return_value["html"] = html_texto
-
-    f.close()
-
-    # Ler o arquivo HTML
-    with open(html_path_old_diagram, "r") as file:
-        html_texto = file.read()
+        def processar_celula(match):
+            tag_inteira = match.group(0)
             
-    # Modificar o conteúdo do HTML
-    for linha_historico_antigo in tabela:
-        nome_cadeira = linha_historico_antigo[1]
-        nome_escapado = re.escape(nome_cadeira)
-        teste = re.findall(rf"{nome_escapado}(?=[\\&]).*?style=.*?fillColor=#FFFFFA", html_texto)
-        
-        if len(teste) > 0:
-            substituido = re.sub(r"fillColor=#\w{6}", "fillColor=red", teste[0])
-            html_texto = html_texto.replace(teste[0], substituido)
+            # Verifica se alguma disciplina da lista está presente nesta tag
+            # Iteramos sobre o set, mas como a tag é uma string longa, verificamos a presença da substring
+            for disciplina in set_disciplinas:
+                if disciplina in tag_inteira:
+                    # Substitui o fillColor existente pela NOVA_COR
+                    # Regex: procura 'fillColor=' e vai até encontrar aspas, ponto-e-vírgula ou fim da string
+                    return re.sub(r'fillColor=[^;"]+', cor_nova, tag_inteira)
+            
+            return tag_inteira
 
-    # Retornar o HTML modificado como resposta
-    return_value["html_old_diagram"] = html_texto
+        padrao_celula = r'&lt;mxCell\s.*?/&gt;'
+        
+        return re.sub(padrao_celula, processar_celula, html_content, flags=re.DOTALL)
+
+
+    
+    with open(html_path_new_diagram, "r", encoding="utf-8") as f:
+        html_texto_novo = f.read()
+
+    COR_NOVO = 'fillColor=light-dark(#ffcccc,#ffcccc)'
+    html_final_novo = aplicar_destaque(html_texto_novo, alreadyDoneClasses.tolist(), COR_NOVO)
+    
+    return_value["html"] = html_final_novo
+
+
+    
+    with open(html_path_old_diagram, "r", encoding="utf-8") as f:
+        html_texto_antigo = f.read()
+    
+    lista_disciplinas_antigas = [linha[1] for linha in tabela]
+    
+    COR_ANTIGO = 'fillColor=light-dark(#ffcccc,#ffcccc)'
+    html_final_antigo = aplicar_destaque(html_texto_antigo, lista_disciplinas_antigas, COR_ANTIGO)
+
+    return_value["html_old_diagram"] = html_final_antigo

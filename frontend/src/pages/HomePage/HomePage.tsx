@@ -68,7 +68,6 @@ const HomePage = () => {
 
   const [semester, setSemester] = useState("2025/2");
   const [curso, setCurso] = useState("CIC");
-  const [etapas, setEtapas] = useState<number[]>([]);
 
   const [frontData, setFrontData] = useState<FrontData | undefined>();
   const [oldUrl, setOldBlobUrl] = useState<string | undefined>();
@@ -99,6 +98,7 @@ const HomePage = () => {
 
   const links = [
     {link: "/regras", label: "Regras de Equivalência", target: "_self"},
+    {link: "/faq", label: "Perguntas Frequentes", target: "_self"},
     {link: "https://www.inf.ufrgs.br/~eslgastal/gt-cic/novo-curriculo-cic-consolidado.html", label: "Informações Oficiais (CIC)", target: "_blank"},
     {link: "https://www.inf.ufrgs.br/~pet/ECP_Resolucao_de_Alteracoes_Curriculares.pdf", label: "Informações Oficiais (ECP)", target: "_blank"},
     {link: "https://codeberg.org/hbecker/ClassHistoryConverter", label: "Conversor de Histórico (Repositório)", target: "_blank"}
@@ -129,14 +129,13 @@ const HomePage = () => {
           text="Diante da mudança do currículo da CIC e ECP, cuja previsão é de acontecer em 2026/1, o professor Henrique Becker desenvolveu um script para a conversão do histórico dos alunos do antigo currículo para o novo. Esse site funciona como uma interface para esse script, além de reunir outras informações úteis. Para converter seu histórico, você pode selecionar as cadeiras que completou na tabela abaixo e clicar em 'Converter'.
                 Se preferir, ao invés disso, você também pode fazer upload do seu histórico. Para isso, basta acessar o portal do aluno e, uma vez dentro da página 'Histórico do Curso' ou 'Histórico Escolar', 
                 pressionar o botão direito do mouse e selecionar 'salvar como' em HTML. Tendo baixado o arquivo HTML, clique no botão 'Carregar Histórico'. Selecione o arquivo
-                HTML baixado e clique em 'Converter'. Note que isso é uma conversão automática, que pode não ser válida para todos os casos (ex: pedidos de equivalência vio processo). Além disso, para critérios de temporalidade, esse site está assumindo que a mudança de currículo ocorrerá no semestre de 2026/1, o que é apenas uma previsão e não uma certeza."/>
+                HTML baixado e clique em 'Converter'. Note que isso é uma conversão automática, que pode não ser válida para todos os casos (ex: pedidos de equivalência via processo)."/>
         
         <ButtonsStyledContainer>
                 <Loadb 
                     setCurso={setCurso} 
                     setSemester={setSemester} 
                     setHistory={setHistory} 
-                    setEtapas={setEtapas} 
                     setMessage={setMessage}
                 />
                 <Convertb 

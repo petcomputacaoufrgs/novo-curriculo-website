@@ -4,8 +4,8 @@ import axios, { AxiosInstance } from 'axios';
 // temos Conversão automática de JSON e Tratamento automático de erros na chamada da requisição
 
 const api:AxiosInstance = axios.create({
-      /*baseURL: import.meta.env.VITE_API_URL*/
-      baseURL: 'http://localhost:8000'  // URL do backend
+      /*baseURL: '/api'*/
+      baseURL: 'http://localhost:8000' 
 
 })
 

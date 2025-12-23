@@ -47,6 +47,24 @@ def correct_alternative_disciplines(cadeiras, curso):
     return cadeiras
 
 
+def correct_other_known_issues(cadeiras, curso):
+    """
+    Corrige outros problemas conhecidos com códigos de disciplinas.
+    """
+
+    if curso == "CIC":
+        for dados_cadeira in cadeiras:
+
+            # A disciplina Tópicos Especiais em Computação XVIII foi especial em 2025/2: foi o piloto da disciplina Projeto Integrador, e deve ser tratada como distinta
+            if dados_cadeira[2] == "INF01060":
+                if dados_cadeira[0] == "2025/2":
+                    dados_cadeira[1] = "TÓPICOS ESPECIAIS EM COMPUTAÇÃO XVIII (Projeto Integrador)"
+                    dados_cadeira[2] = "INF01060-ProjIntPiloto"
+                else:
+                    dados_cadeira[1] = "TÓPICOS ESPECIAIS EM COMPUTAÇÃO XVIII (A que não é piloto do Projeto Integrador)"
+            
+
+    return cadeiras
 
 
 def calculate_temporality(semestre_ingresso: str) -> int:
