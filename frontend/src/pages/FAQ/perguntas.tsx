@@ -26,7 +26,7 @@ export const faqData: FAQData = {
         },
         { 
           question: "Quando a atualização das informações do aluno no portal com a entrada do novo currículo deve ocorrer?", 
-          answer: <>A atualização dos históricos no portal do aluno deve ocorrer <strong>após 08/01/2026</strong>, que é a data do processamento final do semestre de 2025/2. Mas algumas mudanças podem não entrar automaticamente, pois devem ser realizadas manualmente pela COMGRAD. Um exemplo de mudança manual é a liberação das novas disciplinas pelas disciplinas piloto que foram ministradas em 2025/2, como a disciplina <em>INF01060 - TÓPICOS ESPECIAIS EM COMPUTAÇÃO XVIII (Projeto Integrador em Computação)</em>, piloto da disciplina obrigatória <em>Projeto Integrador em Computação.</em></> 
+          answer: <>A atualização dos históricos no portal do aluno já aconteceu. Mas algumas mudanças podem não ter entrado automaticamente, pois devem ser realizadas manualmente pela COMGRAD. Um exemplo de mudança manual é a liberação das novas disciplinas pelas disciplinas piloto que foram ministradas em 2025/2, como a disciplina <em>INF01060 - TÓPICOS ESPECIAIS EM COMPUTAÇÃO XVIII (Projeto Integrador em Computação)</em>, piloto da disciplina obrigatória <em>Projeto Integrador em Computação.</em></> 
         }
       ]
     },
@@ -63,7 +63,9 @@ export const faqData: FAQData = {
         { 
           question: "Onde posso ver os créditos necessários para graduação no novo currículo?", 
           answer: (
+            
             <>
+            <p>Você já pode ver essa informação diretamente no portal do aluno</p>
               Além de outras informações, os créditos necessários para graduação no novo currículo podem ser consultados
               <a href="https://www.inf.ufrgs.br/~eslgastal/gt-cic/novo-curriculo-cic-consolidado.html#ch" target="_blank" rel="noopener noreferrer"> aqui</a>.
             </>
@@ -135,6 +137,10 @@ export const faqData: FAQData = {
       title: "Sobre Situações de Alunos",
       id: "cic-situacoes",
       items: [
+        {
+          question: "Vi pelo Portal do Aluno que o número de créditos obrigatórios que eu tinha diminuiu. Isso está correto?",
+          answer: "Sim, isso está correto, mas é porque algumas disciplinas que eram antes obrigatórias viraram eletivas / se converteram em créditos eletivos no novo currículo. O importante não é o NÚMERO de créditos obtidos, mas a OBTENÇÃO das disciplinas obrigatórias."
+        },
         { 
           question: "A carga horária de extensão vai aumentar, preciso cumprir as horas adicionais se já cumpri todas as horas atuais?", 
           answer: <>Se você já cumpriu todas as horas de extensão exigidas pelo currículo atual, não será necessário cumprir as 10 horas adicionais exigidas pelo novo currículo, conforme consta no Artigo 21 da <a href="https://www.inf.ufrgs.br/~eslgastal/gt-cic/COMGRAD_CIC_Res_01_2025_final_v2_consolidada.pdf" target="_blank" rel="noopener noreferrer">Resolução COMGRAD-CIC 01/2025.</a></>
